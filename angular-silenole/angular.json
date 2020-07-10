@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "angular-silenole"
+    }
+  },
+  "defaultProject": "angular-silenole",
+  "cli": {
+    "analytics": false
+  }
 }
