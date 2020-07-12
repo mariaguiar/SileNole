@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+  <div class="container-fluid ">
+    <div class="container-fluid mt-2 ml-5">
+        <div class="row">
+            <div class="col-9 display-1 mt-3 ">SileNole<br><h3>Tu lugar de intercambio de bienes. Fácil. Rápido. Sencillo.</h3></div>
+            <div class="col-2 d-flex align-items-center">
+                <button class="btn btn-outline-success btn-lg active" role="button" aria-pressed="true" type="submit" data-toggle="modal" data-target="#exampleModal">Ingresar/Registrarse</button>
+            </div>
+        </div>
+    </div>          
+</div><hr>
+
+
+
+<!-- MODAL ENTRAR -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Entrar</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+            <div class="form-group">
+                <label >Usuario</label><br>
+                <input type="text" #Usuario placeholder="Usuario">
+            </div>
+                <div class="form-group">
+                <label >Contraseña</label><br>
+                <input type="text" #Contrasenya placeholder="Contraseña">
+            </div>
+                <button type="submit" class="btn btn-success" >Ingreso</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <label>¿No eres usuario aún?</label><br>
+        <button type="button" class="btn btn-secondary"  data-dismiss="modal" data-toggle="modal" data-target="#exampleModal2">Registrarse</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL REGISTRARSE -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title" id="exampleModalLabel">Registrarse</h1>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+            <div class="form-group">
+                <label >Usuario</label><br>
+                <input type="text" #Usuario placeholder="Usuario">
+            </div>
+            <div class="form-group">
+                <label >Correo Electronico</label><br>
+                <input type="text" #email placeholder="Correo Electronico">
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Comunidad Autónoma</label>
+                <select class="form-control" id="exampleFormControlSelect1">
+                  <option>Barcelona</option>
+                  <option>Madrid</option>
+                  <option>Zaragoza</option>
+                </select>
+                <small id="emailHelp" class="form-text text-muted">* Obligatorio</small>
+              </div>
+            
+            <div class="form-group">
+                <label >Provincia</label><br>
+                <input type="text" #Provincia placeholder="Provincia">
+              </div>
+              <div class="form-group">
+                <label >Localidad</label><br>
+                <input type="text" #Localidad placeholder="Localidad">
+              </div>
+              <div class="form-group">
+                <label >Código postal</label><br>
+                <input type="text" #Contraseña placeholder="Código postal">
+              </div>
+            <div class="form-group">
+              <label >Contraseña</label><br>
+              <input type="text" #Usuario placeholder="Contraseña">
+            </div>
+              <div class="form-group">
+              <label >Confirma tu Contraseña</label><br>
+              <input type="text" #Contrasenya placeholder="Contraseña">
+          </div>
+                <button type="submit" class="btn btn-success" >Registrarse</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <label>¿Ya eres usuario?</label><br>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Ingresa</button>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="carrusel">
+    <ngb-carousel *ngIf="images">
+        <ng-template ngbSlide>
+          <div class="picsum-img-wrapper">
+            <img [src]="images[0]" alt="Random first slide">
+          </div>
+          <div class="carousel-caption">
+            <h3>First slide label</h3>
+            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+          </div>
+        </ng-template>
+        <ng-template ngbSlide>
+          <div class="picsum-img-wrapper">
+            <img [src]="images[1]" alt="Random second slide">
+          </div>
+          <div class="carousel-caption">
+            <h3>Second slide label</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          </div>
+        </ng-template>
+        <ng-template ngbSlide>
+          <div class="picsum-img-wrapper">
+            <img [src]="images[2]" alt="Random third slide">
+          </div>
+          <div class="carousel-caption">
+            <h3>Third slide label</h3>
+            <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+          </div>
+        </ng-template>
+      </ngb-carousel>
+      </div>
+
+      <div id="footer"class=" bg-success fixed-bottom">
+        <div class="row d-flex justify-content-center">
+           <!--  <div><p class="mt-2 text-center mr-3 mt-b d-flex align-items-center">silenole@silenole.es | © 2020 CMP APPS  | Madrid</p></div> -->
+           <div><p class="d-flex align-items-center mt-3 mr-3 pt-1">silenole@silenole.es | © 2020 CMP APPS | Madrid </p></div>
+           <div class="">
+            <img src="assets/img/facebook.png" width="30" alt="" class="mt-3">
+            <img src="assets/img/instagram.png" width="30" alt="" class="mx-4 mt-3">
+            <img src="assets/img/twitter.png" width="30" alt="" class="mt-3">
+           </div> 
+            <div><p class="d-flex align-items-center mt-3 ml-3 pt-1">Politica de Privacidad | Terminos de Uso | Legal</p></div>
+        </div>
+    </div>    
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+</body>
+</html>
