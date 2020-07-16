@@ -115,9 +115,9 @@
             <!-- botones-->
             <div class=" d-flex align-items-center col-sm-4 col-md-8 ">
               <button class="btn btn-outline-success btn-lg active" role="button" aria-pressed="true" type="submit"
-                data-toggle="modal" data-target="#modalIngresar">Ingresar</button> &nbsp;
+                data-toggle="modal" data-target="#modalIngresar" [routerLink]="['/home']" (click)="aparecerF()">Ingresar</button> &nbsp;
               <button class="btn btn-outline-success btn-lg active" role="button" aria-pressed="true" type="submit"
-                data-toggle="modal" data-target="#modalRegistrar">Registrarse</button>
+                data-toggle="modal" data-target="#modalRegistrar" >Registrarse</button>
             </div>
           </div>
         </div>
@@ -133,7 +133,7 @@
         <ngb-carousel class="carrusel2 col-sm-4 col-md-8 col-lg-12 d-flex justify-content-center">
           <ng-template ngbSlide>
             <div class="d-flex  justify-content-center ">
-              <img class="img" src="assets/images/caja4.jpg" alt="Random first slide">
+              <img class="img" src="assets/img/caja4.jpg" alt="Random first slide">
             </div>
             <div class="textocarrousel carousel-caption  text-success ">
               <h3 style="font-size: xxx-large;">FÁCIL</h3>
@@ -142,7 +142,7 @@
           </ng-template>
           <ng-template ngbSlide>
             <div class="d-flex  justify-content-center ">
-              <img class="img " src="assets/images/comodin.jpg" alt="Random second slide">
+              <img class="img " src="assets/img/comodin.jpg" alt="Random second slide">
             </div>
             <div class="textocarrousel carousel-caption  text-success">
               <h3 style="font-size: xxx-large;">RÁPIDO</h3>
@@ -151,7 +151,7 @@
           </ng-template>
           <ng-template ngbSlide>
             <div class= "d-flex justify-content-center">
-              <img class="img " src="assets/images/manos8.jpg" alt="Random third slide">
+              <img class="img " src="assets/img/manos8.jpg" alt="Random third slide">
             </div>
             <div class="textocarrousel carousel-caption  text-success">
               <h3 style="font-size: xxx-large;">SENCILLO</h3>
