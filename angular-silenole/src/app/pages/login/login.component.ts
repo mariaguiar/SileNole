@@ -1,5 +1,6 @@
 import { Component, OnInit, } from '@angular/core';
 import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
+import {ServService} from './../../serv.service'
 
 
 @Component({
@@ -9,7 +10,12 @@ import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  constructor(public servicio:ServService) { }
+
+  public aparecerF(){
+  this.servicio.aparecer=true
+  console.log(this.servicio.aparecer)
+  }
 
   ngOnInit(): void {
   }
