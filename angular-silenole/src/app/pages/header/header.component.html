@@ -20,22 +20,22 @@
                 [ngClass]="{'collapse': collapsed, 'navbar-collapse': true}">
 
                 <div class="navbar-nav mr-auto ">
-                  <a class="nav-item nav-link text-success" href="#">
+                  <a class="nav-item nav-link text-success" [routerLink]="['/usuario']">
                     <h5>Usuario</h5>
                   </a>
-                  <a class="nav-item nav-link text-success" href="#">
+                  <a class="nav-item nav-link text-success" [routerLink]="['/siles']">
                     <h5>Mis Siles</h5>
                   </a>
-                  <a class="nav-item nav-link text-success" href="#">
+                  <a class="nav-item nav-link text-success" [routerLink]="['/subir']">
                     <h5>Subir Siles</h5>
                   </a>
-                  <a class="nav-item nav-link text-success" href="#">
+                  <a class="nav-item nav-link text-success" [routerLink]="['/message']">
                     <h5>Mis Mensajes</h5>
                   </a>
 
                   <form class="form-inline d-flex flex row ml-2">
                     <input class="form-control mr-sm-2" type="search" placeholder="Noles / Usuario" aria-label="Search">
-                    <button class="btn btn-outline-success active mr-2 " type="submit">Buscar</button>
+                    <button class="btn btn-outline-success active mr-2 " type="submit" [routerLink]="['/buscar']">Buscar</button>
                   </form>
                 </div>
               </div>
