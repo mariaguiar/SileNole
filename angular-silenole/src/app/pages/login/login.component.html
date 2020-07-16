@@ -1,123 +1,98 @@
 
-  
-  <html lang="es">
-
-
-    <!-- HEAD -->
- 
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Inicio</title>
-      <link href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&display=swap" rel="stylesheet">
-      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    </head>
- 
  
     <body class="body">
 
        
       <!--MODAL INICIO-->
-      <div class="modal fade " id="modalIngresar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog col-sm-4 col-md-8 col-lg-10 justify-content-center">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Iniciar sesión</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form>
-                <div class="form-group">
-                  <label for="recipient-name" class="col-form-label">Email:</label>
-                  <input type="email" class="form-control" id="recipient-name">
-                </div>
-                <div class="form-group">
-                  <label for="recipient-name" class="col-form-label">Contraseña:</label>
-                  <input type="password" class="form-control" id="recipient-name">
-                </div>
-              </form>
-            </div>
-            <div class="modal-footer">
-              
-              <button type="button" class="btn btn-success" routerLink="home" (click)="aparecerF()">Ingresar</button>
-              
-            </div>
-          </div>
+
+      <ng-template #content let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Iniciar sesión</h4>
+          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-      </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="recipient-name" class="col-form-label">Email:</label>
+              <input type="email" class="form-control" id="recipient-name">
+            </div>
+            <div class="form-group">
+              <label for="recipient-name" class="col-form-label">Contraseña:</label>
+              <input type="password" class="form-control" id="recipient-name">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" [routerLink]="['/home']" (click)="aparecerF()" (click)="modal.dismiss('Cross click')">Ingresar</button>
+        </div>
+      </ng-template>
+     <pre>{{ closeResult }}</pre>
 
       <!--MODAL REGISTRO-->
 
-      <div class="modal fade" id="modalRegistrar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog col-sm-4 col-md-8 col-lg-10">
-          <div class="modal-content ">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Registrase</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body ">
-              <form>
-                <div class="form-group">
-                  <label for="recipient-name" class="col-form-label">Email:</label>
-                  <input type="email" class="form-control" id="recipient-name">
-                </div>
-                <div class="form-group">
-                  <label for="recipient-name" class="col-form-label">Comunidad Autónoma:</label>
-                  <input type="text" class="form-control" id="recipient-name">
-                </div>
-                <div class="form-group">
-                  <label for="recipient-name" class="col-form-label">Provincia:</label>
-                  <input type="text" class="form-control" id="recipient-name">
-                </div>
-                <div class="form-group">
-                  <label for="recipient-name" class="col-form-label">Localidad:</label>
-                  <input type="text" class="form-control" id="recipient-name">
-                </div>
-                <div class="form-group">
-                    <label for="recipient-name" class="col-form-label">CP:</label>
-                    <input type="number" class="form-control" id="recipient-name">
-                  </div>
-                <div class="form-group">
-                  <label for="recipient-name" class="col-form-label">Confirmar contraseña:</label>
-                  <input type="password" class="form-control" id="recipient-name">
-                </div>
-                <div class="form-group">
-                  <label for="recipient-name" class="col-form-label">Contraseña:</label>
-                  <input type="password" class="form-control" id="recipient-name">
-                </div>
-              </form>
-            </div>
-            <div class="modal-footer">
-              
-              <button type="button" class="btn btn-success" routerLink="home" (click)="aparecerF()">Resgistrarse</button>
-              
-            </div>
-          </div>
+      <ng-template #content2 let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title2">Registrarse</h4>
+          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-      </div>
-      
-
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="recipient-name" class="col-form-label">Email:</label>
+              <input type="email" class="form-control" id="recipient-name">
+            </div>
+            <div class="form-group">
+              <label for="recipient-name" class="col-form-label">Comunidad Autónoma:</label>
+              <input type="text" class="form-control" id="recipient-name">
+            </div>
+            <div class="form-group">
+              <label for="recipient-name" class="col-form-label">Provincia:</label>
+              <input type="text" class="form-control" id="recipient-name">
+            </div>
+            <div class="form-group">
+              <label for="recipient-name" class="col-form-label">Localidad:</label>
+              <input type="text" class="form-control" id="recipient-name">
+            </div>
+            <div class="form-group">
+                <label for="recipient-name" class="col-form-label">CP:</label>
+                <input type="number" class="form-control" id="recipient-name">
+              </div>
+            <div class="form-group">
+              <label for="recipient-name" class="col-form-label">Confirmar contraseña:</label>
+              <input type="password" class="form-control" id="recipient-name">
+            </div>
+            <div class="form-group">
+              <label for="recipient-name" class="col-form-label">Contraseña:</label>
+              <input type="password" class="form-control" id="recipient-name">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" [routerLink]="['/home']" (click)="aparecerF()" (click)="modal.dismiss('Cross click')">Registrarse</button>
+        </div>
+      </ng-template>
+    <pre>{{ closeResult }}</pre>
 
  
       <!-- HEADER -->
  
        <!-- Logo -->
       <div class="container-fluid col-sm-4 col-md-8 col-lg-10">
-        <div class="container-fluid mt-2 ml-5">
+        <div class="container-fluid  ml-5">
           <div class="row">
-            <div class="col-9 display-1 mt-3 text-success">SileNole<br>
-              <h3 class="text-success">Tu lugar de intercambio de bienes.</h3>
+            <div class="col-9 display-1 text-success">SileNole<br>
+              <h3 class="text-success mb-4">Tu lugar de intercambio de bienes.</h3>
             </div>
             <!-- botones-->
-            <div class=" d-flex align-items-center col-sm-4 col-md-8 ">
+            <div class=" d-flex align-items-center col-sm-4 col-md-8 mb-3">
               <button class="btn btn-outline-success btn-lg active" role="button" aria-pressed="true" type="submit"
-                data-toggle="modal" data-target="#modalIngresar" [routerLink]="['/home']" (click)="aparecerF()">Ingresar</button> &nbsp;
-              <button class="btn btn-outline-success btn-lg active" role="button" aria-pressed="true" type="submit"
-                data-toggle="modal" data-target="#modalRegistrar" >Registrarse</button>
+                data-toggle="modal" data-target="#modalIngresar" (click)="open(content)">Ingresar</button> 
+              <button class="btn btn-outline-success btn-lg active ml-3" role="button" aria-pressed="true" type="submit"
+                data-toggle="modal" data-target="#modalRegistrar" (click)="open2(content2)">Registrarse</button>
             </div>
           </div>
         </div>
@@ -161,12 +136,4 @@
         </ngb-carousel>
       </div>
  
- 
-     
- 
- 
-    
-     </body>
- 
-    </html>
- 
+

@@ -1,56 +1,42 @@
 <!-- HEADER -->
-<body class="body">
+<body>
   
   <div class="container-fluid">
     <div class="row">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-sm-12-text-center col-md-3-text-center col-lg-3 col-xl-3 mt-4 text-success display-3 mr-5">
-          </div>
-          <div
-          class="col-sm-12 col-md-12-text-center col-lg-9 col-xl-9 mt-4 ml-3 row align-items-center d-flex justify-content-end">
-          <nav class="navbar navbar-expand-md navbar-light ">
-              <a class="navbar-brand" href="index.html">
-                <h1 class="text-success display-3">Silenole</h1>
-              </a>
-              <button class="navbar-toggler navbar-toggler-right" type="button" (click)="toggleCollapsed()"
-              data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-              aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse row align-items-end" id="navbarSupportedContent"
-              [ngClass]="{'collapse': collapsed, 'navbar-collapse': true}">
-
-              <div class="navbar-nav mr-auto ">
-                <a class="nav-item nav-link text-success" [routerLink]="['/usuario']">
-                  <h5>Usuario</h5>
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <nav class="navbar navbar-expand-md navbar-light row align-items-end">
+          <a class="silenole navbar-brand text-success">SileNole</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+              <a class="nav-item nav-link text-success" [routerLink]="['/usuario']">
+                  <h6 class="pb-1">Usuario</h6>
                   </a>
                   <a class="nav-item nav-link text-success" [routerLink]="['/siles']">
-                    <h5>Mis Siles</h5>
+                    <h6 class="pb-1">Mis Siles</h6>
                   </a>
                   <a class="nav-item nav-link text-success" [routerLink]="['/subir']">
-                    <h5>Subir Siles</h5>
+                    <h6 class="pb-1">Subir Siles</h6>
                   </a>
                   <a class="nav-item nav-link text-success" [routerLink]="['/message']">
-                    <h5>Mis Mensajes</h5>
+                    <h6 class="pb-1">Mis Mensajes</h6>
                   </a>
-                  
-                  <form class="form-inline d-flex flex row ml-2">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Noles / Usuario" aria-label="Search">
-                    <button class="btn btn-outline-success active mr-2 " type="submit" [routerLink]="['/buscar']">Buscar</button>
-                  </form>
-                </div>
-              </div>
-              
-            </nav>
+            </ul>
+            <form class="form-inline my-2 my-lg-0 pb-3">
+              <input class="form-control mr-sm-2" type="search" placeholder="Noles/ Usuario" aria-label="Search">
+              <button class="btn btn-outline-success my-2 my-sm-0" type="button" [routerLink]="['/buscar']">Buscar</button>
+            </form>
           </div>
-        </div>
-      </div>
-      <div class="ml-4 text-success">
-        <h3>Tu lugar de intercambio de bienes. Fácil. Rápido. Sencillo.</h3>
+        </nav>
+        <h5 class="text-success">Tu lugar de intercambio de bienes</h5>
       </div>
     </div>
   </div>
 </body>
+
   <!-- FIN HEADER -->
-  
+
+ 
