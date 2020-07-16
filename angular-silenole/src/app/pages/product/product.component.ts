@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostBinding } from '@angular/core';
 
 @Component({
   selector: 'app-product',
@@ -10,6 +10,13 @@ export class ProductComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+  }
+  
+  @HostBinding('class.is-open')
+  isOpen = false;
+
+  toggle() {
+    this.isOpen = !this.isOpen
   }
 
 }
