@@ -6,13 +6,29 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './pages/header/header.component';
 import { FooterComponent } from './pages/footer/footer.component';
 import { UploadComponent } from './pages/upload/upload.component';
+import { CategoriesComponent } from './pages/categories/categories.component';
+import { LoginComponent } from './pages/login/login.component';
+import { OwnerComponent } from './pages/owner/owner.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { SearchComponent } from './pages/search/search.component';
+import { MessagesComponent } from './pages/messages/messages.component';
+import { MyProductsComponent } from './pages/my-products/my-products.component';
+import { ProductComponent } from './pages/product/product.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    UploadComponent
+    UploadComponent,
+    CategoriesComponent,
+    LoginComponent,
+    OwnerComponent,
+    ProfileComponent,
+    SearchComponent,
+    MessagesComponent,
+    MyProductsComponent,
+    ProductComponent
   ],
   imports: [
     BrowserModule,
