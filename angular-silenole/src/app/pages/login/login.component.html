@@ -1,1 +1,77 @@
-<p>login works!</p>
+
+  <html lang="es">
+
+
+    <!-- HEAD -->
+ 
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Inicio</title>
+      <link href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    </head>
+ 
+ 
+    <body class="body">
+ 
+      <!-- HEADER -->
+ 
+       <!-- Logo -->
+      <div class="container-fluid col-sm-4 col-md-8 col-lg-10">
+        <div class="container-fluid mt-2 ml-5">
+          <div class="row">
+            <div class="col-9 display-1 mt-3 text-success">SileNole<br>
+              <h3 class="text-success">Tu lugar de intercambio de bienes.</h3>
+            </div>
+            <!-- botones-->
+            <div class=" d-flex align-items-center col-sm-4 col-md-8 ">
+              <button class="btn btn-outline-success btn-lg active" role="button" aria-pressed="true" type="submit"
+                data-toggle="modal" data-target="#modalIngresar">Ingresar</button> &nbsp;
+              <button class="btn btn-outline-success btn-lg active" role="button" aria-pressed="true" type="submit"
+                data-toggle="modal" data-target="#modalRegistrar">Registrarse</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+ 
+ 
+ 
+      <!-- CARROUSEL -->
+ 
+ 
+      <div class="carrusel row d-flex justify-content-center ">
+        <ngb-carousel class="carrusel2 col-sm-4 col-md-8 col-lg-12 d-flex justify-content-center">
+          <ng-template ngbSlide>
+            <div class="d-flex  justify-content-center ">
+              <img class="img" src="assets/images/caja4.webp" alt="Random first slide">
+            </div>
+            <div class="textocarrousel carousel-caption  text-success ">
+              <h3 style="font-size: xxx-large;">FÁCIL</h3>
+              <p style="color: black;">Regístrate y sube los productos que no utilices o que quieras intercambiar.</p>
+            </div>
+          </ng-template>
+          <ng-template ngbSlide>
+            <div class="d-flex  justify-content-center ">
+              <img class="img " src="assets/images/comodin.webp" alt="Random second slide">
+            </div>
+            <div class="textocarrousel carousel-caption  text-success">
+              <h3 style="font-size: xxx-large;">RÁPIDO</h3>
+              <p style="color: black;">Utiliza los filtros para buscar productos y encuentra el que necesitas.</p>
+            </div>
+          </ng-template>
+          <ng-template ngbSlide>
+            <div class= "d-flex justify-content-center">
+              <img class="img " src="assets/images/manos8.webp" alt="Random third slide">
+            </div>
+            <div class="textocarrousel carousel-caption  text-success">
+              <h3 style="font-size: xxx-large;">SENCILLO</h3>
+              <p style="color: black;">Manda un mensaje al propietario del producto, llegad a un acuerdo y ¡listo! </p>
+            </div>
+          </ng-template>
+        </ngb-carousel>
+      </div>
+      
+      
+       
