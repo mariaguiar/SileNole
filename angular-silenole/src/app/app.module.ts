@@ -15,6 +15,7 @@ import { MessagesComponent } from './pages/messages/messages.component';
 import { MyProductsComponent } from './pages/my-products/my-products.component';
 import { ProductComponent } from './pages/product/product.component';
 import { HomeComponent } from './pages/home/home.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { HomeComponent } from './pages/home/home.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
