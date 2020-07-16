@@ -14,7 +14,12 @@ import { SearchComponent } from './pages/search/search.component';
 import { MessagesComponent } from './pages/messages/messages.component';
 import { MyProductsComponent } from './pages/my-products/my-products.component';
 import { ProductComponent } from './pages/product/product.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomeComponent } from './pages/home/home.component';
+
+//servicios
+import {ServService} from './serv.service';
+
 
 @NgModule({
   declarations: [
@@ -34,9 +39,12 @@ import { HomeComponent } from './pages/home/home.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgbModule
   ],
-  providers: [],
+  providers: [
+    ServService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
