@@ -17,11 +17,49 @@
         <!-- HEADER -->
   <div class="container-fluid">
     <div class="row">
-      <div class="col-sm-12 col-md-12-text-center col-lg-6 col-xl-6 display-4 text-success mt-3">SileNole<br><h3>Tu lugar de intercambio de bienes. Fácil. Rápido. Sencillo.</h3></div>
+      <!-- <div class="col-sm-12 col-md-12-text-center col-lg-6 col-xl-6 display-1 text-success mt-3">SileNole</div> -->
 
   <!-- NABVAR -->    
   
-  <div class="mt-4">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12-text-center col-md-3-text-center col-lg-3 col-xl-3 mt-4 text-success display-3 mr-5">
+        <!-- <p >SileNole</p> -->
+      </div>
+    
+  
+  
+  <div class="col-sm-12 col-md-12-text-center col-lg-9 col-xl-9 mt-4 ml-3 row align-items-center d-flex justify-content-end">
+    <nav class="navbar navbar-expand-md navbar-light ">
+      <a class="navbar-brand" href="index.html"><h1 class="text-success display-3">Silenole</h1></a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" (click)="toggleCollapsed()" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse row align-items-end" id="navbarSupportedContent" [ngClass]="{'collapse': collapsed, 'navbar-collapse': true}">
+        
+        <div class="navbar-nav mr-auto ">
+          <a class="nav-item nav-link text-success" href="#"><h5>Usuario</h5></a>
+          <a class="nav-item nav-link text-success" href="#"><h5>Mis Siles</h5></a>
+          <a class="nav-item nav-link text-success" href="#"><h5>Subir Siles</h5></a>
+          <a class="nav-item nav-link text-success" href="#"><h5>Mis Mensajes</h5></a>
+          
+          <form class="form-inline d-flex flex row ml-2">
+            <input class="form-control mr-sm-2" type="search" placeholder="Noles / Usuario" aria-label="Search">
+            <button class="btn btn-outline-success active mr-2 " type="submit">Buscar</button>
+          </form>
+        </div>
+      </div>
+      
+    </nav>
+  </div>
+</div>
+</div>
+  <div class="ml-4 text-success"><h3>Tu lugar de intercambio de bienes. Fácil. Rápido. Sencillo.</h3></div>
+    </div>
+   </div> 
+
+
+  <!-- <div class="mt-4">
     <nav class="navbar navbar-expand-xl navbar-light">
         <a class="navbar-brand" href="#"></a>
         <button class="navbar-toggler" type="button" (click)="toggleCollapsed()" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,12 +80,14 @@
             <li class="nav-item">
               <a class="nav-link btn btn-outline-success my-2 my-sm-0 mr-2" href="#">Mis Mensajes</a>
             </li>
-            <!-- <li class="nav-item">
+
+             <li class="nav-item">
               <form class="form-inline my-2 my-lg-0 mr-auto">
                 <input class="form-control mr-sm-2" type="search" placeholder="Noles / Usuario" aria-label="Search">
                 <button class="btn btn-outline-success active col-sm-d-flex justify-content-center my-2 my-sm-0" type="submit">Buscar</button>
               </form>
-            </li> -->
+            </li> 
+
           </ul>
           <form class="form-inline my-2 my-lg-0 mr-auto">
             <input class="form-control mr-sm-2" type="search" placeholder="Noles / Usuario" aria-label="Search">
@@ -57,58 +97,62 @@
       </nav>
     </div>
     </div>
-  </div> 
+  </div>  -->
 
 <!-- BOTONERA CATEGORIAS RESPONSIVE-->
-  <div class="container-fluid bg-success">
-    <div class="row container-fluid align-items-between d-flex justify-content-center pt-3 pb-3 mt-3">
-      <div>
-        <button type="button" class="btn btn-outline-light m-1"><i class="fa fa-laptop" aria-hidden="true"></i>
-          Todo</button>
-      </div>
-      <div>
-        <button type="button" class="btn btn-outline-light m-1"><i class="fa fa-laptop" aria-hidden="true"></i>
-          Ordenadores</button>
-      </div>
-      <div>
-        <button type="button" class="btn btn-outline-light m-1"><i class="fa fa-mobile" aria-hidden="true"></i>
-          Móviles</button>
-      </div>
-      <div>
-        <button type="button" class="btn btn-outline-light m-1"><i class="fa fa-gamepad" aria-hidden="true"></i>
-          Consolas</button>
-      </div>
-      <div>
-        <button type="button" class="btn btn-outline-light m-1"><i class="fa fa-shopping-bag" aria-hidden="true"></i>
-          Ropa</button>
-      </div>
-      <div>
-        <button type="button" class="btn btn-outline-light m-1"><i class="fa fa-cutlery" aria-hidden="true"></i>
-          Cocina</button>
-      </div>
-      <div>
-        <button type="button" class="btn btn-outline-light m-1"><i class="fa fa-home" aria-hidden="true"></i>
-          Muebles</button>
-      </div>
-      <div>
-        <button type="button" class="btn btn-outline-light m-1"><i class="fa fa-car" aria-hidden="true"></i>
-          Motor</button>
-      </div>
-      <div>
-        <button type="button" class="btn btn-outline-light m-1"><i class="fa fa-futbol-o" aria-hidden="true"></i>
-          Deporte</button>
-      </div>
-      <div>
-        <button type="button" class="btn btn-outline-light m-1"><i class="fa fa-book" aria-hidden="true"></i> Libros y
-          Música</button>
-      </div>
-      <div>
-        <button type="button" class="btn btn-outline-light m-1"><i class="fa fa-bars" aria-hidden="true"></i>
-          Otros</button>
-      </div>
+<div class="container-fluid bg-success">
+  <div class="row container-fluid align-items-between d-flex justify-content-center pt-3 pb-3 mt-3">
+    <div>
+      <button type="button" class="btn btn-outline-light m-1"><i class="fa fa-plus-square-o" aria-hidden="true"></i>
+        Todo</button>
+    </div>
+    <div>
+      <button type="button" class="btn btn-outline-light m-1"><i class="fa fa-laptop" aria-hidden="true"></i>
+        Ordenadores</button>
+    </div>
+    <div>
+      <button type="button" class="btn btn-outline-light m-1"><i class="fa fa-mobile" aria-hidden="true"></i>
+        Móviles</button>
+    </div>
+    <div>
+      <button type="button" class="btn btn-outline-light m-1"><i class="fa fa-gamepad" aria-hidden="true"></i>
+        Consolas</button>
+    </div>
+    <div>
+      <button type="button" class="btn btn-outline-light m-1"><i class="fa fa-shopping-bag" aria-hidden="true"></i>
+        Ropa</button>
+    </div>
+    <div>
+      <button type="button" class="btn btn-outline-light m-1"><i class="fa fa-cutlery" aria-hidden="true"></i>
+        Cocina</button>
+    </div>
+    <div>
+      <button type="button" class="btn btn-outline-light m-1"><i class="fa fa-home" aria-hidden="true"></i>
+        Muebles</button>
+    </div>
+    <div>
+      <button type="button" class="btn btn-outline-light m-1"><i class="fa fa-car" aria-hidden="true"></i>
+        Motor</button>
+    </div>
+    <div>
+      <button type="button" class="btn btn-outline-light m-1"><i class="fa fa-futbol-o" aria-hidden="true"></i>
+        Deporte</button>
+    </div>
+    <div>
+      <button type="button" class="btn btn-outline-light m-1"><i class="fa fa-book" aria-hidden="true"></i> Libros y
+        Música</button>
+    </div>
+    <div>
+      <button type="button" class="btn btn-outline-light m-1"><i class="fa fa-plug" aria-hidden="true"></i>
+        Electrodomésticos</button>
+    </div>
+    <div>
+      <button type="button" class="btn btn-outline-light m-1"><i class="fa fa-bars" aria-hidden="true"></i>
+        Otros</button>
     </div>
   </div>
-
+</div>
+<!-- CIERRE BOTONERA CATEGORIAS RESPONSIVE-->
 
 <!-- PRODUCTOS -->
 
