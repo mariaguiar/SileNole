@@ -41,6 +41,41 @@
 </div>
 <!-- CIERRE FILTROS DE BUSQUEDA --> 
 
+<!-- MODAL PRODUCT-->
+
+<ng-template #content4 let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title"><img src="assets/img/bicicleta.jpg" class="card-img" alt="..."></h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+          <label><h3><b>Producto</b></h3></label><br>
+          <label>Bicicleta</label><br>
+      </div>
+      <div class="form-group">
+          <label ><h3><b>Descripción</b></h3></label><br>
+          <label >Bicicleta de mujer marca Cloot modelo AR Trial 7000</label><br>
+      </div>
+      <div class="form-group">
+        <label ><h3><b>Usuario</b></h3></label><br>
+        <label >Carlos1998</label><br>
+      </div>
+      <hr>
+      <div class="d-flex justify-content-end">
+        <button type="submit" class="btn btn-success" >Ir a usuario</button> &nbsp;                     
+        <button type="submit" class="btn btn-success" >Enviar Mensaje</button>
+      </div>    
+  </form>
+  </div>
+  <!-- <div class="modal-footer">
+    <button type="button" class="btn btn-success" (click)="modal.dismiss('Cross click')">Ingresar</button>
+  </div> -->
+</ng-template>
+<pre>{{ closeResult }}</pre>
 
 
 <!-- PRODUCTOS -->
@@ -66,7 +101,7 @@
       </div>
     </div>
     <div class="card col-md-12">
-      <img class="card-img-top" src="../../assets/img/bicicleta.jpg" alt="Card image cap" width="80px" height="150px">
+      <img class="card-img-top" src="../../assets/img/bicicleta.jpg" alt="Card image cap" width="80px" height="150px" data-toggle="modal" data-target="#modalprod" (click)="open(content4)">
       <div class="card-block">
         <h4 class="card-title">Producto: Nombre</h4>
         <h6 class="card-text">Descripcion:</h6>
