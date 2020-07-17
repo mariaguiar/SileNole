@@ -1,18 +1,30 @@
-<div class="row">
-  <div class="col-12 display-1 text-success text-center">Silenole
-    <h3>Tu lugar de intercambio de bienes</h3>
+<!-- HEADER -->
+
+<body>
+  <div class="container-fluid ">
+    <div class="row">
+      <div class="col-12 display-1 text-success text-center">Silenole <h3>Tu lugar de intercambio de bienes</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 d-flex justify-content-center mt-2 mb-2"> <button
+          class="btn btn-outline-success btn-sm mr-3 my-2 my-sm-0" type="button" [routerLink]="['/usuario']"><i
+            class="fa fa-user-circle-o" aria-hidden="true"></i> Usuaruo</button> <button
+          class="btn btn-outline-success btn-sm mr-3 my-2 my-sm-0" type="button" [routerLink]="['/siles']"><i
+            class="fa fa-check-square" aria-hidden="true"></i> Mis Siles</button> <button
+          class="btn btn-outline-success btn-sm mr-3 my-2 my-sm-0" type="button" [routerLink]="['/subir']"><i
+            class="fa fa-upload" aria-hidden="true"></i> Subir Siles</button> <button
+          class="btn btn-outline-success btn-sm  my-2 my-sm-0" type="button" [routerLink]="['/message']"><i
+            class="fa fa-envelope-open" aria-hidden="true"></i> Mis Mensajes</button> </div>
+    </div>
+    <div class="container">
+      <div class="input-group input-group-sm mt-2 mb-3"> <input type="text" class="form-control border border-success"
+          id="#sizeInput" placeholder="Noles/ Usuario" aria-label="Recipient's username"
+          aria-describedby="button-addon2">
+        <div class="input-group-append"> <button class="btn btn-outline-success" type="button" id="button-addon2"><i
+              class="fa fa-search" aria-hidden="true"></i> Buscar</button> </div>
+      </div>
+    </div>
   </div>
-</div>
-<div class="row">
-  <div class="col-12 d-flex justify-content-center mt-2 mb-2">
-    <button class="btn btn-outline-success btn-sm mr-3 my-2 my-sm-0" type="button" [routerLink]="['/usuario']"><i
-        class="fa fa-user-circle-o" aria-hidden="true"></i> Usuaruo</button>
-    <button class="btn btn-outline-success btn-sm mr-3 my-2 my-sm-0" type="button" [routerLink]="['/siles']"><i
-        class="fa fa-check-square" aria-hidden="true"></i> Mis Siles</button>
-    <button class="btn btn-outline-success btn-sm mr-3 my-2 my-sm-0" type="button" [routerLink]="['/subir']"><i
-        class="fa fa-upload" aria-hidden="true"></i> Subir Siles</button>
-    <button class="btn btn-outline-success btn-sm  my-2 my-sm-0" type="button" [routerLink]="['/message']"><i
-        class="fa fa-envelope-open" aria-hidden="true"></i> Mis Mensajes</button>
-  </div>
-</div>
- 
+</body>
+<!-- FIN HEADER -->
