@@ -25,8 +25,8 @@
             </div>
             <hr>
             <div class="d-flex justify-content-end">
-              <button type="submit" class="btn btn-success" >Ir a usuario</button> &nbsp;                     
-              <button type="submit" class="btn btn-success" >Enviar Mensaje</button>
+              <button type="button" role="button" class="btn btn-success" [routerLink]="['/usuario']" (click)="modal.dismiss('Cross click')">Ir a usuario</button> &nbsp;                     
+              <button type="button" role="button" class="btn btn-success" [routerLink]="['/message']" (click)="modal.dismiss('Cross click')">Enviar Mensaje</button>
             </div>    
         </form>
         </div>
