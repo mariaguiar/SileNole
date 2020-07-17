@@ -16,11 +16,11 @@
           <form>
             <div class="form-group">
               <label for="recipient-name" class="col-form-label">Email:</label>
-              <input type="email" class="form-control" id="recipient-name">
+              <input type="email" class="form-control border-success" id="recipient-name">
             </div>
             <div class="form-group">
               <label for="recipient-name" class="col-form-label">Contraseña:</label>
-              <input type="password" class="form-control" id="recipient-name">
+              <input type="password" class="form-control border-success" id="recipient-name">
             </div>
           </form>
         </div>
@@ -43,31 +43,31 @@
           <form>
             <div class="form-group">
               <label for="recipient-name" class="col-form-label">Email:</label>
-              <input type="email" class="form-control" id="recipient-name">
+              <input type="email" class="form-control border-success" id="recipient-name " >
             </div>
             <div class="form-group">
               <label for="recipient-name" class="col-form-label">Comunidad Autónoma:</label>
-              <input type="text" class="form-control" id="recipient-name">
+              <input type="text" class="form-control border-success" id="recipient-name">
             </div>
             <div class="form-group">
               <label for="recipient-name" class="col-form-label">Provincia:</label>
-              <input type="text" class="form-control" id="recipient-name">
+              <input type="text" class="form-control border-success" id="recipient-name">
             </div>
             <div class="form-group">
               <label for="recipient-name" class="col-form-label">Localidad:</label>
-              <input type="text" class="form-control" id="recipient-name">
+              <input type="text" class="form-control border-success" id="recipient-name">
             </div>
             <div class="form-group">
                 <label for="recipient-name" class="col-form-label">CP:</label>
-                <input type="number" class="form-control" id="recipient-name">
+                <input type="number" class="form-control border-success" id="recipient-name">
               </div>
             <div class="form-group">
               <label for="recipient-name" class="col-form-label">Confirmar contraseña:</label>
-              <input type="password" class="form-control" id="recipient-name">
+              <input type="password" class="form-control border-success" id="recipient-name">
             </div>
             <div class="form-group">
               <label for="recipient-name" class="col-form-label">Contraseña:</label>
-              <input type="password" class="form-control" id="recipient-name">
+              <input type="password" class="form-control border-success" id="recipient-name">
             </div>
           </form>
         </div>
@@ -78,33 +78,25 @@
     <pre>{{ closeResult }}</pre>
 
  
-      <!-- HEADER -->
- 
-       <!-- Logo -->
-      <div class="container-fluid col-sm-4 col-md-8 col-lg-10">
-        <div class="container-fluid  ml-5">
-          <div class="row">
-            <div class="col-9 display-1 text-success">SileNole<br>
-              <h3 class="text-success mb-4">Tu lugar de intercambio de bienes.</h3>
-            </div>
-            <!-- botones-->
-            <div class=" d-flex align-items-center col-sm-4 col-md-8 mb-3">
-              <button class="btn btn-outline-success btn-lg active" role="button" aria-pressed="true" type="submit"
+    <!-- HEADER -->
+    <!-- Logo -->
+      <!-- botones-->
+      <div class="container-fluid ">
+        <div class="row">
+          <div class="col-12 display-1 text-success text-center">Silenole <h3>Tu lugar de intercambio de bienes</h3>
+            <div class="col-12 d-flex justify-content-center mt-3 mb-4 ml-1">
+              <button class="btn btn-outline-success btn-lg " role="button" aria-pressed="true" type="submit"
                 data-toggle="modal" data-target="#modalIngresar" (click)="open(content)">Ingresar</button> 
-              <button class="btn btn-outline-success btn-lg active ml-3" role="button" aria-pressed="true" type="submit"
+              <button class="btn btn-outline-success btn-lg ml-3 " role="button" aria-pressed="true" type="submit"
                 data-toggle="modal" data-target="#modalRegistrar" (click)="open2(content2)">Registrarse</button>
             </div>
           </div>
         </div>
       </div>
-      <hr>
+
+      <!-- CARROUSEl-->
  
- 
- 
-      <!-- CARROUSEL -->
- 
- 
-      <div class="carrusel row d-flex justify-content-center ml-5 mr-5  ">
+      <div class="carrusel row d-flex justify-content-center ml-5 mr-5 mt-3">
         <ngb-carousel class="carrusel2 col-sm-4 col-md-8 col-lg-12 d-flex justify-content-center">
           <ng-template ngbSlide>
             <div class="d-flex  justify-content-center ">
