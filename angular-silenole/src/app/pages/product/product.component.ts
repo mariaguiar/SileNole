@@ -1,5 +1,6 @@
 import { Component, OnInit, HostBinding } from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import {ServService} from './../../serv.service'
 
 @Component({
   selector: 'app-product',
@@ -10,7 +11,12 @@ export class ProductComponent implements OnInit {
 
   closeResult = '';
 
-  constructor(private modalService: NgbModal) { }
+  constructor(public servicio:ServService,private modalService: NgbModal) { }
+
+  public aparecerF(){
+    this.servicio.aparecer=true
+    console.log(this.servicio.aparecer)
+    }
 
   ngOnInit(): void {
   }
