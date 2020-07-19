@@ -19,6 +19,7 @@ import { HomeComponent } from './pages/home/home.component';
 
 //servicios
 import {ServService} from './serv.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -40,7 +41,7 @@ import {ServService} from './serv.service';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule,NgbCarouselModule
+    NgbModule,NgbCarouselModule, BrowserAnimationsModule
   ],
   providers: [
     ServService

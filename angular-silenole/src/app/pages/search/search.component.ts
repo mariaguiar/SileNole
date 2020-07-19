@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {ServService} from './../../serv.service'
 
@@ -8,6 +8,7 @@ import {ServService} from './../../serv.service'
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
+
   
   collapsed = true;
   toggleCollapsed(): void {
@@ -18,11 +19,12 @@ export class SearchComponent implements OnInit {
   closeResult = '';
 
   constructor(public servicio:ServService,private modalService: NgbModal) { }
-
+  
   public aparecerF(){
     this.servicio.aparecer=true
     console.log(this.servicio.aparecer)
     }
+    
   
     ngOnInit(): void {
     }
