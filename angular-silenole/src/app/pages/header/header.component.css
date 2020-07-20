@@ -1,3 +1,10 @@
 .silenole{
     font-size: 5rem;
 }
+hr{
+    color: rgb(0, 173, 52);
+    height:1px;
+    border:none;
+    background-color:rgb(0, 173, 52);
+
+}
