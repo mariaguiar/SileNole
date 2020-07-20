@@ -1,3 +1,7 @@
+<!-- HEADER Y CATEGORIAS -->
+<app-header></app-header>
+<app-categories></app-categories>
+
 <!-- FORMULARIO SUBIDA -->
 <div class="container-fluid ">
   <div class="row">
@@ -14,10 +18,6 @@
           <label for="exampleFormControlFile1">Carga una Foto</label>
           <input type="file" class="form-control-file" id="exampleFormControlFile1">
           <small id="emailHelp" class="form-text text-muted">* Obligatorio</small>
-        </div>
-        <div class="form-group">
-          <!-- <label for="exampleInputEmail1">Foto</label>
-            <input type="text" class="form-control-file" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder=""> -->
         </div>
         <div class="form-group">
           <label for="exampleInputPassword1">Producto</label>
@@ -45,10 +45,13 @@
           <label for="exampleFormControlTextarea1">Describe el producto</label>
           <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
         </div>
-        <button type="submit" class="btn btn-success mb-3">Agregar</button>
+        <div class="row justify-content-center my-4">
+          <button type="submit" class="btn btn-success ">Agregar</button>
+        </div>
       </form>
     </div>
-    <!-- <div class="col-3"></div> -->
   </div>
 </div>
-<!-- CIERRE FORMULARIO SUBIDA --> 
+
+<!-- FOOTER -->
+<app-footer></app-footer>

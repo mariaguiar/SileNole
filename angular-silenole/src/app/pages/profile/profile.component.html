@@ -1,75 +1,74 @@
-<body>
+<!-- HEADER Y CATEGORIAS -->
+<app-header></app-header>
+<app-categories></app-categories>
 
 
 <!-- TÍTULO -->
-  <h3 class="perfil row container-fluid align-items-between d-flex alig justify-content-center pt-3 pb-3 mt-2">Mi perfil
-  </h3>
-
-  <!-- RECUADRO DATOS/IMAGEN -->
 <div class="container-fluid">
- 
-  <div class="row justify-content-center mr-3 ml-3">
+  <div class="row">
+    <div class="col text-success mt-5 mb-5 text-center">
+      <h2>Mi Perfil</h2>
+    </div>
+  </div>
+</div>
 
-    <div class="col-lg-10 col-md-10 col-sm-10  bg-light border border-success ">
+<!-- RECUADRO DATOS/IMAGEN -->
+
+<div class="container-fluid">
+  <div class="row d-flex justify-content-center">
+    <div class="col-10 col-sm-8 col-md-6 bg-light border border-success text-success mb-5">
 
 
-    <!-- imagen perfil -->
+      <!-- imagen perfil -->
 
-    
-    <div class="container-fluid">
-      <div class="row align-items-between d-flex justify-content-center pt-3 pb-3 mt-3 ">
-        <div class="col-lg-8 col-md-10 col-sm-10">
 
-          <div class="d-flex justify-content-center">
-            <img src="assets/img/perfil.jpg" class="card-img mb-3" style="max-width: 160px;" alt="...">
+      <div class="container-fluid">
+        <div class="row align-items-between d-flex justify-content-center pt-3 pb-3 mt-3 ">
+          <div class="col-lg-8 col-md-10 col-sm-10">
+
+            <div class="d-flex justify-content-center">
+              <img src="assets/img/perfil.jpg" class="card-img mb-3" style="max-width: 160px;" alt="...">
+            </div>
+
+            <div class="row justify-content-center mt-3 mb-2">
+              <div class="text-success">Cambiar foto de perfil</div>
+            </div>
+
+            <div class="row justify-content-center ">
+
+              <div><input type="file" class="text-success" style="font-size: smaller; max-width: max-content;"></div>
+            </div>
+
+
           </div>
-
-          <div class="row justify-content-center mt-3 mb-2">
-            <div class="text-success">Cambiar foto de perfil</div>
-          </div>
-
-          <div class="row justify-content-center ">
-            
-            <div><input type="file" class="text-success" style="font-size: smaller; max-width: max-content;"></div>
-          </div>
-          
-
         </div>
       </div>
-    </div>
-  
-
-    <!-- form datos-->
-
-    <div class="container-fluid">
-      <div class="row container-fluid align-items-between d-flex justify-content-center pt-3 pb-3 mt-3 ">
-        <div class="col-lg-8 col-md-10 col-sm-12 ">
 
 
+      <!-- form datos-->
+
+      <form>
         <div>
           <label for="exampleFormControlInput1" class="text-success">Nombre</label>
-          <input type="text" class="form-control border border-success" id="exampleFormControlInput1" placeholder="Pepe García">
+          <input type="text" class="form-control border border-success" id="exampleFormControlInput1"
+            placeholder="Pepe García">
         </div>&nbsp;
         <div>
           <label for="exampleFormControlInput1" class="text-success">Email</label>
-          <input type="email" class="form-control border border-success" id="exampleFormControlInput1" placeholder="pepe@example.com">
+          <input type="email" class="form-control border border-success" id="exampleFormControlInput1"
+            placeholder="pepe@example.com">
         </div>&nbsp;
         <div>
           <label for="exampleFormControlInput1" class="text-success">Contraseña</label>
-          <input type="password" class="form-control border border-success" id="exampleFormControlInput1" placeholder="*******">
+          <input type="password" class="form-control border border-success" id="exampleFormControlInput1"
+            placeholder="*******">
         </div>&nbsp;
         <div>
           <label for="exampleFormControlInput1" class="text-success">Confirmar contraseña</label>
-          <input type="password" class="form-control border border-success" id="exampleFormControlInput1" placeholder="*******">
+          <input type="password" class="form-control border border-success" id="exampleFormControlInput1"
+            placeholder="*******">
         </div>
 
-      </div>
-    </div>
-  </div>
-
-    <div class="container-fluid">
-      <div class="row container-fluid align-items-between d-flex justify-content-center pt-3 pb-3 mt-3">
-        <div class="col-lg-8 col-md-10 col-sm-12 ">
 
         <div>
           <label for="exampleFormControlSelect1" class="text-success">Comunidad </label>
@@ -92,31 +91,40 @@
 
         <div>
           <label for="exampleFormControlInput1" class="text-success">Localidad</label>
-          <input type="form" class="form-control border border-success" id="exampleFormControlInput1" placeholder="Sitges">
+          <input type="form" class="form-control border border-success" id="exampleFormControlInput1"
+            placeholder="Sitges">
         </div>&nbsp;
 
         <div>
           <label for="exampleFormControlInput1" class="text-success">C.P</label>
-          <input type="number" class="form-control border border-success" id="exampleFormControlInput1" placeholder="28007">
+          <input type="number" class="form-control border border-success" id="exampleFormControlInput1"
+            placeholder="28007">
         </div>&nbsp;
-
-
+      </form>
+      <div class="container-fluid">
+        <div class="row align-items-center d-flex justify-content-center">
+          <div class="my-1">
+            <button type="button" class="btn btn-success">Actualizar Perfil</button>
+          </div> &nbsp;
+        </div>
       </div>
-    </div>
-  </div>
-
-    <div class="container-fluid">
-      <div class="row container-fluid align-items-between d-flex justify-content-center pt-3 pb-3 mt-3">
-        <div>
-          <button type="button" class="btn btn-success  btn-lg">Actualizar Perfil</button>
-        </div> &nbsp;
+      <div class="container-fluid">
+        <div class="row align-items-center d-flex justify-content-center pb-3">
+          <div>
+            <hr>
+            <button type="button" class="btn btn-warning btn-sm mr-1"><i class="fa fa-times-circle-o"
+                aria-hidden="true"></i> Cerrar Sesión</button>
+            <button type="button" class="btn btn-danger btn-sm ml-1"><i class="fa fa-trash" aria-hidden="true"></i>
+              Borrar Perfil</button>
+          </div> &nbsp;
+        </div>
       </div>
+
     </div>
 
   </div>
-
-</div>
 </div>
 <br>
 
-
+<!-- FOOTER -->
+<app-footer></app-footer>

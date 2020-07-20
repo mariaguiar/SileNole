@@ -1,7 +1,7 @@
 .carrusel2
 {
     margin-bottom: 20px;
-   
+    
 }
 .img
 {
@@ -19,8 +19,9 @@
     font-size: 4em;
 }
 .form-group{
-    color: green;
+    color: rgb(0, 128, 0);
 }
 h4{
-    color: green;
+    color: #008000;
 }
+
