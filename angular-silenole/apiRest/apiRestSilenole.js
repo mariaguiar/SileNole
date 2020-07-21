@@ -51,6 +51,7 @@ app.get("/siles/:id", function (request, response) {
     })
 });
 // ?????????
+// HACER
 // GET /NOLES/:USERID = Obtiene todos los productos del resto de los usuarios
 app.get("/noles/:id", function (request, response) {
     var id = request.params.id;
@@ -65,6 +66,7 @@ app.get("/noles/:id", function (request, response) {
     response.send(result);
     })
 });
+// HACER
 // GET /buscar/ Obtiene los ultimos 4 productos agregados
 app.get("/buscar/", function (request, response) {
     var id = request.params.id;
@@ -79,6 +81,7 @@ app.get("/buscar/", function (request, response) {
     response.send(result);
     })
 });
+// HACER
 // GET /buscar/:categoria = Obtiene todos los noles solicitados segun categoria
 app.get("/buscar/:id", function (request, response) {
     var id = request.params.id;
@@ -113,6 +116,7 @@ app.get("/buscar/:id", function (request, response) {
 }); */
 
 //Post
+// HACER
 // POST /USERS/REGISTER = Introduce a un usuario en la base de datos. parámetros : Usuario, Email & Password. 
 app.post("/user/register", function (request, response) {
     let user_id = request.body.user_id
@@ -136,6 +140,7 @@ app.post("/user/register", function (request, response) {
     response.send(result);
     })
 });
+// HACER
 // ??? NECESITA FUNCION DE COMPARACIÓN CON EL EMAIL COMO CLAVE UNICA
 // POST /USERS/LOGIN = Autoriza la entrada a la plataforma o no. parámetros : Usuario & Password. 
 app.post("/user/login", function (request, response) {
@@ -153,6 +158,7 @@ app.post("/user/login", function (request, response) {
     response.send(result);
     })
 });
+// HACER
 // POST /SILES/ = Añade un nuevo sile del usuario 
 app.post("/siles", function (request, response) {
     let nombre = request.body.nombre
@@ -172,6 +178,7 @@ app.post("/siles", function (request, response) {
     response.send(result);
     })
 });
+// HACER
 // POST /MESSAGES/ = Añade un nuevo mensaje.
 app.post("/messages", function (request, response) {
     let user_id  = request.body.user_id 
@@ -192,6 +199,7 @@ app.post("/messages", function (request, response) {
     })
 });
 //Put
+// HACER
 // PUT /USERS/:USERID = Actualiza la información asociada al usuario. 
 app.put("/users/:id", function (request, response) {
     let user_id = request.body.user_id
@@ -215,6 +223,7 @@ app.put("/users/:id", function (request, response) {
     response.send(result);
     })
 });
+// HACER
 // PUT /SILES/ = Actualiza un sile del usuario
 app.put("/siles", function (request, response) {
     let product_id = request.body.product_id
@@ -237,6 +246,8 @@ app.put("/siles", function (request, response) {
 });
 
 //Delete
+// HACER
+// PARA BORRAR UN PRODUCTO
 app.delete("/siles", function (request, response) {
     let sile_id = request.body.sile_id
     let params = [sile_id]
@@ -253,7 +264,7 @@ app.delete("/siles", function (request, response) {
 });
 
 // PARA BORRAR UN USUARIO
-app.post("/user/delete", function (request, response) {
+/* app.post("/user/delete", function (request, response) {
     let email = request.body.email
     let password = request.body.password
     let params = [email, password]
@@ -267,7 +278,22 @@ app.post("/user/delete", function (request, response) {
         } 
     response.send(result);
     })
+}); */
+app.delete("/user", function (request, response) {
+    let email = request.body.email
+    let password = request.body.password
+    let params = [email, password]
+    let sql = "DELETE FROM user WHERE email = ? AND password = ?";
+    connection.query(sql, params, function(err, result){
+        if (err){
+            console.log(err)
+        }else{
+            console.log('Usuario eliminado')
+            console.log(result)
+        } 
+    response.send(result);
+    })
 });
 
 
-app.listen(4300);
+app.listen(4200);
