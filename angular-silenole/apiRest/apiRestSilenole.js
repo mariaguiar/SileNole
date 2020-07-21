@@ -178,16 +178,15 @@ app.post("/siles", function (request, response) {
     response.send(result);
     })
 });
-// HACER
+
 // POST /MESSAGES/ = Añade un nuevo mensaje.
-app.post("/messages", function (request, response) {
+app.post("/messages/", function (request, response) {
     let user_id  = request.body.user_id 
     let chat_id = request.body.chat_id 
     let text = request.body.text
     let date = request.body.date
-
     let params = [user_id , chat_id ,text ,date]
-    let sql = "INSERT INTO messages (user_id , chat_id, text, date ) VALUES ( ?, ?, ?, ?)";
+    let sql = "INSERT INTO messages (user_id, chat_id ,text ,date) VALUES (?, ?, ?, ?)";
     connection.query(sql, params, function(err, result){
         if (err){
             console.log(err)
@@ -198,6 +197,7 @@ app.post("/messages", function (request, response) {
     response.send(result);
     })
 });
+
 //Put
 // HACER
 // PUT /USERS/:USERID = Actualiza la información asociada al usuario. 

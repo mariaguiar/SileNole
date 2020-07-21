@@ -7,8 +7,8 @@ import { Message } from '../model/message';
 })
 export class MessageService {
 
-  private url = "http://localhost:4200/message"
-  public message:any
+  private url = "http://localhost:3000/messages"
+  public message:Message
  
   constructor(private http:HttpClient) { }
 
@@ -16,7 +16,7 @@ export class MessageService {
    return this.http.get(this.url + "/" + id + "/" + id2)
  }  //Devuelve la llamada al endpoint GET “/:user_id/:user_id2”
   
- public anyadirMensage(nuevoMensaje:Message){
+ public anyadirMessage(nuevoMensaje:Message){
   return this.http.post(this.url, nuevoMensaje)
  }  //Devuelve la llamada al endpoint POST “/" 
 

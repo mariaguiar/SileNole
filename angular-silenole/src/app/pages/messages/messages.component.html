@@ -180,3 +180,50 @@
 </div>
 
 <!-- <app-footer></app-footer>  -->
+
+<div class="col-6 mt-2">
+  <form #discoForm="ngForm" (ngSubmit)="onSubmit(discoForm)">
+      <div class="form-group">
+         
+          <label>user_id</label><br>
+          <input type="text" class="form-control" name="user_id" [(ngModel)]="message.user_id" #user_id="ngModel" required>
+          
+      </div>
+      <div class="form-group">
+          <label>product_id</label><br>
+          <input type="text" class="form-control" name="chat_id" [(ngModel)]="message.chat_id" #chat_id="ngModel"required>
+          
+      </div>
+      <div class="form-group">
+          <label>texto</label><br>
+          <input type="text" class="form-control" name="text" [(ngModel)]="message.text" #text="ngModel"required>
+          
+      </div>
+      <div class="form-group">
+          <label>date</label><br>
+          <input type="text" class="form-control" name="date" [(ngModel)]="message.date" #date="ngModel" required>
+          
+      </div>
+      <div class="form-group">
+          
+          <button type="submit" class="btn btn-primary" (click)="anyadir(null, user_id.value, chat_id.value, text.value, date.value)">Insertar</button>
+          
+      </div>
+  </form>
+  
+  </div>
+  <!-- <div *ngFor="let disco of discos"> 
+      <p *ngIf="discos!=null" >
+          Titulo: {{disco.titulo}}<br>
+          Interprete: {{disco.interprete}}<br>
+          Año de Publicación: {{disco.anyoPublicacion}}<br>
+      </p>
+      <hr>
+  </div> -->
+  <!-- <div>
+      <p>
+          Titulo: {{disco.titulo}}<br>
+          Interprete: {{disco.interprete}}<br>
+          Año de Publicación: {{disco.anyoPublicacion}}<br>
+      </p>
+  </div> -->
