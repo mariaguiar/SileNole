@@ -16,6 +16,8 @@ import { MyProductsComponent } from './pages/my-products/my-products.component';
 import { ProductComponent } from './pages/product/product.component';
 import { NgbModule, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomeComponent } from './pages/home/home.component';
+//Modales ngx
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 //servicios
 import {ServService} from './serv.service';
@@ -41,7 +43,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule,NgbCarouselModule, BrowserAnimationsModule
+    NgbModule,NgbCarouselModule, BrowserAnimationsModule,
+    ModalModule.forRoot()
   ],
   providers: [
     ServService

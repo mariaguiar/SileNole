@@ -1,6 +1,6 @@
 <!-- HEADER Y CATEGORIAS -->
-<app-header></app-header>
-<app-categories></app-categories>
+<!-- <app-header></app-header>
+<app-categories></app-categories> -->
 
 <!--DATOS DE USUARIO-->
 <div class="d-flex justify-content-center">
@@ -11,15 +11,23 @@
     <div class="card border-success mb-3" style="max-width: 18rem;">
       <img src="assets/img/vector-person-icon.jpg" class="card-img-top" alt="...">
       <div class="card-body text-black">
-        <ul>
+       <!--  <ul>
           <li>Nombre : Pepe Guzman</li>
           <li>Localidad: Mostoles</li>
           <li>Email: Pepe123@gmail.com</li>
-        </ul>
+        </ul>-->
         <div class="d-flex justify-content-center">
-          <button type="button" class="btn btn-outline-success">Enviar Mensaje</button>
-        </div>
+          <button type="button" class="btn btn-success" [routerLink]="['/message']">Enviar Mensaje</button>
+        </div> 
       </div>
+    </div>
+  </div>
+</div>
+<!-- TÍTULO -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col text-success mt-5 mb-5 text-center">
+      <h2>Sus Productos</h2>
     </div>
   </div>
 </div>
@@ -27,75 +35,57 @@
 
 <!--CONTAINER CON PRODUCTOS-->
 
-<h4 class="titulo">
-  <p class="text-center">Productos de Pepito</p>
-</h4>
-<div class="card border-success text-center mb-5">
-  <div class="row mb-5 ml-5 mr-5">
-    <div class="col-sm-12 col-md-6 col-lg-4">
-      <div class="card border-success">
-        <img class="card-img-top" src="assets/img/mesa.jpg" alt="Card image cap" width="80px" height="150px">
-        <div class="card-block">
-          <h4 class="card-title">Producto: Nombre</h4>
-          <h6 class="card-text">Descripcion:</h6>
-          <p class="card-text">Descripcion del producto detallando sus caracteristicas con limite de caracteres</p>
-          <p class="card-text"><small class="text-muted">Tiempo de subida</small></p>
-        </div>
-      </div>
-    </div>
+<div class="container-fluid mb-5">
+  <div class="row justify-content-center">
+    <div class="col-10 border border-success ">
+      <div class="row justify-content-center">
+        <div class="card border border-0 mt-2 pb-2" style="width: 18rem; height: 350px">
 
-    <div class="col-sm-12 col-md-6 col-lg-4">
-      <div class="card border-success">
-        <img class="card-img-top" src="assets/img/mesa.jpg" alt="Card image cap" width="80px" height="150px">
-        <div class="card-block">
-          <h4 class="card-title">Producto: Nombre</h4>
-          <h6 class="card-text">Descripcion:</h6>
-          <p class="card-text">Descripcion del producto detallando sus caracteristicas con limite de caracteres</p>
-          <p class="card-text"><small class="text-muted">Tiempo de subida</small></p>
+          <img class="card-img-top m-auto" src="assets/img/mesa.jpg" alt="Card image cap"
+            style="max-width: 200px; max-height: 200px">
+
+          <div class="card-block ml-2 text-center ">
+            <h4 class="card-title">Producto: Nombre</h4>
+            <h6 class="card-text">Descripcion:</h6>
+            <p class="card-text">Descripcion del producto detallando sus caracteristicas con limite de caracteres</p>
+          </div>
+
         </div>
-      </div>
-    </div>
-    <div class="col-sm-12 col-md-6 col-lg-4">
-      <div class="card border-success">
-        <img class="card-img-top" src="assets/img/mesa.jpg" alt="Card image cap" width="80px" height="150px">
-        <div class="card-block">
-          <h4 class="card-title">Producto: Nombre</h4>
-          <h6 class="card-text">Descripcion:</h6>
-          <p class="card-text">Descripcion del producto detallando sus caracteristicas con limite de caracteres</p>
-          <p class="card-text"><small class="text-muted">Tiempo de subida</small></p>
+        <div class="card border-0 mt-2 pb-2" style="width: 18rem; height: 350px">
+
+          <img class="card-img-top m-auto" src="assets/img/bicicleta.jpg" alt="Card image cap"
+            style="max-width: 200px; max-height: 200px">
+
+          <div class="card-block ml-2 text-center ">
+            <h4 class="card-title">Producto: Nombre</h4>
+            <h6 class="card-text">Descripcion:</h6>
+            <p class="card-text">Descripcion del producto detallando sus caracteristicas con limite de caracteres</p>
+          </div>
+
         </div>
-      </div>
-    </div>
-    <div class="col-sm-12 col-md-6 col-lg-4">
-      <div class="card border-success">
-        <img class="card-img-top" src="assets/img/mesa.jpg" alt="Card image cap" width="80px" height="150px">
-        <div class="card-block">
-          <h4 class="card-title">Producto: Nombre</h4>
-          <h6 class="card-text">Descripcion:</h6>
-          <p class="card-text">Descripcion del producto detallando sus caracteristicas con limite de caracteres</p>
-          <p class="card-text"><small class="text-muted">Tiempo de subida</small></p>
+        <div class="card border-0 mt-2 pb-2" style="width: 18rem; height: 350px">
+
+          <img class="card-img-top m-auto" src="assets/img/samsung_s20+.jpg" alt="Card image cap"
+            style="max-width: 200px; max-height: 200px">
+
+          <div class="card-block ml-2 text-center ">
+            <h4 class="card-title">Producto: Nombre</h4>
+            <h6 class="card-text">Descripcion:</h6>
+            <p class="card-text">Descripcion del producto detallando sus caracteristicas con limite de caracteres</p>
+          </div>
+
         </div>
-      </div>
-    </div>
-    <div class="col-sm-12 col-md-6 col-lg-4">
-      <div class="card border-success">
-        <img class="card-img-top" src="assets/img/mesa.jpg" alt="Card image cap" width="80px" height="150px">
-        <div class="card-block">
-          <h4 class="card-title">Producto: Nombre</h4>
-          <h6 class="card-text">Descripcion:</h6>
-          <p class="card-text">Descripcion del producto detallando sus caracteristicas con limite de caracteres</p>
-          <p class="card-text"><small class="text-muted">Tiempo de subida</small></p>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-12 col-md-6 col-lg-4">
-      <div class="card border-success">
-        <img class="card-img-top" src="assets/img/mesa.jpg" alt="Card image cap" width="80px" height="150px">
-        <div class="card-block">
-          <h4 class="card-title">Producto: Nombre</h4>
-          <h6 class="card-text">Descripcion:</h6>
-          <p class="card-text">Descripcion del producto detallando sus caracteristicas con limite de caracteres</p>
-          <p class="card-text"><small class="text-muted">Tiempo de subida</small></p>
+        <div class="card border-0 mt-2 pb-2" style="width: 18rem; height: 350px">
+
+          <img class="card-img-top m-auto" src="assets/img/casco.jpg" alt="Card image cap"
+            style="max-width: 200px; max-height: 200px">
+
+          <div class="card-block ml-2 text-center ">
+            <h4 class="card-title">Producto: Nombre</h4>
+            <h6 class="card-text">Descripcion:</h6>
+            <p class="card-text">Descripcion del producto detallando sus caracteristicas con limite de caracteres</p>
+          </div>
+
         </div>
       </div>
     </div>
@@ -103,4 +93,4 @@
 </div>
 
 <!-- FOOTER -->
-<app-footer></app-footer>
+<!-- <app-footer></app-footer> -->

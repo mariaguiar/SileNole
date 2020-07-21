@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import {ServService} from './../../serv.service'
 
 @Component({
   selector: 'app-header',
@@ -14,24 +16,17 @@ export class HeaderComponent implements OnInit {
     
   }
 
-  closeResult = '';
+  modalRef:BsModalRef
 
-  constructor(private modalService: NgbModal) { }
+    constructor(public servicio:ServService, private modalService: BsModalService) { }
 
   ngOnInit(): void {
   }
-  open4(content4) {
-    this.modalService.open(content4, {ariaLabelledBy: 'modalCerrarSesion'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `${this.getDismissReason(reason)}`;
-    });
+  openModal(templateHeader: TemplateRef<any>){
+    this.modalRef = this.modalService.show(templateHeader)
   }
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    }  else {
-      return '';
+  public aparecerF2(){
+    this.servicio.aparecer=false
+    console.log(this.servicio.aparecer)
     }
-  }
 }
