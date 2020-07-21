@@ -8,9 +8,10 @@ import { Usuario } from './../models/usuario';
 })
 export class UsuarioService {
   public usuario: Usuario;
-  private url = "http://localhost:3000/Usuario"
+  public usuarioService: UsuarioService;
+  private url = "http://localhost:4200/usuario"
   constructor(private http: HttpClient) { }
-
+  
   getUsuarios(id: number){
     if (!id){
       return this.http.get(this.url)

@@ -1,6 +1,7 @@
-import { Component, OnInit, } from '@angular/core';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit, TemplateRef, } from '@angular/core';
 import {ServService} from './../../serv.service'
+import { Usuario } from './../../models/usuario';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 
 @Component({
@@ -9,40 +10,34 @@ import {ServService} from './../../serv.service'
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  modalRef: BsModalRef;
+  usuario: Usuario;
 
   closeResult = '';
 
-  constructor(public servicio:ServService,private modalService: NgbModal) { }
+  constructor(public servicio:ServService,private modalService: BsModalService) { }
 
+  openModal(template: TemplateRef<any>){
+    this.modalRef = this.modalService.show(template)
+  }
+  
+
+  ////////SERVICIO APARECER 
   public aparecerF(){
   this.servicio.aparecer=true
   console.log(this.servicio.aparecer)
   }
 
-  ngOnInit(): void {
-  }
-  open(content) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `${this.getDismissReason(reason)}`;
-    });
-  }
-  open2(content2) {
-    this.modalService.open(content2, {ariaLabelledBy: 'modal-basic-title2'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `${this.getDismissReason(reason)}`;
-    });
+  ngOnInit(){
+    this.usuario = new Usuario();
   }
 
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    }  else {
-      return '';
-    }
+  onSubmit(){
+    console.log('Formulario Enviado');
+    console.log(this.usuario);
   }
+
+  //////////FUNCIONES PARA QUE MODAL FUNCIONE
 }
 export class NgbdCarouselBasic {
   constructor() 
