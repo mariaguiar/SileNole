@@ -1,7 +1,8 @@
 .carrusel2
 {
     margin-bottom: 20px;
-    
+    margin-right: 300px;
+    margin-left: 300px;
 }
 .img
 {
@@ -24,4 +25,5 @@
 h4{
     color: #008000;
 }
+
 
