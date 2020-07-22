@@ -1,21 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Usuario } from './../models/usuario';
 import { login } from '../models/user.login';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class UsuarioService {
-  public usuario: Usuario;
-  private url = "http://localhost:3000/user/register"
+export class LoginService {
+  public usuario: login;
+  private url = "http://localhost:3000/user/login"
   constructor(private http: HttpClient) { }
 
 
-  newUsuario(nuevoUsuario: Usuario){
+  loginUser(loginUser: login){
     console.log(this.url)
-    return this.http.post(this.url, nuevoUsuario)
+    return this.http.post(this.url, loginUser);
   }
 }
 

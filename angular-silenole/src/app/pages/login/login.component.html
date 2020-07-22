@@ -1,7 +1,6 @@
-
-      <!--MODAL INICIO-->
+    <!--MODAL INICIO-->
       
-      <ng-template #template>
+    <ng-template #template>
         <div class="modal-header">
           <h4 class="modal-title" id="modal-basic-title">Iniciar sesión</h4>
            <button type="button" class="close pull-right" aria-label="close" (click)="modalRef.hide()">
@@ -9,7 +8,7 @@
            </button>
         </div>
         <div class="modal-body">
-          <form (ngSubmit)="onSubmit()">
+          <form #form=ngForm (ngSubmit)="onSubmit(form)">
             <div class="form-group">
               <label for="recipient-name" class="col-form-label">Email:</label>
               <input type="email" class="form-control border-success" id="recipient-name" [(ngModel)]="usuario.email">
@@ -26,8 +25,9 @@
         </div>
       </ng-template>
 
-      
-      <!--MODAL DE REGISTRARSE-->
+
+      <!-- MODAL DE REGISTRARSE-->
+    
 
 
       <ng-template #template2>
@@ -38,43 +38,47 @@
            </button>
         </div>
         <div class="modal-body">
-          <form>
+          <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
+            <div class="form-group">
+              <label for="recipient-name" class="col-form-label">Nombre Usuario:</label>
+              <input type="text" class="form-control border-success" name="name" [(ngModel)]="usuario.name" #name="ngModel" required>
+            </div>
             <div class="form-group">
               <label for="recipient-name" class="col-form-label" >Email:</label>
-              <input type="email" class="form-control border-success" id="recipient-name" [(ngModel)]="usuario.email">
+              <input type="email" class="form-control border-success" name="email" [(ngModel)]="usuario.email" #email="ngModel"required>
             </div>
             <div class="form-group">
               <label for="recipient-name" class="col-form-label">Comunidad Autónoma:</label>
-              <input type="text" class="form-control border-success" id="recipient-name">
+              <input type="text" class="form-control border-success" name="comunidad" [(ngModel)]="usuario.comunidad" #comunidad="ngModel" required>
             </div>
             <div class="form-group">
               <label for="recipient-name" class="col-form-label">Provincia:</label>
-              <input type="text" class="form-control border-success" id="recipient-name">
+              <input type="text" class="form-control border-success" name="provincia" [(ngModel)]="usuario.provincia" #provincia="ngModel" required>
             </div>
             <div class="form-group">
               <label for="recipient-name" class="col-form-label">Localidad:</label>
-              <input type="text" class="form-control border-success" id="recipient-name">
+              <input type="text" class="form-control border-success" name="localidad" [(ngModel)]="usuario.localidad" #localidad="ngModel" required>
             </div>
             <div class="form-group">
               <label for="recipient-name" class="col-form-label">CP:</label>
-              <input type="number" class="form-control border-success" id="recipient-name">
+              <input type="number" class="form-control border-success" name="cp" [(ngModel)]="usuario.cp" #cp="ngModel" required>
             </div>
             <div class="form-group">
               <label for="recipient-name" class="col-form-label">Confirmar contraseña:</label>
-              <input type="password" class="form-control border-success" id="recipient-name">
+              <input type="password" class="form-control border-success" name="password" [(ngModel)]="usuario.password" #password="ngModel"required>
             </div>
             <div class="form-group">
               <label for="recipient-name" class="col-form-label">Contraseña:</label>
-              <input type="password" class="form-control border-success" id="recipient-name">
+              <input type="password" class="form-control border-success" name="password" [(ngModel)]="usuario.password" #password="ngModel"required>
             </div>
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-success" [routerLink]="['/home']" (click)="aparecerF()" (click)="modalRef.hide()"
+          <button type="button" class="btn btn-success" [routerLink]="['/home']" (click)="aparecerF()" (click)="modalRef.hide()" (click)="newUsuario(name.value, password.value, email.value, comunidad.value, provincia.value, localidad.value, cp.value )"
            >Registrarse</button>
         </div>
       </ng-template>
-
+  
     
       <!-- HEADER -->
       <!-- Logo -->
@@ -93,15 +97,15 @@
         </div>
       </div>
     
-      <!-- <hr class="border border-success"> -->
-      <!-- <hr> -->
+       <hr class="border border-success">
+       <hr>
 
-      <!-- CARROUSEl-->
+       
 
-      <div class="carrusel row d-flex justify-content-center mr-5 ml-5 mt-3">
+      <div class="carrusel row d-flex justify-content-center ml-5 mr-5 mt-5">
         <ngb-carousel class="carrusel2 col-sm-4 col-md-8 col-lg-12 d-flex justify-content-center">
           <ng-template ngbSlide>
-            <div class="d-flex  justify-content-center ">
+            <div class="d-flex  justify-content-center">
               <img class="img" src="assets/img/caja4.jpg" alt="Random first slide">
             </div>
             <div class="textocarrousel carousel-caption  text-success ">
@@ -128,6 +132,4 @@
             </div>
           </ng-template>
         </ngb-carousel>
-      </div>
-
-
+      </div> 

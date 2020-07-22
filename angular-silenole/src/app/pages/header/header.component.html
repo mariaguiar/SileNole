@@ -1,6 +1,6 @@
 
 <!-- MODAL  -->
-<ng-template #content4 let-modal>
+<ng-template #templateHeader>
   <div class="modal-body text-success text-center">
     <form>
       <div class="form-group">
@@ -9,10 +9,10 @@
     </form>
   </div>
   <div class="d-flex justify-content-center mb-3">
-    <button type="button" class="btn btn-outline-danger"  [routerLink]="['/']"  (click)="modal.dismiss('Cross click')">Cerrar Sesión</button>
+    <button type="button" class="btn btn-outline-danger"  [routerLink]="['/']"  (click)="aparecerF2()" (click)="modalRef.hide()">Cerrar Sesión</button>
   </div>
 </ng-template>
-<pre>{{ closeResult }}</pre>
+
 
 <!-- HEADER -->
 
@@ -34,7 +34,7 @@
             class="fa fa-upload" aria-hidden="true"></i> Subir Siles</button>
         <button class="btn btn-outline-success btn-sm mr-3 my-2 my-sm-0" type="button" [routerLink]="['/message']"><i
             class="fa fa-envelope-open" aria-hidden="true"></i> Mis Mensajes</button>
-        <button class="btn btn-outline-success btn-sm my-2 my-sm-0" type="button" (click)="open4(content4)"><i 
+        <button class="btn btn-outline-success btn-sm my-2 my-sm-0" type="button" (click)="openModal(templateHeader)"><i 
             class="fa fa-times-circle-o" aria-hidden="true"></i> Cerrar Sesión</button>
       </div>
     </div>

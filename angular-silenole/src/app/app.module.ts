@@ -1,8 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './pages/header/header.component';
@@ -22,7 +21,8 @@ import { HomeComponent } from './pages/home/home.component';
 //servicios
 import {ServService} from './serv.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { HttpClientModule } from '@angular/common/http';
+import { UsuarioService } from './Shared/usuario.service';
 
 @NgModule({
   declarations: [
@@ -42,14 +42,19 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     
   ],
   imports: [
-    BrowserModule,
+  
+  BrowserModule,
     AppRoutingModule,
     NgbModule,NgbCarouselModule, BrowserAnimationsModule,
+    ModalModule.forRoot(),
     FormsModule,
-    ModalModule.forRoot()
+    HttpClientModule,
+    ReactiveFormsModule,
+
   ],
   providers: [
-    ServService
+    ServService,
+    UsuarioService
   ],
   bootstrap: [AppComponent]
 })
