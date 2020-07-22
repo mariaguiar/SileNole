@@ -1,92 +1,86 @@
 
 
-
+<!--MODAL INICIO-->
        
-      <!--MODAL INICIO-->
-
-      <ng-template #content let-modal>
-        <div class="modal-header">
-          <h4 class="modal-title" id="modal-basic-title">Iniciar sesión</h4>
-          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="form-group">
-              <label for="recipient-name" class="col-form-label">Email:</label>
-              <input type="email" class="form-control border-success" id="recipient-name">
-            </div>
-            <div class="form-group">
-              <label for="recipient-name" class="col-form-label">Contraseña:</label>
-              <input type="password" class="form-control border-success" id="recipient-name">
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-success" [routerLink]="['/home']" (click)="aparecerF()"
-            (click)="modal.dismiss('Cross click')">Ingresar</button>
-        </div>
-      </ng-template>
-      <pre>{{ closeResult }}</pre>
-
-      <!--MODAL REGISTRO-->
-
-      <ng-template #content2 let-modal>
-        <div class="modal-header">
-          <h4 class="modal-title" id="modal-basic-title2">Registrarse</h4>
-          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="form-group">
-              <label for="recipient-name" class="col-form-label">Nombre Usuario:</label>
-              <input type="email" class="form-control border-success" id="recipient-name ">
-            </div>
-            <div class="form-group">
-              <label for="recipient-name" class="col-form-label">Email:</label>
-              <input type="email" class="form-control border-success" id="recipient-name ">
-            </div>
-            <div class="form-group">
-              <label for="recipient-name" class="col-form-label">Comunidad Autónoma:</label>
-              <input type="text" class="form-control border-success" id="recipient-name">
-            </div>
-            <div class="form-group">
-              <label for="recipient-name" class="col-form-label">Provincia:</label>
-              <input type="text" class="form-control border-success" id="recipient-name">
-            </div>
-            <div class="form-group">
-              <label for="recipient-name" class="col-form-label">Localidad:</label>
-              <input type="text" class="form-control border-success" id="recipient-name">
-            </div>
-            <div class="form-group">
-              <label for="recipient-name" class="col-form-label">CP:</label>
-              <input type="number" class="form-control border-success" id="recipient-name">
-            </div>
-            <div class="form-group">
-              <label for="recipient-name" class="col-form-label">Confirmar contraseña:</label>
-              <input type="password" class="form-control border-success" id="recipient-name">
-            </div>
-            <div class="form-group">
-              <label for="recipient-name" class="col-form-label">Contraseña:</label>
-              <input type="password" class="form-control border-success" id="recipient-name">
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-success" [routerLink]="['/home']" (click)="aparecerF()"
-            (click)="modal.dismiss('Cross click')">Registrarse</button>
-        </div>
-      </ng-template>
-      <pre>{{ closeResult }}</pre>
+ <ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Iniciar sesión</h4>
+     <button type="button" class="close pull-right" aria-label="close" (click)="modalRef.hide()">
+       <span aria-hidden="true">&times;</span>
+     </button>
+  </div>
+  <div class="modal-body">
+    <!-- <form (ngSubmit)="onSubmit()"> -->
+      <div class="form-group">
+        <label for="recipient-name" class="col-form-label">Email:</label>
+        <input type="email" class="form-control border-success" id="recipient-name" [(ngModel)]="usuario.email">
+      </div>
+      <div class="form-group">
+        <label for="recipient-name" class="col-form-label">Contraseña:</label>
+        <input type="password" class="form-control border-success" id="recipient-name" [(ngModel)]="usuario.password" >
+      </div>
+    <!-- </form> -->
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success" [routerLink]="['/home']" (click)="aparecerF()" (click)="modalRef.hide()"
+      >Ingresar</button>
+  </div>
+</ng-template>
+<!--MODAL DE REGISTRARSE-->
+<ng-template #template2>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title2">Registrarse</h4>
+     <button type="button" class="close pull-right" aria-label="close" (click)="modalRef.hide()">
+       <span aria-hidden="true">&times;</span>
+     </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="recipient-name" class="col-form-label">Nombre Usuario:</label>
+        <input type="email" class="form-control border-success" id="recipient-name ">
+      </div>
+      <div class="form-group">
+        <label for="recipient-name" class="col-form-label" >Email:</label>
+        <input type="email" class="form-control border-success" id="recipient-name" [(ngModel)]="usuario.email">
+      </div>
+      <div class="form-group">
+        <label for="recipient-name" class="col-form-label">Comunidad Autónoma:</label>
+        <input type="text" class="form-control border-success" id="recipient-name">
+      </div>
+      <div class="form-group">
+        <label for="recipient-name" class="col-form-label">Provincia:</label>
+        <input type="text" class="form-control border-success" id="recipient-name">
+      </div>
+      <div class="form-group">
+        <label for="recipient-name" class="col-form-label">Localidad:</label>
+        <input type="text" class="form-control border-success" id="recipient-name">
+      </div>
+      <div class="form-group">
+        <label for="recipient-name" class="col-form-label">CP:</label>
+        <input type="number" class="form-control border-success" id="recipient-name">
+      </div>
+      <div class="form-group">
+        <label for="recipient-name" class="col-form-label">Confirmar contraseña:</label>
+        <input type="password" class="form-control border-success" id="recipient-name">
+      </div>
+      <div class="form-group">
+        <label for="recipient-name" class="col-form-label">Contraseña:</label>
+        <input type="password" class="form-control border-success" id="recipient-name">
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success" [routerLink]="['/home']" (click)="aparecerF()" (click)="modalRef.hide()"
+     >Registrarse</button>
+  </div>
+</ng-template>
 
 
       <!-- HEADER -->
       <!-- Logo -->
       <!-- botones-->
-      <div class="container-fluid ">
+      <!-- <div class="container-fluid ">
         <div class="row">
           <div class="col-12 display-1 text-success text-center">Silenole <h3>Tu lugar de intercambio de bienes</h3>
             <div class="col-12 d-flex justify-content-center mt-3 mb-4">
@@ -97,42 +91,37 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
       <!-- <hr class="border border-success"> -->
       <!-- <hr> -->
 
       <!-- CARROUSEl-->
 
-      <div class="carrusel row d-flex justify-content-center ml-5 mr-5 mt-5">
-        <ngb-carousel class="carrusel2 col-sm-4 col-md-8 col-lg-12 d-flex justify-content-center">
-          <ng-template ngbSlide>
-            <div class="d-flex  justify-content-center">
-              <img class="img" src="assets/img/caja4.jpg" alt="Random first slide">
-            </div>
-            <div class="textocarrousel carousel-caption  text-success ">
-              <h3 style="font-size: xxx-large;">FÁCIL</h3>
-              <p style="color: black;">Regístrate y sube los productos que no utilices o que quieras intercambiar.</p>
-            </div>
-          </ng-template>
-          <ng-template ngbSlide>
-            <div class="d-flex  justify-content-center ">
-              <img class="img " src="assets/img/comodin.jpg" alt="Random second slide">
-            </div>
-            <div class="textocarrousel carousel-caption  text-success">
-              <h3 style="font-size: xxx-large;">RÁPIDO</h3>
-              <p style="color: black;">Utiliza los filtros para buscar productos y encuentra el que necesitas.</p>
-            </div>
-          </ng-template>
-          <ng-template ngbSlide>
-            <div class="d-flex justify-content-center">
-              <img class="img " src="assets/img/manos8.jpg" alt="Random third slide">
-            </div>
-            <div class="textocarrousel carousel-caption  text-success">
-              <h3 style="font-size: xxx-large;">SENCILLO</h3>
-              <p style="color: black;">Manda un mensaje al propietario del producto, llegad a un acuerdo y ¡listo! </p>
-            </div>
-          </ng-template>
-        </ngb-carousel>
-      </div>
+      <carousel class="carrusel row d-flex justify-content-center ml-5 mr-5 mt-3 mb-5">
+        <slide>
+          <img src="assets/img/caja4.jpg" alt="first slide"
+            style="display: block; height: 350px; width: 1200px; opacity: 0.8;">
+          <div class="carousel-caption d-none d-md-block  text-success">
+            <h3 style="font-size: xxx-large;">FÁCIL</h3>
+            <p style="color: black;">Regístrate y sube los productos que no utilices o que quieras intercambiar.</p>
+          </div>
+        </slide>
+        <slide>
+          <img src="assets/img/comodin.jpg" alt="second slide"
+            style="display: block; height: 350px; width: 1200px; opacity: 0.8;">
+          <div class="carousel-caption d-none d-md-block  text-success">
+            <h3 style="font-size: xxx-large;">RÁPIDO</h3>
+            <p style="color: black;">Utiliza los filtros para buscar productos y encuentra el que necesitas.</p>
+          </div>
+        </slide>
+        <slide>
+          <img src="assets/img/manos8.jpg" alt="third slide"
+            style="display: block; height: 350px; width: 1200px; opacity: 0.8;">
+          <div class="carousel-caption d-none d-md-block  text-success">
+            <h3 style="font-size: xxx-large;">SENCILLO</h3>
+            <p style="color: black;">Manda un mensaje al propietario del producto, llegad a un acuerdo y ¡listo! </p>
+          </div>
+        </slide>
+      </carousel>
 
-
+      

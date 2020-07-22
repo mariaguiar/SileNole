@@ -118,37 +118,21 @@
                     <div class="media media-chat ml-4 mt-4"> <!--<img class="avatar"
                         src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="...">-->
                       <div class="media-body mb-3">
-                        <h6><strong>Pepe Sanz</strong> </h6>
+                        <!-- Usuario: {{message1.user_id}} <br>
+                        Producto: {{message1.chat_id}} <br> -->
+                        <!-- Mensaje: --> {{message1.text}} <br>
+                        <!-- Fecha: {{message1.date}} -->
+                        <!-- <h6><strong>Pepe Sanz</strong> </h6>
                         <p>Hola</p>
                         <p>Estoy interesado en tu bicicleta</p>
                         <p>Te interesa algunos de mis productos?</p>
-                        <p class="meta"><time datetime="2018">16:58</time></p>
+                        <p class="meta"><time datetime="2018">16:58</time></p> -->
                       </div>
                     </div>
                
 
 
-                <div class="media media-chat ml-4"> <!--<img class="avatar"
-                        src="https://img.icons8.com/color/48/000000/administrator-female.png" alt="...">-->
-                      <div class="media-body">
-                        <h6><strong>Ana García</strong></h6>
-                        <p>Hola Pepe</p>
-                        <p>Dejame echar un vistazo</p>
-                        <p>y te digo algo pronto</p>
-                        <p class="meta"><time datetime="2018">17:30</time></p>
-                      </div>
-                </div>
-
-
-                <div class="media media-chat ml-4"> <!--<img class="avatar"
-                        src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="..."> -->
-                      <div class="media-body">
-                        <h6><strong>Pepe Sanz</strong></h6>
-                        <p>Perfecto!</p>
-                        <p>quedo a la espera entonces</p>
-                        <p class="meta"><time datetime="2018">00:07</time></p>
-                      </div>
-                </div>
+                
 
 
                 <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;">
@@ -166,8 +150,11 @@
 
           <div class="row col-sm-6 col-md-6 col-lg-6">
           <div class="publisher bt-1 border-light mb-4">
-            <input class="publisher-input" type="text" placeholder="Escribe tu mensaje"> &nbsp;
-            <button type="button" class="btn btn-success btn-sm ">Enviar</button>&nbsp;
+
+            
+
+            <!-- <input class="publisher-input" type="text" placeholder="Escribe tu mensaje"> &nbsp;
+            <button type="button" class="btn btn-success btn-sm ">Enviar</button>&nbsp; -->
           </div>
         </div>
 
@@ -180,3 +167,42 @@
 </div>
 
 <!-- <app-footer></app-footer>  -->
+
+
+<!-- PARA PROBAR EL SERVICIO -->
+<div class="col-6 mt-2">
+  <form #discoForm="ngForm" (ngSubmit)="onSubmit(discoForm)">
+    <div class="form-group">
+
+      <label>user_id</label><br>
+      <input type="text" class="form-control" name="user_id" [(ngModel)]="message.user_id" #user_id="ngModel" required>
+
+    </div>
+    <div class="form-group">
+      <label>product_id</label><br>
+      <input type="text" class="form-control" name="product_id" [(ngModel)]="message.product_id" #product_id="ngModel"
+        required>
+
+    </div>
+    <div class="form-group">
+      <label>Mensaje</label><br>
+      <input type="text" class="form-control" name="text" [(ngModel)]="message.text" #text="ngModel" required>
+
+    </div>
+    <div class="form-group">
+      <label>date</label><br>
+      <input type="text" class="form-control" name="date" [(ngModel)]="message.date" #date="ngModel" #boton3 required>
+
+    </div>
+    <div class="form-group">
+
+
+      <button type="submit" class="btn btn-success btn-sm"
+        (click)="anyadir(null, user_id.value, product_id.value, text.value, date.value)"
+        (click)=enviarTexto(text.value)>Enviar</button>
+
+    </div>
+  </form>
+
+</div>
+ 
