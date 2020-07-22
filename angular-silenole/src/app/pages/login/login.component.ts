@@ -39,12 +39,7 @@ export class LoginComponent implements OnInit {
   onSubmit(form){
     console.log(form.value)
   }
-  loginUsuario(email:string, password:string){
-    console.log('Usuario Conectado')
-    console.log(this.loginService)
-    this.loginService.loginUser(new User(email, password))
-  }
-
+ 
   newUsuario(name:string, password:string, email:string, comunidad:string, provincia:string, localidad:string, cp:number){
     console.log('Usuario Añadido')
     console.log(this.usuarioService.usuario)
