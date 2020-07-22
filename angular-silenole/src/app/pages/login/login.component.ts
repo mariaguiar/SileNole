@@ -1,6 +1,9 @@
 import { Component, OnInit, } from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {ServService} from './../../serv.service'
+import { UsuarioService } from 'src/app/shared/usuario.service';
+import { Usuario } from 'src/app/models/usuario';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 
 
 @Component({
@@ -10,9 +13,19 @@ import {ServService} from './../../serv.service'
 })
 export class LoginComponent implements OnInit {
 
+  public modalRef: BsModalRef;
+  public usuario: Usuario;
+
   closeResult = '';
 
-  constructor(public servicio:ServService,private modalService: NgbModal) { }
+  constructor(public usuarioService:UsuarioService,public servicio:ServService,private modalService: NgbModal) {
+    console.log("Funcionando servicio usuario")
+    this.usuario
+   }
+
+   onSubmit(form){
+    console.log(form.value)
+  }
 
   public aparecerF(){
   this.servicio.aparecer=true
@@ -21,7 +34,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  open(content) {
+  /* open(content) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
@@ -42,7 +55,7 @@ export class LoginComponent implements OnInit {
     }  else {
       return '';
     }
-  }
+  } */
 }
 export class NgbdCarouselBasic {
   constructor() 

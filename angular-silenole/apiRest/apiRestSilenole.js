@@ -158,16 +158,17 @@ app.post("/user/login", function (request, response) {
     response.send(result);
     })
 });
-// HACER
+// FUNCIONA
 // POST /SILES/ = Añade un nuevo sile del usuario 
 app.post("/siles", function (request, response) {
+    /* let product_id = request.body.product_id */
     let nombre = request.body.nombre
     let descripcion = request.body.descripcion
     let categoria = request.body.categoria
     let user_id  = request.body.user_id 
     let product_image = request.body.product_image
-    let params = [product_id, nombre, descripcion, categoria, user_id , product_image]
-    let sql = "INSERT INTO product (nombre, descripcion, categoria, user_id , product_image) VALUES ( ?, ?, ?, ?, ?)";
+    let params = [nombre, descripcion, categoria, user_id, product_image]
+    let sql = `INSERT INTO product (nombre, descripcion, categoria, user_id , product_image) VALUES ( ?, ?, ?, ?, ?)`;
     connection.query(sql, params, function(err, result){
         if (err){
             console.log(err)
@@ -179,14 +180,15 @@ app.post("/siles", function (request, response) {
     })
 });
 
+// FUNCIONA
 // POST /MESSAGES/ = Añade un nuevo mensaje.
 app.post("/messages/", function (request, response) {
     let user_id  = request.body.user_id 
-    let chat_id = request.body.chat_id 
+    let product_id = request.body.product_id 
     let text = request.body.text
     let date = request.body.date
-    let params = [user_id , chat_id ,text ,date]
-    let sql = "INSERT INTO messages (user_id, chat_id ,text ,date) VALUES (?, ?, ?, ?)";
+    let params = [user_id , product_id ,text ,date]
+    let sql = "INSERT INTO messages (user_id, product_id ,text ,date) VALUES (?, ?, ?, ?)";
     connection.query(sql, params, function(err, result){
         if (err){
             console.log(err)
@@ -223,7 +225,7 @@ app.put("/users/:id", function (request, response) {
     response.send(result);
     })
 });
-// HACER
+// FUNCIONA
 // PUT /SILES/ = Actualiza un sile del usuario
 app.put("/siles", function (request, response) {
     let product_id = request.body.product_id
@@ -246,12 +248,12 @@ app.put("/siles", function (request, response) {
 });
 
 //Delete
-// HACER
+// FUNCIONA
 // PARA BORRAR UN PRODUCTO
 app.delete("/siles", function (request, response) {
-    let sile_id = request.body.sile_id
-    let params = [sile_id]
-    let sql = "DELETE FROM siles WHERE sile_id = ?"
+    let product_id = request.body.product_id
+    let params = [product_id]
+    let sql = "DELETE FROM product WHERE product_id = ?"
     connection.query(sql, params, function(err, result){
         if (err){
             console.log(err)
@@ -262,6 +264,7 @@ app.delete("/siles", function (request, response) {
     response.send(result);
     })
 });
+
 
 // PARA BORRAR UN USUARIO
 /* app.post("/user/delete", function (request, response) {

@@ -55,3 +55,44 @@
 
 <!-- FOOTER -->
 <!-- <app-footer></app-footer> -->
+
+
+<!-- PARA PROBAR EL SERVICIO -->
+<div class="col-6 mt-2">
+  <form #uploadForm="ngForm" (ngSubmit)="onSubmit(uploadForm)">
+    <div class="form-group">
+      <label>Product_id</label><br>
+      <input type="text" class="form-control" name="product_id" [(ngModel)]="product.product_id" #product_id="ngModel" required>
+  </div>
+      <div class="form-group">
+          <label>nombre</label><br>
+          <input type="text" class="form-control" name="nombre" [(ngModel)]="product.nombre" #nombre="ngModel" required>
+      </div>
+      <div class="form-group">
+          <label>descripcion</label><br>
+          <input type="text" class="form-control" name="descripcion" [(ngModel)]="product.descripcion" #descripcion="ngModel"required>
+      </div>
+      <div class="form-group">
+          <label>categoria</label><br>
+          <input type="text" class="form-control" name="categoria" [(ngModel)]="product.categoria" #categoria="ngModel"required>
+      </div>
+      <div class="form-group">
+          <label>User_id</label><br>
+          <input type="text" class="form-control" name="user_id" [(ngModel)]="product.user_id" #user_id="ngModel" required>
+        </div>
+          <div class="form-group">
+            <label>image</label><br>
+            <input type="text" class="form-control" name="product_image" [(ngModel)]="product.product_image" #product_image="ngModel" required>
+        </div>
+      
+      <div class="form-group">
+          <button type="submit" class="btn btn-primary" (click)="anyadirSile(null, nombre.value, descripcion.value, categoria.value, user_id.value, product_image.value)">Insertar</button>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary" (click)="modificarSile(product_id.value, nombre.value, descripcion.value, categoria.value, user_id.value, product_image.value)">Cambiar</button>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary" (click)="borrarSile(product_id.value)">Borrar</button>
+  </div>
+  </form>
+  </div>

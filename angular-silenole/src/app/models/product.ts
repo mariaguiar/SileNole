@@ -1,18 +1,18 @@
 export class Product {
     public product_id: number;
-    public name: string;
+    public nombre: string;
     public descripcion: string;
     public categoria: string;
     public user_id: number;
-    public image: string;
+    public product_image: string;
     
-    constructor(product_id: number, name: string, descripcion: string, categoria: string, user_id: number, image: string)
+    constructor(product_id: number, nombre: string, descripcion: string, categoria: string, user_id: number, product_image: string)
     {
         this.product_id = product_id;
-        this.name= name;
+        this.nombre= nombre;
         this.descripcion = descripcion;
         this.categoria= categoria;
         this.user_id= user_id;
-        this.image= image;
+        this.product_image= product_image;
     }
 }
