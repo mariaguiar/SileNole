@@ -5,10 +5,14 @@ import { Usuario } from './../models/usuario';
   providedIn: 'root'
 })
 export class UsuarioService {
-  public usuario: Usuario[];
+
+  public usuario: Usuario
   public usuarioService: UsuarioService;
-  private url = "http://localhost:3000/usuario"
+
+  private url = "http://localhost:3000/user/register"
+
   constructor(private http: HttpClient) { }
+  
   getUsuario(id: number){
     if (!id){
       return this.http.get(this.url)

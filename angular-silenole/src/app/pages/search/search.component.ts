@@ -1,6 +1,8 @@
 import { Component, OnInit} from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import {ServService} from './../../serv.service'
+/* import {ServService} from './../../serv.service' */
+import { ProductService } from 'src/app/shared/product.service';
+import { Product } from 'src/app/models/product';
 
 @Component({
   selector: 'app-search',
@@ -9,21 +11,39 @@ import {ServService} from './../../serv.service'
 })
 export class SearchComponent implements OnInit {
 
-  
-  collapsed = true;
+  public product= new Product(null,null,null,null,null,null)
+  public products: any;
+  public idProducto: number
+  public idUsuario: number=1
+  /* collapsed = true;
   toggleCollapsed(): void {
   this.collapsed = !this.collapsed;
     
-  }
+  } */
 
   closeResult = '';
 
-  constructor(public servicio:ServService,private modalService: NgbModal) { }
+  constructor(public productService:ProductService, private modalService: NgbModal) { 
+    this.mostrarProductosPorUsuario(this.idUsuario)
+  }
   
-  public aparecerF(){
-    this.servicio.aparecer=true
-    console.log(this.servicio.aparecer)
-    }
+  mostrarProductosPorUsuario(uid){
+    this.productService. getProductsByUser(uid).subscribe((data)=>{
+      this.products = data
+      console.log(data)
+    })
+  }
+  mostrarProductos(){
+    this.productService.getProducts().subscribe((data)=>{
+      this.products = data
+      console.log(data)
+    })
+  }
+  
+  pasarIdProducto(pid){
+    this.idProducto=pid
+    console.log(this.idProducto)
+  }
     
   
     ngOnInit(): void {
@@ -35,7 +55,6 @@ export class SearchComponent implements OnInit {
         this.closeResult = `${this.getDismissReason(reason)}`;
       });
     }
-    
   
     private getDismissReason(reason: any): string {
       if (reason === ModalDismissReasons.ESC) {
@@ -47,3 +66,7 @@ export class SearchComponent implements OnInit {
   
 
 }
+/* public aparecerF(){
+    this.servicio.aparecer=true
+    console.log(this.servicio.aparecer)
+    } */

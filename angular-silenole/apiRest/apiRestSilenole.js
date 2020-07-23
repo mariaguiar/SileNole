@@ -36,6 +36,7 @@ app.get("/usuario/:id", function (request, response) {
     response.send(result);
     })
 });
+//FUNCIONA
 // GET /SILES/:USERID = Obtiene el todos los siles creados por el usuario
 app.get("/siles/:id", function (request, response) {
     var id = request.params.id;
@@ -119,7 +120,6 @@ app.get("/buscar/:id", function (request, response) {
 // HACER
 // POST /USERS/REGISTER = Introduce a un usuario en la base de datos. parámetros : Usuario, Email & Password. 
 app.post("/user/register", function (request, response) {
-    let user_id = request.body.user_id
     let name = request.body.name
     let email = request.body.email
     let password = request.body.password
@@ -127,9 +127,8 @@ app.post("/user/register", function (request, response) {
     let provincia = request.body.provincia
     let localidad = request.body.localidad
     let cp = request.body.cp
-    let user_image = request.body.user_image
-    let params = [user_id, name, email, password, comunidad, provincia, localidad, cp, user_image]
-    let sql = "INSERT INTO user (user_id, name, email, password, comunidad, provincia, localidad, cp, user_image) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    let params = [name, email, password, comunidad, provincia, localidad, cp]
+    let sql = "INSERT INTO user (name, email, password, comunidad, provincia, localidad, cp) VALUES ( ?, ?, ?, ?, ?, ?, ?)";
     connection.query(sql, params, function(err, result){
         if (err){
             console.log(err)
@@ -144,9 +143,9 @@ app.post("/user/register", function (request, response) {
 // ??? NECESITA FUNCION DE COMPARACIÓN CON EL EMAIL COMO CLAVE UNICA
 // POST /USERS/LOGIN = Autoriza la entrada a la plataforma o no. parámetros : Usuario & Password. 
 app.post("/user/login", function (request, response) {
-    let name = request.body.name
+    let email = request.body.email
     let password = request.body.password
-    let params = [name, password]
+    let params = [email, password]
     let sql = "SELECT name, password FROM user";
     connection.query(sql, params, function(err, result){
         if (err){
