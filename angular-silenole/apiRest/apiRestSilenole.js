@@ -226,16 +226,13 @@ app.delete("/user", function (request, response) {
     response.send(result);
     })
 });
-
-/* ---------------------------------USUARIOS SIN HACER----------------------------------- */
-// ??? NECESITA FUNCION DE COMPARACIÓN CON EL EMAIL COMO CLAVE UNICA
-// POST /USERS/LOGIN = Autoriza la entrada a la plataforma o no. parámetros : Usuario & Password. 
-/* app.post("/user/login", function (request, response) {
-    let email = request.body.email
-    let password = request.body.password
+app.post("/user/login", function (request, response) {
+    let email = request.body.email;
+    let password = request.body.password;
     let params = [email, password]
-    let sql = "SELECT name, password FROM user";
-    connection.query(sql, params, function(err, result){
+    let sql = "SELECT * FROM user WHERE email = ? AND password = ?";
+    if(email && password){
+        connection.query(sql, params, function(err, result){
         if (err){
             console.log(err)
         }else{
@@ -244,7 +241,11 @@ app.delete("/user", function (request, response) {
         } 
     response.send(result);
     })
-}); */
+    }
+});
+/* ---------------------------------USUARIOS SIN HACER----------------------------------- */
+
+
 /* ---------------------------------FIN USUARIOS----------------------------------- */
 
 /* ---------------------------------MENSAJES FUNCIONANDO----------------------------------- */

@@ -6,12 +6,14 @@ import { Usuario } from './../models/usuario';
 })
 export class UsuarioService {
 
-  public usuario: Usuario
-  public usuarioService: UsuarioService;
-
+  public usuario: Usuario;
+  public idUsuario: number
+  
   private url = "http://localhost:3000/user/register"
-
+  
   constructor(private http: HttpClient) { }
+
+  public autentificado:boolean = false
   
   getUsuario(id: number){
     if (!id){

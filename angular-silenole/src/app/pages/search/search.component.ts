@@ -41,9 +41,6 @@ export class SearchComponent implements OnInit {
   }
   
 
-
-
-  
   pasarIdProducto(pid){
     this.idProducto=pid
     console.log(this.idProducto)
