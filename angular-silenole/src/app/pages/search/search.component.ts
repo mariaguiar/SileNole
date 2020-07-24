@@ -24,21 +24,25 @@ export class SearchComponent implements OnInit {
   closeResult = '';
 
   constructor(public productService:ProductService, private modalService: NgbModal) { 
-    this.mostrarProductosPorUsuario(this.idUsuario)
+    this.mostrarProductos()
   }
   
+  mostrarProductos(){
+    this.productService.getAllProducts().subscribe((data)=>{
+      this.products = data
+      console.log(data)
+    })
+  }
   mostrarProductosPorUsuario(uid){
     this.productService. getProductsByUser(uid).subscribe((data)=>{
       this.products = data
       console.log(data)
     })
   }
-  mostrarProductos(){
-    this.productService.getProducts().subscribe((data)=>{
-      this.products = data
-      console.log(data)
-    })
-  }
+  
+
+
+
   
   pasarIdProducto(pid){
     this.idProducto=pid
@@ -48,7 +52,7 @@ export class SearchComponent implements OnInit {
   
     ngOnInit(): void {
     }
-    open(content4) {
+    /* open(content4) {
       this.modalService.open(content4, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
         this.closeResult = `Closed with: ${result}`;
       }, (reason) => {
@@ -62,7 +66,7 @@ export class SearchComponent implements OnInit {
       }  else {
         return '';
       }
-    }
+    } */
   
 
 }

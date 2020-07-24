@@ -9,7 +9,7 @@
     </form>
   </div>
   <div class="d-flex justify-content-center mb-3">
-    <button type="button" class="btn btn-outline-danger"  [routerLink]="['/']"  (click)="aparecerF2()" (click)="modalRef.hide()">Cerrar Sesión</button>
+    <button type="button" class="btn btn-outline-danger"  [routerLink]="['/']" (click)="modalRef.hide()">Cerrar Sesión</button>
   </div>
 </ng-template>
 
@@ -44,7 +44,7 @@
         <input type="text" class="form-control border border-success" id="#sizeInput" placeholder="Noles/ Usuario"
           aria-label="Recipient's username" aria-describedby="button-addon2">
         <div class="input-group-append">
-          <button class="btn btn-outline-success" type="button" [routerLink]="['/buscar']" id="button-addon2"><i class="fa fa-search" aria-hidden="true"></i> Buscar</button>
+          <button class="btn btn-outline-success" type="button" [routerLink]="['/buscar']" (click)="mostrarTodosProductos()" id="button-addon2"><i class="fa fa-search" aria-hidden="true"></i> Buscar</button>
         </div>
       </div>
     </div>

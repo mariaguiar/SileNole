@@ -31,6 +31,12 @@ mostrarProductos(uid){
     console.log(data)
   })
 }
+mostrarTodosProductos(){
+  this.productService.getAllProducts().subscribe((data)=>{
+    this.products = data
+    console.log(data)
+  })
+}
   ngOnInit(): void {
   }
   openModal(templateHeader: TemplateRef<any>){

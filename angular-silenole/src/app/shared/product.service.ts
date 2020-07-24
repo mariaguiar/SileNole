@@ -9,7 +9,7 @@ export class ProductService {
   public product: any
   public products: any[];
 
-  private url = "http://localhost:3000/siles"
+  private url = "http://localhost:3000/"
 
   constructor(private http: HttpClient) {
     console.log("funcionando servicio product")
@@ -18,18 +18,18 @@ export class ProductService {
     return this.products
   }
 
-  getProductsByUser(id: number) {
-    return this.http.get(this.url + "/" + id);
+  getAllProducts() {
+    return this.http.get(this.url+ "siles/");
   }
-  getProducts() {
-    return this.http.get(this.url);
+  getProductsByUser(id: number) {
+    return this.http.get(this.url + "siles/" + id);
   }
   postProduct(newProduct: Product) {
-    return this.http.post(this.url, newProduct)
+    return this.http.post(this.url+ "siles/", newProduct)
   }
   putProduct(newProduct: Product) {
     console.log(newProduct);
-    return this.http.put(this.url, newProduct)
+    return this.http.put(this.url+ "siles/", newProduct)
   }
 
 public deleteProduct(id:number){
@@ -41,7 +41,7 @@ public deleteProduct(id:number){
       product_id: id
     },
   };
-  return this.http.delete(this.url, options)
+  return this.http.delete(this.url+ "siles/", options)
 }
 
 }
