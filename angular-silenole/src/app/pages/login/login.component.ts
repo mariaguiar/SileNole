@@ -1,63 +1,57 @@
-import { Component, OnInit, } from '@angular/core';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import {ServService} from './../../serv.service'
-import { UsuarioService } from 'src/app/shared/usuario.service';
-import { Usuario } from 'src/app/models/usuario';
-import { BsModalRef } from 'ngx-bootstrap/modal';
+import { Component, OnInit, TemplateRef, } from '@angular/core';
+import { ServService } from './../../serv.service'
+import { Usuario } from './../../models/usuario';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { UsuarioService } from 'src/app/shared/usuario.service';
+import { HttpClient } from "@angular/common/http";
+import { LoginService } from './../../shared/login.service';
 
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
 
   public modalRef: BsModalRef;
-  public usuario: Usuario;
+  public usuario=new Usuario(null,null,null,null,null,null,null)
+  email: string;
+  password: string;  
 
-  closeResult = '';
-
-  constructor(public usuarioService:UsuarioService,public servicio:ServService,private modalService: NgbModal) {
+  constructor(public loginService:LoginService, public usuarioService:UsuarioService, public modalService:BsModalService, public servicio:ServService, private http: HttpClient) { 
     console.log("Funcionando servicio usuario")
     this.usuario
-   }
-
-   onSubmit(form){
-    console.log(form.value)
   }
-
+  
+  ////////SERVICIO APARECER 
   public aparecerF(){
   this.servicio.aparecer=true
   console.log(this.servicio.aparecer)
   }
 
-  ngOnInit(): void {
-  }
-  /* open(content) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `${this.getDismissReason(reason)}`;
-    });
-  }
-  open2(content2) {
-    this.modalService.open(content2, {ariaLabelledBy: 'modal-basic-title2'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `${this.getDismissReason(reason)}`;
-    });
+  ngOnInit(){ }
+
+  openModal(template: TemplateRef<any>){
+    this.modalRef = this.modalService.show(template)
   }
 
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    }  else {
-      return '';
+  newUsuario(name:string, password:string, email:string, comunidad:string, provincia:string, localidad:string, cp:number){
+    console.log('Usuario Añadido')
+    console.log(this.usuarioService.usuario)
+    this.usuarioService.newUsuario(new Usuario(name, password, email, comunidad, provincia, localidad,cp)).subscribe((data)=>{
+      console.log(data)
+    })
+  }
+
+  onSubmit(form){
+      console.log(form.value)
+  }
+
+  login() {
+      const user = {email: this.email, password: this.password};
+      this.loginService.login(user).subscribe( data => {
+        console.log(data[0].user_id);
+      });
     }
-  } */
-}
-export class NgbdCarouselBasic {
-  constructor() 
-  {} 
-}
+  }

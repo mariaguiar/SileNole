@@ -1,6 +1,6 @@
-<!-- <app-header></app-header>
+<app-header></app-header>
 <app-categories></app-categories>
- -->
+
      <!-- TÍTULO -->
 
   <div class="container-fluid">
@@ -130,7 +130,7 @@
                       </div>
                     </div>
                
-
+                    
 
                 
 
@@ -140,9 +140,23 @@
                     <div class="ps-scrollbar-y-rail" style="top: 0px; height: 0px; right: 2px;"> </div>
                     <div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 2px;"></div>
                 </div>
-
-
-                </div>
+                
+              </div>
+                  <div class="mt-2">
+                    <form #discoForm="ngForm" (ngSubmit)="onSubmit(discoForm)">
+                  
+                      <div class="form-group">
+                        <label>Mensaje</label><br>
+                        <input type="text" class="form-control" name="text" [(ngModel)]="message.text" #text="ngModel" required>
+                      </div>
+                  
+                      <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-sm"
+                          (click)="anyadir(null, user_id.value, product_id.value, text.value, date.value)"
+                          (click)=enviarTexto(text.value)>Enviar</button>
+                      </div>
+                    </form>
+                  </div>
 
               </div>
             </div>
@@ -166,8 +180,8 @@
 
 </div>
 
-<!-- <app-footer></app-footer>  -->
 
+<app-footer></app-footer> 
 
 <!-- PARA PROBAR EL SERVICIO -->
 <div class="col-6 mt-2">

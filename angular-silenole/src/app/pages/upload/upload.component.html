@@ -1,6 +1,6 @@
 <!-- HEADER Y CATEGORIAS -->
-<!-- <app-header></app-header>
-<app-categories></app-categories> -->
+<app-header></app-header>
+<app-categories></app-categories>
 
 <!-- FORMULARIO SUBIDA -->
 <div class="container-fluid ">
@@ -13,20 +13,22 @@
 <div class="container-fluid">
   <div class="row d-flex justify-content-center">
     <div class="col-10 col-sm-8 col-md-6 bg-light border border-success text-success mb-5">
-      <form>
+      <form #uploadForm="ngForm" (ngSubmit)="onSubmit(uploadForm)">
         <div class="form-group mt-3">
           <label for="exampleFormControlFile1">Carga una Foto</label>
-          <input type="file" class="form-control-file" id="exampleFormControlFile1">
-          <small id="emailHelp" class="form-text text-muted">* Obligatorio</small>
+          <input type="file" class="form-control-file" name="product_image" [(ngModel)]="product.product_image"
+            #product_image="ngModel" required>
+            <small id="emailHelp" class="form-text text-muted">*Obligatorio.</small>
         </div>
         <div class="form-group">
           <label for="exampleInputPassword1">Producto</label>
-          <input type="text" class="form-control" id="exampleInputPassword1" placeholder="En una sola palabra">
-          <small id="emailHelp" class="form-text text-muted">* Obligatorio</small>
+          <input type="text" class="form-control" name="nombre" [(ngModel)]="product.nombre" #nombre="ngModel"
+            placeholder="En una sola palabra" required>
+            <small id="emailHelp" class="form-text text-muted">*Obligatorio.</small>
         </div>
         <div class="form-group">
           <label for="exampleFormControlSelect1">Elige Categoría</label>
-          <select class="form-control" id="exampleFormControlSelect1">
+          <select class="form-control" name="categoria" [(ngModel)]="product.categoria" #categoria="ngModel" required>
             <option>Ordenadores</option>
             <option>Móviles</option>
             <option>Consolas</option>
@@ -39,14 +41,17 @@
             <option>Electrodomésticos</option>
             <option>Otros</option>
           </select>
-          <small id="emailHelp" class="form-text text-muted">* Obligatorio</small>
+          <small id="emailHelp" class="form-text text-muted">*Obligatorio.</small>
         </div>
         <div class="form-group">
           <label for="exampleFormControlTextarea1">Describe el producto</label>
-          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+          <textarea class="form-control" name="descripcion" [(ngModel)]="product.descripcion" #descripcion="ngModel"
+            required rows="3"></textarea>
+            <small id="emailHelp" class="form-text text-muted">*Obligatorio.</small>
         </div>
         <div class="row justify-content-center my-4">
-          <button type="submit" class="btn btn-success ">Agregar</button>
+          <button type="submit" class="btn btn-success" 
+            (click)="anyadirSile(null, nombre.value, descripcion.value, categoria.value, idUsuario, product_image.value.replace('C:\\fakepath\\',''))">Agregar</button>
         </div>
       </form>
     </div>
@@ -54,11 +59,11 @@
 </div>
 
 <!-- FOOTER -->
-<!-- <app-footer></app-footer> -->
+<app-footer></app-footer>
 
 
 <!-- PARA PROBAR EL SERVICIO -->
-<div class="col-6 mt-2">
+<!-- <div class="col-6 mt-2">
   <form #uploadForm="ngForm" (ngSubmit)="onSubmit(uploadForm)">
     <div class="form-group">
       <label>Product_id</label><br>
@@ -89,10 +94,10 @@
           <button type="submit" class="btn btn-primary" (click)="anyadirSile(null, nombre.value, descripcion.value, categoria.value, user_id.value, product_image.value)">Insertar</button>
       </div>
       <div class="form-group">
-        <button type="submit" class="btn btn-primary" (click)="modificarSile(product_id.value, nombre.value, descripcion.value, categoria.value, user_id.value, product_image.value)">Cambiar</button>
+       <button type="submit" class="btn btn-primary" (click)="modificarSile(product_id.value, nombre.value, descripcion.value, categoria.value, user_id.value, product_image.value)">Cambiar</button> 
     </div>
     <div class="form-group">
-      <button type="submit" class="btn btn-primary" (click)="borrarSile(product_id.value)">Borrar</button>
+     <button type="submit" class="btn btn-primary" (click)="borrarSile(product_id.value)">Borrar</button>
   </div>
   </form>
-  </div>
+  </div> -->

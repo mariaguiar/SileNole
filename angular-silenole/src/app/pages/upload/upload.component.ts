@@ -10,9 +10,17 @@ import { Product } from 'src/app/models/product';
 export class UploadComponent implements OnInit {
 
   public product= new Product(null,null,null,null,null,null)
+  public idProducto: number
+  public idUsuario: number=1
 
   constructor(public productService:ProductService) { }
 
+  
+  pasarIdProducto(numero){
+    this.idProducto=numero
+    console.log(this.idProducto)
+  }
+  
   onSubmit(form){
     console.log(form.value)
   }
@@ -24,19 +32,7 @@ export class UploadComponent implements OnInit {
       console.log(data)
     })
   }
-  modificarSile(product_id: number, nombre: string, descripcion: string, categoria: string, user_id: number, product_image: string){
-    console.log('Hola desde modificarSile')
-    console.log(this.productService.product)
-    this.productService.putProduct(new Product(product_id, nombre, descripcion, categoria, user_id, product_image)).subscribe((data)=>{
-      console.log(data)
-    })
-  }
-  borrarSile(id: number){
-    console.log('Hola desde borrarSile')
-    this.productService.deleteProduct(id).subscribe((data)=>{
-      console.log(data)
-    })
-  }
+  
 
   ngOnInit(): void {
   }
