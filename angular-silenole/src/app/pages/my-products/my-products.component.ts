@@ -13,7 +13,7 @@ import { LoginService } from 'src/app/shared/login.service';
 export class MyProductsComponent implements OnInit {
 
   closeResult = '';
-  public product= new Product(null,null,null,null,null,null)
+  public productoActual= new Product(null,null,null,null,null,null)
   public products: any;
   public idProducto: number
   public idUsuario: number
@@ -32,7 +32,12 @@ export class MyProductsComponent implements OnInit {
   pasarIdProducto(pid){
     this.idProducto=pid
     console.log(this.idProducto)
-  }
+    }
+
+  pasarProducto(p){
+    this.productoActual=p
+    console.log(this.productoActual)
+    }
 
   ngOnInit(): void {
   }
@@ -44,7 +49,8 @@ export class MyProductsComponent implements OnInit {
   modificarSile(product_id: number, nombre: string, descripcion: string, categoria: string, user_id: number, product_image: string){
     console.log('Hola desde modificarSile')
     this.productService.putProduct(new Product(product_id, nombre, descripcion, categoria, user_id, product_image)).subscribe((data)=>{
-      console.log(data)      
+      console.log(data)
+      this.mostrarProductos(this.idUsuario)      
     })
   }
   /* PARA BORRAR PRODUCTOS */
@@ -52,6 +58,7 @@ export class MyProductsComponent implements OnInit {
     console.log('Hola desde borrarSile')
     this.productService.deleteProduct(id).subscribe((data)=>{
       console.log(data)
+      this.mostrarProductos(this.idUsuario)
     })
   }
   /* PARA ABRIR LOS MODALES */

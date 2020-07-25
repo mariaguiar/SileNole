@@ -10,9 +10,7 @@ import { Usuario } from '../models/usuario';
 export class LoginService {
 
   public usuarioActual=new Usuario(null,null,null,null,null,null,null,null,null)
-  /* public idUsuario: number; 
-  public email:string*/
-  
+    
   private url = "http://localhost:3000/user"
   
   constructor(private http: HttpClient) { }
