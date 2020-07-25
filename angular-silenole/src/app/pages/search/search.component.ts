@@ -3,6 +3,9 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 /* import {ServService} from './../../serv.service' */
 import { ProductService } from 'src/app/shared/product.service';
 import { Product } from 'src/app/models/product';
+import { UsuarioService } from 'src/app/shared/usuario.service';
+import { Usuario } from './../../models/usuario';
+import { LoginService } from 'src/app/shared/login.service';
 
 @Component({
   selector: 'app-search',
@@ -11,19 +14,16 @@ import { Product } from 'src/app/models/product';
 })
 export class SearchComponent implements OnInit {
 
+  public usuarioActual=new Usuario(null,null,null,null,null,null,null,null,null)
+
   public product= new Product(null,null,null,null,null,null)
   public products: any;
   public idProducto: number
-  public idUsuario: number=1
-  /* collapsed = true;
-  toggleCollapsed(): void {
-  this.collapsed = !this.collapsed;
-    
-  } */
-
+  
   closeResult = '';
 
-  constructor(public productService:ProductService, private modalService: NgbModal) { 
+  constructor(public productService:ProductService, public loginService:LoginService, private modalService: NgbModal) { 
+    this.usuarioActual=this.loginService.usuarioActual
     this.mostrarProductos()
   }
   

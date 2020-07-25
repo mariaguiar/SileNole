@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { ProductService } from 'src/app/shared/product.service';
 import { Product } from 'src/app/models/product';
+import { LoginService } from 'src/app/shared/login.service';
+
 
 @Component({
   selector: 'app-my-products',
@@ -14,14 +16,14 @@ export class MyProductsComponent implements OnInit {
   public product= new Product(null,null,null,null,null,null)
   public products: any;
   public idProducto: number
-  public idUsuario: number=1
+  public idUsuario: number
 
-  constructor(public productService:ProductService, private modalService: NgbModal) { 
-    this.mostrarProductos(this.idUsuario)
+  constructor(public productService:ProductService, public loginService:LoginService, private modalService: NgbModal) { 
+    this.mostrarProductos(this.idUsuario=this.loginService.usuarioActual.user_id)
   }
   
   mostrarProductos(uid){
-    this.productService. getProductsByUser(uid).subscribe((data)=>{
+    this.productService.getProductsByUser(uid).subscribe((data)=>{
       this.products = data
       console.log(data)
     })
@@ -42,10 +44,10 @@ export class MyProductsComponent implements OnInit {
   modificarSile(product_id: number, nombre: string, descripcion: string, categoria: string, user_id: number, product_image: string){
     console.log('Hola desde modificarSile')
     this.productService.putProduct(new Product(product_id, nombre, descripcion, categoria, user_id, product_image)).subscribe((data)=>{
-      console.log(data)
+      console.log(data)      
     })
   }
-
+  /* PARA BORRAR PRODUCTOS */
   borrarSile(id: number){
     console.log('Hola desde borrarSile')
     this.productService.deleteProduct(id).subscribe((data)=>{

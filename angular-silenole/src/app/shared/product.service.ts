@@ -8,8 +8,10 @@ export class ProductService {
 
   public product: any
   public products: any[];
+  public idUsuario: number;
 
   private url = "http://localhost:3000/"
+  
 
   constructor(private http: HttpClient) {
     console.log("funcionando servicio product")
@@ -31,8 +33,12 @@ export class ProductService {
     console.log(newProduct);
     return this.http.put(this.url+ "siles/", newProduct)
   }
+  getProductsCategoria(categoria: string) {
+    console.log("hola desde servicio")
+    return this.http.get(this.url + "buscar/" + categoria);
+  }
 
-public deleteProduct(id:number){
+  public deleteProduct(id:number){
   let options = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -42,6 +48,6 @@ public deleteProduct(id:number){
     },
   };
   return this.http.delete(this.url+ "siles/", options)
-}
+  }
 
 }
