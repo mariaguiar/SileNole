@@ -44,9 +44,12 @@
               <small id="emailHelp" class="form-text text-muted">*Obligatorio.</small>
           </div>
           <div class="row justify-content-center my-4">
-            <button type="submit" class="btn btn-success"
+            <button type="submit" class="btn btn-success mr-1"
               (click)="modificarSile(productoActual.product_id, nombre.value, descripcion.value, categoria.value, idUsuario, product_image.value.replace('C:\\fakepath\\',''))"
               (click)="modal.dismiss('Cross click')">Modificar Producto</button>
+              <button type="submit" class="btn btn-danger ml-1"
+              (click)="modificarSile(productoActual.product_id, nombre.value, descripcion.value, categoria.value, idUsuario, product_image.value.replace('C:\\fakepath\\',''))"
+              (click)="modal.dismiss('Cross click')">Cancelar</button>
           </div>
         </form>
       </div>

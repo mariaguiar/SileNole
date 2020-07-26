@@ -6,6 +6,7 @@ import { Product } from 'src/app/models/product';
 import { UsuarioService } from 'src/app/shared/usuario.service';
 import { Usuario } from './../../models/usuario';
 import { LoginService } from 'src/app/shared/login.service';
+import { Nole } from 'src/app/models/nole';
 
 @Component({
   selector: 'app-search',
@@ -18,15 +19,28 @@ export class SearchComponent implements OnInit {
 
   public product= new Product(null,null,null,null,null,null)
   public products: any;
-  public idProducto: number
+  public idProducto: number;
+  // public ownerActual: number
+  public categoriaActual: any;
   
   closeResult = '';
 
   constructor(public productService:ProductService, public loginService:LoginService, private modalService: NgbModal) { 
-    
-    
+    this.usuarioActual=this.loginService.usuarioActual
+     this.categoriaActual = this.productService.categoriaSeleccionada;
+     this.mostrarProductosPorCategoria();
   }
-  
+
+  //PARA ACTUALIZAR CATEGORIA
+  getCategoriaActual(): void{
+    this.productService.getCategoriaSelecionada()
+      .subscribe(categoria => { 
+        this.categoriaActual=categoria
+        console.log("Categoria Actualizada")
+        this.mostrarProductosPorCategoria();
+      })
+  }
+
   mostrarProductos(){
     this.productService.getAllProducts().subscribe((data)=>{
       this.products = data
@@ -46,35 +60,28 @@ export class SearchComponent implements OnInit {
     })
   }
   
+  pasarIdOwner(oid){
+    this.productService.ownerActual=oid
+    console.log(this.productService.ownerActual)
+  }
 
   pasarIdProducto(pid){
     this.idProducto=pid
     console.log(this.idProducto)
   }
-    
   
+  relacionarProductoMensaje(pid){
+    let uid=this.loginService.usuarioActual.user_id;
+    let newNole= new Nole(uid,pid);
+    this.productService.postNole(newNole).subscribe((data)=>{
+      this.products = data
+      console.log(data)
+    })
+  }
+    
   ngOnInit(): void {
     this.usuarioActual=this.loginService.usuarioActual
-    this.mostrarProductosPorCategoria()
   }
-    /* open(content4) {
-      this.modalService.open(content4, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-        this.closeResult = `Closed with: ${result}`;
-      }, (reason) => {
-        this.closeResult = `${this.getDismissReason(reason)}`;
-      });
-    }
-  
-    private getDismissReason(reason: any): string {
-      if (reason === ModalDismissReasons.ESC) {
-        return 'by pressing ESC';
-      }  else {
-        return '';
-      }
-    } */
-  /* public aparecerF(){
-    this.servicio.aparecer=true
-    console.log(this.servicio.aparecer)
-    } */
 
+  
 }
