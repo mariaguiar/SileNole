@@ -31,7 +31,7 @@
               <option>Muebles</option>
               <option>Motor</option>
               <option>Deporte</option>
-              <option>Libros y musica</option>
+              <option>Libros y Música</option>
               <option>Electrodomésticos</option>
               <option>Otros</option>
             </select>
@@ -45,7 +45,7 @@
           </div>
           <div class="row justify-content-center my-4">
             <button type="submit" class="btn btn-success"
-              (click)="modificarSile(idProducto, nombre.value, descripcion.value, categoria.value, idUsuario, product_image.value.replace('C:\\fakepath\\',''))"
+              (click)="modificarSile(productoActual.product_id, nombre.value, descripcion.value, categoria.value, idUsuario, product_image.value.replace('C:\\fakepath\\',''))"
               (click)="modal.dismiss('Cross click')">Modificar Producto</button>
           </div>
         </form>
