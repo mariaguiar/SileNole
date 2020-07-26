@@ -23,8 +23,8 @@ export class SearchComponent implements OnInit {
   closeResult = '';
 
   constructor(public productService:ProductService, public loginService:LoginService, private modalService: NgbModal) { 
-    this.usuarioActual=this.loginService.usuarioActual
-    this.mostrarProductos()
+    
+    
   }
   
   mostrarProductos(){
@@ -34,7 +34,13 @@ export class SearchComponent implements OnInit {
     })
   }
   mostrarProductosPorUsuario(uid){
-    this.productService. getProductsByUser(uid).subscribe((data)=>{
+    this.productService.getProductsByUser(uid).subscribe((data)=>{
+      this.products = data
+      console.log(data)
+    })
+  }
+  mostrarProductosPorCategoria(){
+    this.productService.getProductsBySelectedCategory().subscribe((data)=>{
       this.products = data
       console.log(data)
     })
@@ -47,8 +53,10 @@ export class SearchComponent implements OnInit {
   }
     
   
-    ngOnInit(): void {
-    }
+  ngOnInit(): void {
+    this.usuarioActual=this.loginService.usuarioActual
+    this.mostrarProductosPorCategoria()
+  }
     /* open(content4) {
       this.modalService.open(content4, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
         this.closeResult = `Closed with: ${result}`;
@@ -64,10 +72,9 @@ export class SearchComponent implements OnInit {
         return '';
       }
     } */
-  
-
-}
-/* public aparecerF(){
+  /* public aparecerF(){
     this.servicio.aparecer=true
     console.log(this.servicio.aparecer)
     } */
+
+}

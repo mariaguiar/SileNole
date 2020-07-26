@@ -14,17 +14,16 @@ export class CategoriesComponent implements OnInit {
   public products: any;
   public categoria: any;
 
-  constructor(public productService:ProductService) { }
+  constructor(public productService:ProductService) { 
+    this.products=this.productService.products;
+  }
 
   ngOnInit(): void {
   }
 
-  mostrarProductsCategoria(categoria: string){
-    this.productService.getProductsCategoria(categoria).subscribe((data)=>{
-      this.products = data
-      console.log("hola desde categorias")
-      console.log(data)
-    })
+  pasarCategoria(categoria: string){
+    this.productService.categoriaSeleccionada=categoria;
+    console.log(this.productService.categoriaSeleccionada)
   }
 }
 

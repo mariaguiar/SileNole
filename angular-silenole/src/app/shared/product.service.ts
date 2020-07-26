@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Product } from '../models/product';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -9,6 +10,7 @@ export class ProductService {
   public product: any
   public products: any[];
   public idUsuario: number;
+  public categoriaSeleccionada: string="Todo";
 
   private url = "http://localhost:3000/"
   
@@ -33,10 +35,12 @@ export class ProductService {
     console.log(newProduct);
     return this.http.put(this.url+ "siles/", newProduct)
   }
-  getProductsCategoria(categoria: string) {
-    console.log("hola desde servicio")
-    return this.http.get(this.url + "buscar/" + categoria);
+
+  getProductsBySelectedCategory() {
+    console.log("hola desde product.service")
+    return this.http.get(this.url + "buscar/" + this.categoriaSeleccionada);
   }
+  
 
   public deleteProduct(id:number){
   let options = {

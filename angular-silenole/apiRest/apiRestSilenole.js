@@ -108,7 +108,12 @@ app.delete("/siles", function (request, response) {
 // GET /buscar/:categoria = Obtiene todos los noles solicitados segun categoria
 app.get("/buscar/:categoria", function (request, response) {
     var categoria = request.params.categoria;
-    let sql = "SELECT * FROM product WHERE categoria='"+categoria+"'"; 
+    let sql;
+    if(categoria==="Todo"){
+        sql = "SELECT * FROM product";
+    }else{
+        sql = "SELECT * FROM product WHERE categoria='"+categoria+"'"; 
+    }
     connection.query(sql, function(err, result){
         if (err){
             console.log(err)

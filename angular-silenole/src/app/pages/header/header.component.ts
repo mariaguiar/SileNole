@@ -37,6 +37,14 @@ mostrarTodosProductos(){
     console.log(data)
   })
 }
+
+mostrarProductosPorCategoria(){
+  this.productService.categoriaSeleccionada="Todo";
+  this.productService.getProductsBySelectedCategory().subscribe((data)=>{
+    this.products = data
+    console.log(data)
+  })
+}
   ngOnInit(): void {
   }
   openModal(templateHeader: TemplateRef<any>){
