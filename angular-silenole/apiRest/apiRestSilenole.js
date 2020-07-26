@@ -24,10 +24,11 @@ app.use(bodyParser.json());
 
 /* ---------------------------------PRODUCTOS FUNCIONANDO----------------------------------- */
 // GET /SILES/:USERID = Obtiene el todos los siles creados por el usuario
-app.get("/siles/:id", function (request, response) {
-    var id = request.params.id;
-    let sql = "SELECT * FROM product WHERE user_id ="+id;
-    connection.query(sql, function(err, result){
+app.get("/siles/:user_id", function (request, response) {
+    var user_id = request.params.user_id;
+    let params = [user_id];
+    let sql = "SELECT * FROM product WHERE user_id = ?";
+    connection.query(sql, params, function(err, result){
         if (err){
             console.log(err)
         }else{
@@ -41,6 +42,21 @@ app.get("/siles/:id", function (request, response) {
 app.get("/siles", function (request, response) {
     let sql = "SELECT * FROM product"
     connection.query(sql, function(err, result){
+        if (err){
+            console.log(err)
+        }else{
+            console.log('Objetos del Usuario')
+            console.log(result)
+        } 
+    response.send(result);
+    })
+});
+// GET /NOLES= Obtiene todos los productos
+app.get("/noles/:user_id", function (request, response) {
+    var user_id = request.params.user_id;
+    let params = [user_id];
+    let sql = "SELECT product.nombre, product.product_image FROM noles INNER JOIN product ON (noles.product_id = product.product_id) WHERE noles.user_id = ?"
+    connection.query(sql, params, function(err, result){
         if (err){
             console.log(err)
         }else{
@@ -106,7 +122,7 @@ app.delete("/siles", function (request, response) {
     })
 });
 // GET /buscar/:categoria = Obtiene todos los noles solicitados segun categoria
-app.get("/buscar/:categoria", function (request, response) {
+/* app.get("/buscar/:categoria", function (request, response) {
     var categoria = request.params.categoria;
     let sql;
     if(categoria==="Todo"){
@@ -115,6 +131,27 @@ app.get("/buscar/:categoria", function (request, response) {
         sql = "SELECT * FROM product WHERE categoria='"+categoria+"'"; 
     }
     connection.query(sql, function(err, result){
+        if (err){
+            console.log(err)
+            console.log("hola desde api")
+        }else{
+            console.log('Objetos en la categoria ' + categoria)
+            console.log(result)
+        } 
+    response.send(result);
+    })
+}); */
+app.get("/buscar/:categoria", function (request, response) {
+    var categoria = request.params.categoria;
+    let sql;
+    let params = [];
+    if(categoria==="Todo"){
+        sql = "SELECT * FROM product";
+    }else{
+        params= [categoria]
+        sql = "SELECT * FROM product WHERE categoria = ?"; 
+    }
+    connection.query(sql, params, function(err, result){
         if (err){
             console.log(err)
             console.log("hola desde api")
@@ -142,20 +179,6 @@ app.get("/buscar/:categoria", function (request, response) {
 }); */
 // GET /SILES/:TIEMPO = Obtiene el todos los siles según tiempo
 /* app.get("/siles/:tiempo", function (request, response) {
-    var distancia = request.params.distancia;
-    let sql = "SELECT * FROM user WHERE localidad ="+distancia;
-    connection.query(sql, function(err, result){
-        if (err){
-            console.log(err)
-        }else{
-            console.log('Objetos Propios')
-            console.log(result)
-        } 
-    response.send(result);
-    })
-}); */
-// GET /SILES/:CATEGORIA = Obtiene el todos los siles según categoria
-/* app.get("/siles/:categoria", function (request, response) {
     var distancia = request.params.distancia;
     let sql = "SELECT * FROM user WHERE localidad ="+distancia;
     connection.query(sql, function(err, result){
@@ -321,23 +344,41 @@ app.post("/messages/", function (request, response) {
 }); */
 /* ---------------------------------FIN MENSAJES----------------------------------- */
 
-
-// ?????????
-// HACER
-// GET /NOLES/:USERID = Obtiene todos los productos del resto de los usuarios
-app.get("/noles/:id", function (request, response) {
-    var id = request.params.id;
-    let sql = "SELECT * FROM product WHERE user_id !="+id;
-    connection.query(sql, function(err, result){
+/* ---------------------------------NOLES FUNCIONANDO----------------------------------- */
+// POST /NOLES/ inserta la relacion entre usuario y producto //PARA MENSAJES
+app.post("/noles/", function (request, response) {
+    let uid  = request.body.user_id 
+    let pid = request.body.product_id 
+    let params = [uid , pid]
+    let sql = "INSERT INTO noles (user_id, product_id ) VALUES (?, ?)";
+    connection.query(sql, params, function(err, result){
         if (err){
             console.log(err)
         }else{
-            console.log('Objetos del Usuario')
+            console.log('Relación Nole creada')
             console.log(result)
         } 
     response.send(result);
     })
 });
+/* ---------------------------------USUARIOS SIN HACER----------------------------------- */
+// HACER
+// GET /NOLES/:USERID = Obtiene todos los productos del resto de los usuarios /PARA MENSAJES
+app.get("/noles/:user_id", function (request, response) {
+    var user_id = request.params.user_id;
+    let params = [user_id]
+    let sql = "SELECT * FROM product WHERE user_id = ?";
+    connection.query(sql, params, function(err, result){
+        if (err){
+            console.log(err)
+        }else{
+            console.log('Noles del Usuario')
+            console.log(result)
+        } 
+    response.send(result);
+    })
+});
+/* ---------------------------------FIN NOLES----------------------------------- */
 // HACER
 // GET /buscar/ Obtiene los ultimos 4 productos agregados
 app.get("/buscar/", function (request, response) {

@@ -26,7 +26,7 @@ modalRef:BsModalRef
 constructor(public productService:ProductService, public servicio:ServService, private modalService: BsModalService) { }
 
 mostrarProductos(uid){
-  this.productService. getProductsByUser(uid).subscribe((data)=>{
+  this.productService.getProductsByUser(uid).subscribe((data)=>{
     this.products = data
     console.log(data)
   })
