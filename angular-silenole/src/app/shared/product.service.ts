@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Product } from '../models/product';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -8,8 +9,11 @@ export class ProductService {
 
   public product: any
   public products: any[];
+  public idUsuario: number;
+  public categoriaSeleccionada: string="Todo";
 
   private url = "http://localhost:3000/"
+  
 
   constructor(private http: HttpClient) {
     console.log("funcionando servicio product")
@@ -32,7 +36,13 @@ export class ProductService {
     return this.http.put(this.url+ "siles/", newProduct)
   }
 
-public deleteProduct(id:number){
+  getProductsBySelectedCategory() {
+    console.log("hola desde product.service")
+    return this.http.get(this.url + "buscar/" + this.categoriaSeleccionada);
+  }
+  
+
+  public deleteProduct(id:number){
   let options = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -42,6 +52,6 @@ public deleteProduct(id:number){
     },
   };
   return this.http.delete(this.url+ "siles/", options)
-}
+  }
 
 }

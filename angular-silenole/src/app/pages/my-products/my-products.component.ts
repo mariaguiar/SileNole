@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { ProductService } from 'src/app/shared/product.service';
 import { Product } from 'src/app/models/product';
+import { LoginService } from 'src/app/shared/login.service';
+
 
 @Component({
   selector: 'app-my-products',
@@ -11,17 +13,17 @@ import { Product } from 'src/app/models/product';
 export class MyProductsComponent implements OnInit {
 
   closeResult = '';
-  public product= new Product(null,null,null,null,null,null)
+  public productoActual= new Product(null,null,null,null,null,null)
   public products: any;
   public idProducto: number
-  public idUsuario: number=1
+  public idUsuario: number
 
-  constructor(public productService:ProductService, private modalService: NgbModal) { 
-    this.mostrarProductos(this.idUsuario)
+  constructor(public productService:ProductService, public loginService:LoginService, private modalService: NgbModal) { 
+    this.mostrarProductos(this.idUsuario=this.loginService.usuarioActual.user_id)
   }
   
   mostrarProductos(uid){
-    this.productService. getProductsByUser(uid).subscribe((data)=>{
+    this.productService.getProductsByUser(uid).subscribe((data)=>{
       this.products = data
       console.log(data)
     })
@@ -30,7 +32,12 @@ export class MyProductsComponent implements OnInit {
   pasarIdProducto(pid){
     this.idProducto=pid
     console.log(this.idProducto)
-  }
+    }
+
+  pasarProducto(p){
+    this.productoActual=p
+    console.log(this.productoActual)
+    }
 
   ngOnInit(): void {
   }
@@ -43,13 +50,15 @@ export class MyProductsComponent implements OnInit {
     console.log('Hola desde modificarSile')
     this.productService.putProduct(new Product(product_id, nombre, descripcion, categoria, user_id, product_image)).subscribe((data)=>{
       console.log(data)
+      this.mostrarProductos(this.idUsuario)      
     })
   }
-
+  /* PARA BORRAR PRODUCTOS */
   borrarSile(id: number){
     console.log('Hola desde borrarSile')
     this.productService.deleteProduct(id).subscribe((data)=>{
       console.log(data)
+      this.mostrarProductos(this.idUsuario)
     })
   }
   /* PARA ABRIR LOS MODALES */

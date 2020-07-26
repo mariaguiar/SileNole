@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/shared/product.service';
 import { Product } from 'src/app/models/product';
+import { LoginService } from 'src/app/shared/login.service';
+import { Usuario } from 'src/app/models/usuario';
 
 @Component({
   selector: 'app-upload',
@@ -9,13 +11,17 @@ import { Product } from 'src/app/models/product';
 })
 export class UploadComponent implements OnInit {
 
+  public usuarioActual=new Usuario(null,null,null,null,null,null,null,null,null)
+
   public product= new Product(null,null,null,null,null,null)
+  public products: any[];
   public idProducto: number
-  public idUsuario: number=1
-
-  constructor(public productService:ProductService) { }
-
   
+
+  constructor(public productService:ProductService, public loginService:LoginService) {
+    this.usuarioActual=this.loginService.usuarioActual
+  }
+
   pasarIdProducto(numero){
     this.idProducto=numero
     console.log(this.idProducto)
@@ -25,7 +31,7 @@ export class UploadComponent implements OnInit {
     console.log(form.value)
   }
 
-  anyadirSile(product_id: number, nombre: string, descripcion: string, categoria: string, user_id: number, product_image: string){
+  anyadirSile(nombre: string, descripcion: string, categoria: string, user_id: number, product_image: string){
     console.log('Hola desde anyadir')
     console.log(this.productService.product)
     this.productService.postProduct(new Product(null, nombre, descripcion, categoria, user_id, product_image)).subscribe((data)=>{

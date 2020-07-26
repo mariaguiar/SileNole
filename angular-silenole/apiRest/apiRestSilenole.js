@@ -105,6 +105,26 @@ app.delete("/siles", function (request, response) {
     response.send(result);
     })
 });
+// GET /buscar/:categoria = Obtiene todos los noles solicitados segun categoria
+app.get("/buscar/:categoria", function (request, response) {
+    var categoria = request.params.categoria;
+    let sql;
+    if(categoria==="Todo"){
+        sql = "SELECT * FROM product";
+    }else{
+        sql = "SELECT * FROM product WHERE categoria='"+categoria+"'"; 
+    }
+    connection.query(sql, function(err, result){
+        if (err){
+            console.log(err)
+            console.log("hola desde api")
+        }else{
+            console.log('Objetos en la categoria ' + categoria)
+            console.log(result)
+        } 
+    response.send(result);
+    })
+});
 /* ---------------------------------PRODUCTOS SIN HACER----------------------------------- */
 // GET /SILES/:DISTANCIA = Obtiene el todos los siles según distancia
 /* app.get("/siles/:distancia", function (request, response) {
@@ -152,8 +172,25 @@ app.delete("/siles", function (request, response) {
 
 
 /* ---------------------------------USUARIOS FUNCIONANDO----------------------------------- */
-// GET /USERS/:USERID = Obtiene toda la información asociada al usuario 
-app.get("/usuario/:id", function (request, response) {
+//Login y comparación de datos
+app.post("/user/login", function (request, response) {
+    let email = request.body.email;
+    let password = request.body.password;
+    let params = [email, password]
+    let sql = "SELECT * FROM user WHERE email = ? AND password = ?";
+    if(email && password){
+        connection.query(sql, params, function(err, result){
+        if (err){
+            console.log(err)
+        }else{
+            console.log('Usuario Correcto')
+            console.log(result)
+        } 
+    response.send(result);
+    })
+    }
+});// GET /USERS/:USERID = Obtiene toda la información asociada al usuario 
+app.get("/user/:id", function (request, response) {
     var id = request.params.id;
     let sql = "SELECT * FROM user WHERE user_id ="+id;
     connection.query(sql, function(err, result){
@@ -188,7 +225,7 @@ app.post("/user/register", function (request, response) {
     })
 });
 // PUT /USERS/:USERID = Actualiza la información asociada al usuario. 
-app.put("/users/:id", function (request, response) {
+app.put("/user", function (request, response) {
     let user_id = request.body.user_id
     let name = request.body.name
     let email = request.body.email
@@ -212,6 +249,20 @@ app.put("/users/:id", function (request, response) {
 });
 // DELETE PARA BORRAR UN USUARIO
 app.delete("/user", function (request, response) {
+    let user_id = request.body.user_id
+    let params = [user_id]
+    let sql = "DELETE FROM user WHERE user_id = ?";
+    connection.query(sql, params, function(err, result){
+        if (err){
+            console.log(err)
+        }else{
+            console.log('Usuario eliminado')
+            console.log(result)
+        } 
+    response.send(result);
+    })
+});
+/* app.delete("/user", function (request, response) {
     let email = request.body.email
     let password = request.body.password
     let params = [email, password]
@@ -225,24 +276,8 @@ app.delete("/user", function (request, response) {
         } 
     response.send(result);
     })
-});
-app.post("/user/login", function (request, response) {
-    let email = request.body.email;
-    let password = request.body.password;
-    let params = [email, password]
-    let sql = "SELECT * FROM user WHERE email = ? AND password = ?";
-    if(email && password){
-        connection.query(sql, params, function(err, result){
-        if (err){
-            console.log(err)
-        }else{
-            console.log('Usuario Correcto')
-            console.log(result)
-        } 
-    response.send(result);
-    })
-    }
-});
+}); */
+
 /* ---------------------------------USUARIOS SIN HACER----------------------------------- */
 
 

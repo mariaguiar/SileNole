@@ -3,6 +3,7 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {ServService} from './../../serv.service'
 import { UsuarioService } from 'src/app/shared/usuario.service';
 import { Usuario } from './../../models/usuario';
+import { LoginService } from 'src/app/shared/login.service';
 
 @Component({
   selector: 'app-profile',
@@ -12,21 +13,27 @@ import { Usuario } from './../../models/usuario';
 export class ProfileComponent implements OnInit {
 
   closeResult = '';
-  public usuario=new Usuario(null,null,null,null,null,null,null)
+  public usuarioActual=new Usuario(null,null,null,null,null,null,null,null,null)
+  
 
-  constructor(public usuarioService:UsuarioService, private modalService: NgbModal) { 
-    this.usuario
-  }
+  constructor(public usuarioService:UsuarioService, public loginService:LoginService, private modalService: NgbModal) { 
+    this.usuarioActual=this.loginService.usuarioActual
+    }
 
   ngOnInit(): void {
   }
   onSubmit(form){
     console.log(form.value)
   }
-  modificarUsuario(name:string, password:string, email:string, comunidad:string, provincia:string, localidad:string, cp:number){
+  modificarUsuario(idUsuario:number, name:string, password:string, email:string, comunidad:string, provincia:string, localidad:string, cp:number, user_image:string){
     console.log('Usuario Añadido')
-    console.log(this.usuarioService.usuario)
-    this.usuarioService.putUsuario(new Usuario(name, password, email, comunidad, provincia, localidad,cp)).subscribe((data)=>{
+    this.usuarioService.putUsuario(new Usuario(idUsuario, name, password, email, comunidad, provincia, localidad, cp, user_image)).subscribe((data)=>{
+      console.log(data)
+    })
+  }
+  borrarUsuario(id:number){
+    console.log('Usuario Añadido')
+    this.usuarioService.deleteUsuario(id).subscribe((data)=>{
       console.log(data)
     })
   }

@@ -19,7 +19,7 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-success" (click)="login()" (click)="modalRef.hide()"
+    <button type="button" class="btn btn-success" [routerLink]="['/home']" (click)="login()" (click)="modalRef.hide()"
       >Ingresar</button>
   </div>
 </ng-template>
@@ -68,7 +68,7 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-success" [routerLink]="['/home']" (click)="aparecerF()" (click)="modalRef.hide()" (click)="newUsuario(name.value, password.value, email.value, comunidad.value, provincia.value, localidad.value, cp.value )"
+    <button type="button" class="btn btn-success" [routerLink]="['/home']" (click)="aparecerF()" (click)="modalRef.hide()" (click)="newUsuario(null, name.value, password.value, email.value, comunidad.value, provincia.value, localidad.value, cp.value, null)"
      >Registrarse</button>
   </div>
 </ng-template>
@@ -88,7 +88,7 @@
             </div>
           </div>
         </div>
-      </div> -->
+      </div>
       <!-- <hr class="border border-success"> -->
       <!-- <hr>-->
 
