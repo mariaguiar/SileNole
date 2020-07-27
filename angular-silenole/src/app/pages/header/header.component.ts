@@ -38,20 +38,20 @@ mostrarTodosProductos(){
   })
 }
 
-mostrarProductosPorCategoria(){
+/* mostrarProductosPorCategoria(){
   this.productService.categoriaSeleccionada="Todo";
   this.productService.getProductsBySelectedCategory().subscribe((data)=>{
     this.products = data
     console.log(data)
   })
-}
+} */
   ngOnInit(): void {
   }
   openModal(templateHeader: TemplateRef<any>){
     this.modalRef = this.modalService.show(templateHeader)
   }
-  public aparecerF2(){
+  /* public aparecerF2(){
     this.servicio.aparecer=false
     console.log(this.servicio.aparecer)
-    }
+    } */
 }

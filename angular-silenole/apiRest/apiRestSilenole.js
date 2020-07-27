@@ -122,6 +122,21 @@ app.delete("/siles", function (request, response) {
     })
 });
 // GET /buscar/:categoria = Obtiene todos los noles solicitados segun categoria
+app.get("/buscar/:categoria", function (request, response) {
+    var categoria = request.params.categoria;
+    let sql = "SELECT * FROM product WHERE categoria='"+categoria+"'"; 
+    connection.query(sql, function(err, result){
+        if (err){
+            console.log(err)
+            console.log("hola desde api")
+        }else{
+            console.log('Objetos en la categoria ' + categoria)
+            console.log(result)
+        } 
+    response.send(result);
+    })
+});
+// GET /buscar/:categoria = Obtiene todos los noles solicitados segun categoria
 /* app.get("/buscar/:categoria", function (request, response) {
     var categoria = request.params.categoria;
     let sql;
@@ -141,7 +156,7 @@ app.delete("/siles", function (request, response) {
     response.send(result);
     })
 }); */
-app.get("/buscar/:categoria", function (request, response) {
+/* app.get("/buscar/:categoria", function (request, response) {
     var categoria = request.params.categoria;
     let sql;
     let params = [];
@@ -161,7 +176,7 @@ app.get("/buscar/:categoria", function (request, response) {
         } 
     response.send(result);
     })
-});
+}); */
 /* ---------------------------------PRODUCTOS SIN HACER----------------------------------- */
 // GET /SILES/:DISTANCIA = Obtiene el todos los siles según distancia
 /* app.get("/siles/:distancia", function (request, response) {
