@@ -1,6 +1,6 @@
 <!-- HEADER Y CATEGORIAS -->
-<app-header></app-header>
-<app-categories></app-categories>
+<!-- <app-header></app-header>
+<app-categories></app-categories> -->
 
 <!-- MODAL  -->
 <ng-template #content3 let-modal>
@@ -12,7 +12,7 @@
     </form>
   </div>
   <div class="d-flex justify-content-center mb-3">
-    <button type="button" class="btn btn-outline-danger" (click)="borrarUsuario(usuarioActual.user_id)" [routerLink]="['/']"  (click)="modal.dismiss('Cross click')">Eliminar Cuenta</button>
+    <button type="button" class="btn btn-outline-danger"  [routerLink]="['/']"  (click)="modal.dismiss('Cross click')">Eliminar Cuenta</button>
   </div>
 </ng-template>
 <pre>{{ closeResult }}</pre>
@@ -35,8 +35,6 @@
 
       <!-- imagen perfil -->
 
-      <div class="form-group">
-      <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
 
       <div class="container-fluid">
         <div class="row align-items-between d-flex justify-content-center pt-3 pb-3 mt-3 ">
@@ -52,7 +50,7 @@
 
             <div class="row justify-content-center ">
 
-              <div><input type="file" class="text-success" name="user_image" [(ngModel)]="usuarioActual.user_image" #user_image="ngModel" required style="font-size: smaller; max-width: max-content;"></div>
+              <div><input type="file" class="text-success" style="font-size: smaller; max-width: max-content;"></div>
             </div>
 
 
@@ -60,64 +58,10 @@
         </div>
       </div>
 
-        <div class="form-group">
-          <label for="recipient-name" class="col-form-label">Nombre Usuario:</label>
-          <input type="text" class="form-control border-success" name="name" [(ngModel)]="usuarioActual.name" #name="ngModel" required>
-        </div>
-        <div class="form-group">
-          <label for="recipient-name" class="col-form-label" >Email:</label>
-          <input type="email" class="form-control border-success" name="email" [(ngModel)]="usuarioActual.email" #email="ngModel" required>
-        </div>
-        <div class="form-group">
-          <label for="recipient-name" class="col-form-label">Comunidad Autónoma:</label>
-          <input type="text" class="form-control border-success" name="comunidad" [(ngModel)]="usuarioActual.comunidad" #comunidad="ngModel" required>
-        </div>
-        <div class="form-group">
-          <label for="recipient-name" class="col-form-label">Provincia:</label>
-          <input type="text" class="form-control border-success" name="provincia" [(ngModel)]="usuarioActual.provincia" #provincia="ngModel" required>
-        </div>
-        <div class="form-group">
-          <label for="recipient-name" class="col-form-label">Localidad:</label>
-          <input type="text" class="form-control border-success" name="localidad" [(ngModel)]="usuarioActual.localidad" #localidad="ngModel" required>
-        </div>
-        <div class="form-group">
-          <label for="recipient-name" class="col-form-label">CP:</label>
-          <input type="number" class="form-control border-success" name="cp" [(ngModel)]="usuarioActual.cp" #cp="ngModel" required>
-        </div>
-        <div class="form-group">
-          <label for="recipient-name" class="col-form-label">Contraseña:</label>
-          <input type="password" class="form-control border-success" name="password" [(ngModel)]="usuarioActual.password" #password="ngModel"required>
-        </div>
-        <div class="form-group">
-          <label for="recipient-name" class="col-form-label">Confirmar contraseña:</label>
-          <input type="password" class="form-control border-success" name="password" [(ngModel)]="usuarioActual.password" #password="ngModel"required>
-        </div>
-      </form>
-    </div>
-    <div class="container-fluid">
-      <div class="row align-items-center d-flex justify-content-center">
-        <div class="my-1">
-          <button type="button" class="btn btn-success" [routerLink]="['/usuario']" (click)="modificarUsuario(usuarioActual.user_id, name.value, password.value, email.value, comunidad.value, provincia.value, localidad.value, cp.value, user_image.value.replace('C:\\fakepath\\','') )">Actualizar Perfil</button>
-        </div> &nbsp;
-      </div>
-    </div>
-    <div class="container-fluid">
-      <div class="row align-items-center d-flex justify-content-center pb-3">
-        <div>
-          <hr>
-          <button type="button" class="btn btn-danger btn-sm" (click)="open3(content3)"><i class="fa fa-trash" aria-hidden="true"></i>
-            Eliminar Cuenta</button>
-        </div> &nbsp;
-      </div>
-    </div>
-    <!-- <div>
-      <button type="button" class="btn btn-success" [routerLink]="['/home']" (click)="modificarUsuario(name.value, password.value, email.value, comunidad.value, provincia.value, localidad.value, cp.value )"
-       >Registrarse</button>
-    </div> -->
 
       <!-- form datos-->
 
-      <!-- <form>
+      <form>
         <div>
           <label for="exampleFormControlInput1" class="text-success">Nombre</label>
           <input type="text" class="form-control border border-success" id="exampleFormControlInput1"
@@ -170,15 +114,15 @@
           <input type="number" class="form-control border border-success" id="exampleFormControlInput1"
             placeholder="28007">
         </div>&nbsp;
-      </form> -->
-      <!-- <div class="container-fluid">
+      </form>
+      <div class="container-fluid">
         <div class="row align-items-center d-flex justify-content-center">
           <div class="my-1">
             <button type="button" class="btn btn-success">Actualizar Perfil</button>
           </div> &nbsp;
         </div>
-      </div> -->
-      <!-- <div class="container-fluid">
+      </div>
+      <div class="container-fluid">
         <div class="row align-items-center d-flex justify-content-center pb-3">
           <div>
             <hr>
@@ -186,7 +130,7 @@
               Eliminar Cuenta</button>
           </div> &nbsp;
         </div>
-      </div> -->
+      </div>
 
     </div>
 
@@ -195,4 +139,4 @@
 <br>
 
 <!-- FOOTER -->
-<app-footer></app-footer>
+<!-- <app-footer></app-footer> -->

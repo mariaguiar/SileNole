@@ -1,28 +1,24 @@
 <!-- HEADER Y CATEGORIAS -->
-<app-header></app-header>
-<app-categories></app-categories>
+<!-- <app-header></app-header>
+<app-categories></app-categories> -->
 
 <!-- MODAL MODIFICAR PRODUCTO -->
 <ng-template #contentMMP let-modal>
   <div class="container-fluid">
     <div class="row d-flex justify-content-center">
       <div class="col-10 bg-light border border-success text-success mb-5 mt-5">
-        <form #uploadForm="ngForm" (ngSubmit)="onSubmit(uploadForm)">
+        <form>
           <div class="form-group mt-3">
             <label for="exampleFormControlFile1">Carga una Foto</label>
-            <input type="file" class="form-control-file" name="product_image" [(ngModel)]="productoActual.product_image"
-              #product_image="ngModel" required>
-              <small id="emailHelp" class="form-text text-muted">*Obligatorio.</small>
+            <input type="file" class="form-control-file" id="exampleFormControlFile1">
           </div>
           <div class="form-group">
             <label for="exampleInputPassword1">Producto</label>
-            <input type="text" class="form-control" name="nombre" [(ngModel)]="productoActual.nombre" #nombre="ngModel"
-              placeholder="En una sola palabra" required>
-              <small id="emailHelp" class="form-text text-muted">*Obligatorio.</small>
+            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="En una sola palabra">
           </div>
           <div class="form-group">
             <label for="exampleFormControlSelect1">Elige Categoría</label>
-            <select class="form-control" name="categoria" [(ngModel)]="productoActual.categoria" #categoria="ngModel" required>
+            <select class="form-control" id="exampleFormControlSelect1">
               <option>Ordenadores</option>
               <option>Móviles</option>
               <option>Consolas</option>
@@ -31,25 +27,17 @@
               <option>Muebles</option>
               <option>Motor</option>
               <option>Deporte</option>
-              <option>Libros y Música</option>
+              <option>Libros y musica</option>
               <option>Electrodomésticos</option>
               <option>Otros</option>
             </select>
-            <small id="emailHelp" class="form-text text-muted">*Obligatorio.</small>
           </div>
           <div class="form-group">
             <label for="exampleFormControlTextarea1">Describe el producto</label>
-            <textarea class="form-control" name="descripcion" [(ngModel)]="productoActual.descripcion" #descripcion="ngModel"
-              required rows="3"></textarea>
-              <small id="emailHelp" class="form-text text-muted">*Obligatorio.</small>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
           </div>
           <div class="row justify-content-center my-4">
-            <button type="submit" class="btn btn-success mr-1"
-              (click)="modificarSile(productoActual.product_id, nombre.value, descripcion.value, categoria.value, idUsuario, product_image.value.replace('C:\\fakepath\\',''))"
-              (click)="modal.dismiss('Cross click')">Modificar Producto</button>
-              <button type="submit" class="btn btn-danger ml-1"
-              (click)="modificarSile(productoActual.product_id, nombre.value, descripcion.value, categoria.value, idUsuario, product_image.value.replace('C:\\fakepath\\',''))"
-              (click)="modal.dismiss('Cross click')">Cancelar</button>
+            <button type="submit" class="btn btn-success ">Modificar Producto</button>
           </div>
         </form>
       </div>
@@ -63,15 +51,12 @@
   <div class="modal-body text-success text-center">
     <form>
       <div class="form-group">
-        <label for="recipient-name" class="col-form-label">
-          <h3>¿Seguro que quieres borrar tu producto?</h3>
-        </label>
+        <label for="recipient-name" class="col-form-label"><h3>¿Seguro que quieres borrar tu producto?</h3></label>
       </div>
     </form>
   </div>
   <div class="d-flex justify-content-center mb-3">
-    <button type="button" class="btn btn-outline-danger" (click)="borrarSile(idProducto)" [routerLink]="['/siles']" 
-      (click)="modal.dismiss('Cross click')">Borrar Producto</button>
+    <button type="button" class="btn btn-outline-danger"  [routerLink]="['/']"  (click)="modal.dismiss('Cross click')">Borrar Producto</button>
   </div>
 </ng-template>
 <pre>{{ closeResult }}</pre>
@@ -79,7 +64,7 @@
 <!--TITULO-->
 <div class="container-fluid">
   <div class="row">
-    <div class="col text-success mt-3 mb-5 text-center">
+    <div class="col text-success mt-5 mb-5 text-center">
       <h2>Mis Productos</h2>
     </div>
   </div>
@@ -90,32 +75,74 @@
   <div class="row d-flex justify-content-center">
     <div class="col-10 border border-success ">
       <div class="row align-items-end d-flex justify-content-center">
-
-        <div class="card border-0 mt-2" style="width: 18rem; height: 450px" *ngFor="let producto of products">
-          <img class="card-img-top m-auto" src="assets/img/{{producto.product_image}}" alt="Card image cap"
+        <!-- PRODUCTO 1 -->
+        <div class="card border-0 mt-2" style="width: 18rem; height: 450px">
+          <img class="card-img-top m-auto" src="assets/img/mesa.jpg" alt="Card image cap"
             style="max-width: 200px; max-height: 200px">
-          <div class="card-block ml-2 mr-2 text-center">
-            <h4 class="card-title">Producto: {{producto.nombre}}</h4>
-            <h6 class="card-text">Descripción:</h6>
-            <p class="card-text">{{producto.descripcion}}</p>
+          <div class="card-block ml-2 mr-2 text-center ">
+            <h4 class="card-title">Producto: Nombre</h4>
+            <h6 class="card-text">Descripcion:</h6>
+            <p class="card-text">Descripcion del producto detallando sus caracteristicas con limite de caracteres</p>
           </div>
           <div class="mt-3 mb-3 d-flex justify-content-center">
-            <button type="button" class="btn btn-outline-success btn-sm mr-1"
-              (click)="pasarProducto(producto)" (click)="openModalModifyProduct(contentMMP)"
-              [routerLink]="['/siles']"><i class="fa fa-refresh" aria-hidden="true"></i>
+            <button type="button" class="btn btn-outline-success btn-sm mr-1"><i class="fa fa-refresh" aria-hidden="true"></i>
               Modificar</button>
-            <button type="button" class="btn btn-outline-danger btn-sm ml-1"
-              (click)="pasarIdProducto(producto.product_id)" (click)="openModalDeleteProduct(contentMDP)"
-              [routerLink]="['/siles']"><i class="fa fa-trash" aria-hidden="true"></i>
+            <button type="button" class="btn btn-outline-danger btn-sm ml-1"><i class="fa fa-trash" aria-hidden="true"></i>
               Borrar</button>
           </div>
         </div>
 
+        <div class="card border-0 mt-2" style="width: 18rem; height: 450px">
+          <img class="card-img-top m-auto" src="assets/img/bicicleta.jpg" alt="Card image cap"
+            style="max-width: 200px; max-height: 200px">
+          <div class="card-block ml-2 mr-2 text-center ">
+            <h4 class="card-title">Producto: Nombre</h4>
+            <h6 class="card-text">Descripcion:</h6>
+            <p class="card-text">Descripcion del producto detallando sus caracteristicas con limite de caracteres</p>
+          </div>
+          <div class="mt-3 mb-3 d-flex justify-content-center">
+            <button type="button" class="btn btn-outline-success btn-sm mr-1" (click)="openModalModifyProduct(contentMMP)" [routerLink]="['/siles']"><i class="fa fa-refresh" aria-hidden="true"></i>
+              Modificar</button>
+            <button type="button" class="btn btn-outline-danger btn-sm ml-1" (click)="openModalDeleteProduct(contentMDP)" [routerLink]="['/siles']"><i class="fa fa-trash" aria-hidden="true"></i>
+              Borrar</button>
+          </div>
+        </div>
+
+        <div class="card border-0 mt-2" style="width: 18rem; height: 450px">
+          <img class="card-img-top m-auto" src="assets/img/samsung_s20+.jpg" alt="Card image cap"
+            style="max-width: 200px; max-height: 200px">
+          <div class="card-block ml-2 mr-2 text-center ">
+            <h4 class="card-title">Producto: Nombre</h4>
+            <h6 class="card-text">Descripcion:</h6>
+            <p class="card-text">Descripcion del producto detallando sus caracteristicas con limite de caracteres</p>
+          </div>
+          <div class="mt-3 mb-3 d-flex justify-content-center">
+            <button type="button" class="btn btn-outline-success btn-sm mr-1"><i class="fa fa-refresh" aria-hidden="true"></i>
+              Modificar</button>
+            <button type="button" class="btn btn-outline-danger btn-sm ml-1"><i class="fa fa-trash" aria-hidden="true"></i>
+              Borrar</button>
+          </div>
+        </div>
+
+        <div class="card border-0 mt-2" style="width: 18rem; height: 450px">
+          <img class="card-img-top m-auto" src="assets/img/casco.jpg" alt="Card image cap"
+            style="max-width: 200px; max-height: 200px">
+          <div class="card-block ml-2 text-center">
+            <h4 class="card-title">Producto: Nombre</h4>
+            <h6 class="card-text">Descripcion:</h6>
+            <p class="card-text">Descripcion del producto detallando sus caracteristicas con limite de caracteres</p>
+          </div>
+          <div class="mt-3 mb-3 d-flex justify-content-center">
+            <button type="button" class="btn btn-outline-success btn-sm mr-1"><i class="fa fa-refresh" aria-hidden="true"></i>
+              Modificar</button>
+            <button type="button" class="btn btn-outline-danger btn-sm ml-1"><i class="fa fa-trash" aria-hidden="true"></i>
+              Borrar</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
 <!-- FOOTER -->
-<app-footer></app-footer>
-
+<!-- <app-footer></app-footer> -->
