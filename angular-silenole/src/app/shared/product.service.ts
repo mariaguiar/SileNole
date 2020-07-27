@@ -1,37 +1,68 @@
 import { Injectable } from '@angular/core';
 import { Product } from '../models/product';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Nole } from '../models/nole';
+import { Observable, of } from 'rxjs';
+
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
 
-  public product: Product;
-  public products: Product[];
+  public product: any
+  public products: any[];
+  public idUsuario: number;
+  public ownerActual: number
+  public categoriaSeleccionada: any;
 
-  private url = "http://localhost:3000/siles"
+  private url = "http://localhost:3000/"
+  
 
- constructor(private http: HttpClient){}
- 
-getProduct(id: number)
-{
-  return this.http.get(this.url + "?id=" + id);
-}
-getProducts()
-{
-  return this.http.get(this.url);
-}
-postProduct(newProduct: Product)
-{
-  return this.http.post(this.url, newProduct)
-}
-putProduct(newProduct: Product)
-{
-  console.log(newProduct);
-  return this.http.put(this.url, newProduct)
-}
+  constructor(private http: HttpClient) {
+    console.log("funcionando servicio product");
+    this.categoriaSeleccionada = "Todo";
+  }
 
-public deleteProduct(id:number){
+  //PARA ACTUALIZAR CATEGORIA
+  getCategoriaSelecionada(): Observable<any> {
+    return of(this.categoriaSeleccionada);
+  }
+
+  obtenerProductos() {
+    return this.products
+  }
+
+  getAllProducts() {
+    return this.http.get(this.url+ "siles/");
+  }
+  getProductsByUser(id: number) {
+    return this.http.get(this.url + "siles/" + id);
+  }
+  postProduct(newProduct: Product) {
+    return this.http.post(this.url + "siles/", newProduct)
+  }
+  getNolesByUser(id: number) {
+    return this.http.get(this.url + "noles/" + id);
+  }
+  postNole(newNoleRelation: Nole) {
+    return this.http.post(this.url + "noles/", newNoleRelation)
+  }
+  putProduct(newProduct: Product) {
+    console.log(newProduct);
+    return this.http.put(this.url+ "siles/", newProduct)
+  }
+
+  getProductsBySelectedCategory() {
+    console.log("hola desde product.service")
+    return this.http.get(this.url + "buscar/" + this.categoriaSeleccionada);
+  }
+
+  getProductsByCategory(categoria: string) {
+    console.log("hola desde product.service")
+    return this.http.get(this.url + "buscar/" + categoria);
+  }
+  
+  public deleteProduct(id:number){
   let options = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -40,7 +71,7 @@ public deleteProduct(id:number){
       product_id: id
     },
   };
-  return this.http.delete(this.url, options)
-}
+  return this.http.delete(this.url+ "siles/", options)
+  }
 
 }

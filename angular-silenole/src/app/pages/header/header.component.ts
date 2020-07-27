@@ -2,6 +2,8 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import {ServService} from './../../serv.service'
+import { ProductService } from 'src/app/shared/product.service';
+import { Product } from 'src/app/models/product';
 
 @Component({
   selector: 'app-header',
@@ -13,13 +15,36 @@ export class HeaderComponent implements OnInit {
   collapsed = true;
   toggleCollapsed(): void {
   this.collapsed = !this.collapsed;
-    
   }
 
-  modalRef:BsModalRef
+  public product= new Product(null,null,null,null,null,null)
+  public products: any;
+  
+  
+modalRef:BsModalRef
 
-    constructor(public servicio:ServService, private modalService: BsModalService) { }
+constructor(public productService:ProductService, public servicio:ServService, private modalService: BsModalService) { }
 
+mostrarProductos(uid){
+  this.productService.getProductsByUser(uid).subscribe((data)=>{
+    this.products = data
+    console.log(data)
+  })
+}
+mostrarTodosProductos(){
+  this.productService.getAllProducts().subscribe((data)=>{
+    this.products = data
+    console.log(data)
+  })
+}
+
+mostrarProductosPorCategoria(){
+  this.productService.categoriaSeleccionada="Todo";
+  this.productService.getProductsBySelectedCategory().subscribe((data)=>{
+    this.products = data
+    console.log(data)
+  })
+}
   ngOnInit(): void {
   }
   openModal(templateHeader: TemplateRef<any>){

@@ -1,4 +1,4 @@
-export class Sile {
+export class Nole {
     public user_id:number
     public product_id:number    
     

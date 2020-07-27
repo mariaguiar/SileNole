@@ -10,12 +10,10 @@ import { Message } from '../../models/message';
 export class MessagesComponent implements OnInit {
 
   public message=new Message(null,null,null,null,null)
-  
-  public message1: Message
 
   constructor(public messageService:MessageService) { 
     console.log("Funcionando servicio messageService")
-    this.message1= new Message(null,null,null,'',null)
+    this.message
   }
   onSubmit(form){
     console.log(form.value)
@@ -28,13 +26,6 @@ export class MessagesComponent implements OnInit {
       console.log(data)
     })
   }
-
-  enviarTexto(nuevoTexto: string){
-    console.log(this.message.text);
-    this.message1.text=nuevoTexto;
-    console.log(this.message.text, "texto a imprimir");
-  }
-
   ngOnInit(): void {
   }
 

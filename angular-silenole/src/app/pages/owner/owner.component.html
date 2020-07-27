@@ -1,25 +1,15 @@
 <!-- HEADER Y CATEGORIAS -->
-<!-- <app-header></app-header>
-<app-categories></app-categories> -->
+<app-header></app-header>
+<app-categories></app-categories>
 
 <!--DATOS DE USUARIO-->
 <div class="d-flex justify-content-center">
   <div class="float-left">
     <h4 class="titulo">
-      <p class="text-center">Usuario Pepito</p>
+      <p class="text-center">Usuario {{nombreOwner}}</p>
     </h4>
-    <div class="card border-success mb-3" style="max-width: 18rem;">
+    <div class="card border-success mb-3" style="max-width: 5rem;">
       <img src="assets/img/vector-person-icon.jpg" class="card-img-top" alt="...">
-      <div class="card-body text-black">
-       <!--  <ul>
-          <li>Nombre : Pepe Guzman</li>
-          <li>Localidad: Mostoles</li>
-          <li>Email: Pepe123@gmail.com</li>
-        </ul>-->
-        <div class="d-flex justify-content-center">
-          <button type="button" class="btn btn-success" [routerLink]="['/message']">Enviar Mensaje</button>
-        </div> 
-      </div>
     </div>
   </div>
 </div>
@@ -33,64 +23,31 @@
 </div>
 
 
-<!--CONTAINER CON PRODUCTOS-->
-
-<div class="container-fluid mb-5">
-  <div class="row justify-content-center">
+<!-- CONTENEDOR PRODUCTOS -->
+<div class="container-fluid mb-5 ">
+  <div class="row d-flex justify-content-center">
     <div class="col-10 border border-success ">
-      <div class="row justify-content-center">
-        <div class="card border border-0 mt-2 pb-2" style="width: 18rem; height: 350px">
+      <div class="row align-items-end d-flex justify-content-center">
 
-          <img class="card-img-top m-auto" src="assets/img/mesa.jpg" alt="Card image cap"
+        <div class="card border-0 mt-2" style="width: 18rem; height: 450px" *ngFor="let producto of products">
+          <img class="card-img-top m-auto" src="assets/img/{{producto.product_image}}" alt="Card image cap"
             style="max-width: 200px; max-height: 200px">
-
-          <div class="card-block ml-2 text-center ">
-            <h4 class="card-title">Producto: Nombre</h4>
-            <h6 class="card-text">Descripcion:</h6>
-            <p class="card-text">Descripcion del producto detallando sus caracteristicas con limite de caracteres</p>
+          <div class="card-block ml-2 mr-2 text-center">
+            <h4 class="card-title">Producto: {{producto.nombre}}</h4>
+            <h6 class="card-text">Descripción:</h6>
+            <p class="card-text">{{producto.descripcion}}</p>
           </div>
-
-        </div>
-        <div class="card border-0 mt-2 pb-2" style="width: 18rem; height: 350px">
-
-          <img class="card-img-top m-auto" src="assets/img/bicicleta.jpg" alt="Card image cap"
-            style="max-width: 200px; max-height: 200px">
-
-          <div class="card-block ml-2 text-center ">
-            <h4 class="card-title">Producto: Nombre</h4>
-            <h6 class="card-text">Descripcion:</h6>
-            <p class="card-text">Descripcion del producto detallando sus caracteristicas con limite de caracteres</p>
+          <div class="mt-3 mb-3 d-flex justify-content-center">
+            <button type="button" class="btn btn-outline-success btn-sm mr-1" (click)="relacionarProductoMensaje(producto.product_id)"
+               [routerLink]="['/message']"><i class="fa fa-envelope-open" aria-hidden="true"></i>
+              Enviar Mensaje</button>
           </div>
-
         </div>
-        <div class="card border-0 mt-2 pb-2" style="width: 18rem; height: 350px">
 
-          <img class="card-img-top m-auto" src="assets/img/samsung_s20+.jpg" alt="Card image cap"
-            style="max-width: 200px; max-height: 200px">
-
-          <div class="card-block ml-2 text-center ">
-            <h4 class="card-title">Producto: Nombre</h4>
-            <h6 class="card-text">Descripcion:</h6>
-            <p class="card-text">Descripcion del producto detallando sus caracteristicas con limite de caracteres</p>
-          </div>
-
-        </div>
-        <div class="card border-0 mt-2 pb-2" style="width: 18rem; height: 350px">
-
-          <img class="card-img-top m-auto" src="assets/img/casco.jpg" alt="Card image cap"
-            style="max-width: 200px; max-height: 200px">
-
-          <div class="card-block ml-2 text-center ">
-            <h4 class="card-title">Producto: Nombre</h4>
-            <h6 class="card-text">Descripcion:</h6>
-            <p class="card-text">Descripcion del producto detallando sus caracteristicas con limite de caracteres</p>
-          </div>
-
-        </div>
       </div>
     </div>
   </div>
 </div>
 
 <!-- FOOTER -->
-<!-- <app-footer></app-footer> -->
+<app-footer></app-footer>
