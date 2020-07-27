@@ -17,9 +17,11 @@ import { Usuario } from 'src/app/models/usuario';
 export class MessagesComponent implements OnInit {
 
   public message=new Message(null,null,null,null,null ,null)
-  public messages: any;
-  public productoActual= new Product(null,null,null,null,null,null)
+  public messagesNoles: any;
+  public messagesSiles: any;
+  // public productoActual= new Product(null,null,null,null,null,null)
   public noles: any;
+  public siles: any;
   public usuarioActual=new Usuario(null,null,null,null,null,null,null,null,null)
   // public message1: Message
   public fecha = new Date();
@@ -27,7 +29,9 @@ export class MessagesComponent implements OnInit {
   constructor(public usuarioService:UsuarioService, public messageService:MessageService, public productService:ProductService, public loginService:LoginService) { 
     console.log("Funcionando servicio messageService")
     this.cargarNoles()
-    // this.message1= new Message(null,null,null,'',null)
+    this.cargarMensajesNoles()
+    this.cargarSiles()
+    this.cargarMensajesSiles()
   }
   onSubmit(form){
     console.log(form.value)
@@ -37,6 +41,14 @@ export class MessagesComponent implements OnInit {
     console.log("El chat seleccionado es: " + nole.chat_id);
     this.messageService.noleSeleccionado.chat_id = nole.chat_id;
     this.messageService.noleSeleccionado.product_id = nole.product_id;
+    this.cargarMensajesNoles();
+  }
+
+  pasarSile(sile){
+    console.log("El chat seleccionado es: " + sile.chat_id);
+    this.messageService.sileSeleccionado.chat_id = sile.chat_id;
+    this.messageService.sileSeleccionado.product_id = sile.product_id;
+    this.cargarMensajesSiles();
   }
 
   enviarMsgNoleSeleccionado(text:string){
@@ -49,28 +61,54 @@ export class MessagesComponent implements OnInit {
     this.messageService.postMessage(new Message(null, chat_id, sender_id,  product_id, text, date)).subscribe((data)=>{
     console.log(data)
     })
+    this.cargarMensajesNoles();
   }
 
   cargarNoles() {
     let uid=this.loginService.usuarioActual.user_id
-    this.productService.getNolesByUser(uid).subscribe((data)=>{
+    this.messageService.getNolesByUser(uid).subscribe((data)=>{
       this.noles = data
       console.log(data) 
     })
   }
-  cargarMensajes() {
-    /* let uid=this.loginService.usuarioActual.user_id
-    this.productService.obtenerMensage(uid).subscribe((data)=>{
-      this.products = data
+
+  cargarMensajesNoles() {
+    let chat_id = this.messageService.noleSeleccionado.chat_id
+    this.messageService.getMessages(chat_id).subscribe((data)=>{
+      this.messagesNoles = data
       console.log(data)  
-    })*/
+    })
   }
 
- /*  enviarTexto(nuevoTexto: string){
-    console.log(this.message.text);
-    this.message1.text=nuevoTexto;
-    console.log(this.message.text, "texto a imprimir");
-  } */
+    cargarSiles() {
+      let uid=this.loginService.usuarioActual.user_id
+      this.messageService.getSilesByUser(uid).subscribe((data)=>{
+        this.siles = data
+        console.log(data) 
+      })
+    }
+
+    cargarMensajesSiles() {
+      let chat_id = this.messageService.noleSeleccionado.chat_id
+      this.messageService.getMessages(chat_id).subscribe((data)=>{
+        this.messagesSiles = data
+        console.log(data)  
+      })
+    }
+  
+    enviarMsgSileeSeleccionado(text:string){
+      console.log('Hola desde enviarMsgSileeSeleccionado')
+      console.log(text)
+      let sender_id = this.loginService.usuarioActual.user_id;
+      let chat_id = this.messageService.sileSeleccionado.chat_id
+      let product_id = this.messageService.sileSeleccionado.product_id
+      let date = new Date();
+      this.messageService.postMessage(new Message(null, chat_id, sender_id,  product_id, text, date)).subscribe((data)=>{
+      console.log(data)
+      })
+      this.cargarMensajesSiles();
+    }
+
 
   ngOnInit(): void {
   }

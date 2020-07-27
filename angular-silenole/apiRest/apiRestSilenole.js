@@ -24,10 +24,10 @@ app.use(bodyParser.json());
 
 /* ---------------------------------PRODUCTOS FUNCIONANDO----------------------------------- */
 // GET /SILES/:USERID = Obtiene el todos los siles creados por el usuario
-app.get("/siles/:user_id", function (request, response) {
+app.get("/products/:user_id", function (request, response) {
     var user_id = request.params.user_id;
     let params = [user_id];
-    let sql = "SELECT * FROM product WHERE user_id = ?";
+    let sql = "SELECT * FROM products WHERE user_id = ?";
     connection.query(sql, params, function(err, result){
         if (err){
             console.log(err)
@@ -39,8 +39,8 @@ app.get("/siles/:user_id", function (request, response) {
     })
 });
 // GET /SILES= Obtiene todos los productos
-app.get("/siles", function (request, response) {
-    let sql = "SELECT * FROM product"
+app.get("/products", function (request, response) {
+    let sql = "SELECT * FROM products"
     connection.query(sql, function(err, result){
         if (err){
             console.log(err)
@@ -51,23 +51,9 @@ app.get("/siles", function (request, response) {
     response.send(result);
     })
 });
-// GET /NOLES= Obtiene todos los productos
-app.get("/noles/:user_id", function (request, response) {
-    var user_id = request.params.user_id;
-    let params = [user_id];
-    let sql = "SELECT product.nombre, product.descripcion, product.product_image, noles.product_id, noles.chat_id FROM noles INNER JOIN product ON (noles.product_id = product.product_id) WHERE noles.user_id = ?"
-    connection.query(sql, params, function(err, result){
-        if (err){
-            console.log(err)
-        }else{
-            console.log('Objetos del Usuario')
-            console.log(result)
-        } 
-    response.send(result);
-    })
-});
+
 // POST /SILES/ = Añade un nuevo sile del usuario 
-app.post("/siles", function (request, response) {
+app.post("/products", function (request, response) {
     /* let product_id = request.body.product_id */
     let nombre = request.body.nombre
     let descripcion = request.body.descripcion
@@ -75,7 +61,7 @@ app.post("/siles", function (request, response) {
     let user_id  = request.body.user_id 
     let product_image = request.body.product_image
     let params = [nombre, descripcion, categoria, user_id, product_image]
-    let sql = `INSERT INTO product (nombre, descripcion, categoria, user_id , product_image) VALUES ( ?, ?, ?, ?, ?)`;
+    let sql = `INSERT INTO products (nombre, descripcion, categoria, user_id , product_image) VALUES ( ?, ?, ?, ?, ?)`;
     connection.query(sql, params, function(err, result){
         if (err){
             console.log(err)
@@ -86,8 +72,9 @@ app.post("/siles", function (request, response) {
     response.send(result);
     })
 });
+
 // PUT /SILES/ = Actualiza un sile del usuario
-app.put("/siles", function (request, response) {
+app.put("/products", function (request, response) {
     let product_id = request.body.product_id
     let nombre = request.body.nombre
     let descripcion = request.body.descripcion
@@ -95,7 +82,7 @@ app.put("/siles", function (request, response) {
     let user_id  = request.body.user_id 
     let product_image = request.body.product_image
     let params = [nombre, descripcion, categoria, user_id , product_image]
-    let sql = "UPDATE product SET nombre = ?, descripcion = ?, categoria = ?, user_id = ?, product_image = ? WHERE product_id ="+product_id;
+    let sql = "UPDATE products SET nombre = ?, descripcion = ?, categoria = ?, user_id = ?, product_image = ? WHERE product_id ="+product_id;
     connection.query(sql, params, function(err, result){
         if (err){
             console.log(err)
@@ -107,10 +94,10 @@ app.put("/siles", function (request, response) {
     })
 });
 // DELETE PARA BORRAR UN PRODUCTO
-app.delete("/siles", function (request, response) {
+app.delete("/products", function (request, response) {
     let product_id = request.body.product_id
     let params = [product_id]
-    let sql = "DELETE FROM product WHERE product_id = ?"
+    let sql = "DELETE FROM products WHERE product_id = ?"
     connection.query(sql, params, function(err, result){
         if (err){
             console.log(err)
@@ -127,10 +114,10 @@ app.get("/buscar/:categoria", function (request, response) {
     let sql;
     let params = [];
     if(categoria==="Todo"){
-        sql = "SELECT * FROM product";
+        sql = "SELECT * FROM products";
     }else{
         params= [categoria]
-        sql = "SELECT * FROM product WHERE categoria = ?"; 
+        sql = "SELECT * FROM products WHERE categoria = ?"; 
     }
     connection.query(sql, params, function(err, result){
         if (err){
@@ -363,29 +350,45 @@ app.post("/noles/", function (request, response) {
     response.send(result);
     })
 });
-/* ---------------------------------USUARIOS SIN HACER----------------------------------- */
-// HACER
-// GET /NOLES/:USERID = Obtiene todos los productos del resto de los usuarios /PARA MENSAJES
-/* app.get("/noles/:user_id", function (request, response) {
+
+// GET /NOLES= Obtiene todos los productos
+app.get("/noles/:user_id", function (request, response) {
     var user_id = request.params.user_id;
-    let params = [user_id]
-    let sql = "SELECT * FROM product WHERE user_id = ?";
+    let params = [user_id];
+    let sql = "SELECT products.nombre, products.descripcion, products.product_image, noles.product_id, noles.chat_id FROM noles INNER JOIN products ON (noles.product_id = products.product_id) WHERE noles.user_id = ?"
     connection.query(sql, params, function(err, result){
         if (err){
             console.log(err)
         }else{
-            console.log('Noles del Usuario')
+            console.log('Objetos del Usuario')
             console.log(result)
         } 
     response.send(result);
     })
-}); */
+});
+
+// GET /SILES= Obtiene todos los productos
+app.get("/siles/:user_id", function (request, response) {
+    var user_id = request.params.user_id;
+    let params = [user_id];
+    let sql = "SELECT products.nombre, products.descripcion, products.product_image, noles.product_id, noles.chat_id FROM noles INNER JOIN products ON (noles.product_id = products.product_id) WHERE products.user_id = ?"
+    connection.query(sql, params, function(err, result){
+        if (err){
+            console.log(err)
+        }else{
+            console.log('Objetos del Usuario')
+            console.log(result)
+        } 
+    response.send(result);
+    })
+});
+
 /* ---------------------------------FIN NOLES----------------------------------- */
 // HACER
 // GET /buscar/ Obtiene los ultimos 4 productos agregados
 app.get("/buscar/", function (request, response) {
     var id = request.params.id;
-    let sql = "SELECT * FROM product ORDER BY product_id DESC LIMIT 4";
+    let sql = "SELECT * FROM products ORDER BY product_id DESC LIMIT 4";
     connection.query(sql, function(err, result){
         if (err){
             console.log(err)
@@ -400,7 +403,7 @@ app.get("/buscar/", function (request, response) {
 // GET /buscar/:categoria = Obtiene todos los noles solicitados segun categoria
 app.get("/buscar/:id", function (request, response) {
     var id = request.params.id;
-    let sql = "SELECT * FROM product WHERE categoria ="+id;
+    let sql = "SELECT * FROM products WHERE categoria ="+id;
     connection.query(sql, function(err, result){
         if (err){
             console.log(err)

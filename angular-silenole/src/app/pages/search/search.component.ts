@@ -56,8 +56,8 @@ export class SearchComponent implements OnInit {
     let uid = this.loginService.usuarioActual.user_id;
     this.productService.idProductoSeleccionado=pid;
     let newNole = new Nole(uid, pid);
-    this.productService.postNole(newNole).subscribe((data) => {
-      this.products = data
+    this.messageService.postNole(newNole).subscribe((data) => {
+      //this.products = data
       console.log(data)
     })
     this.messageService.noleSeleccionado = newNole;

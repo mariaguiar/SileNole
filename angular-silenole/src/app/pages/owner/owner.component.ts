@@ -39,8 +39,8 @@ export class OwnerComponent implements OnInit {
   relacionarProductoMensaje(pid){
     let uid=this.loginService.usuarioActual.user_id;
     let newNole= new Nole(uid,pid);
-    this.productService.postNole(newNole).subscribe((data)=>{
-      this.products = data
+    this.messageService.postNole(newNole).subscribe((data)=>{
+      //this.products = data
       console.log(data)
     })
     this.messageService.noleSeleccionado = newNole;

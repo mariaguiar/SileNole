@@ -33,23 +33,23 @@ export class ProductService {
   }
 
   getAllProducts() {
-    return this.http.get(this.url+ "siles/");
+    return this.http.get(this.url+ "products/");
   }
   getProductsByUser(id: number) {
-    return this.http.get(this.url + "siles/" + id);
+    return this.http.get(this.url + "products/" + id);
   }
   postProduct(newProduct: Product) {
-    return this.http.post(this.url + "siles/", newProduct)
+    return this.http.post(this.url + "products/", newProduct)
   }
-  getNolesByUser(id: number) {
+/*   getNolesByUser(id: number) {
     return this.http.get(this.url + "noles/" + id);
   }
   postNole(newNoleRelation: Nole) {
      return this.http.post(this.url + "noles/", newNoleRelation)
-  }
+  } */
   putProduct(newProduct: Product) {
     console.log(newProduct);
-    return this.http.put(this.url+ "siles/", newProduct)
+    return this.http.put(this.url+ "products/", newProduct)
   }
 
   getProductsBySelectedCategory() {
@@ -75,7 +75,7 @@ export class ProductService {
       product_id: id
     },
   };
-  return this.http.delete(this.url+ "siles/", options)
+  return this.http.delete(this.url+ "products/", options)
   }
 
 }
