@@ -17,6 +17,7 @@ import { MyProductsComponent } from './pages/my-products/my-products.component';
 import { ProductComponent } from './pages/product/product.component';
 import { NgbModule, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomeComponent } from './pages/home/home.component';
+import { CarouselModule } from 'ngx-bootstrap/carousel';
 
 //servicios
 import {ServService} from './serv.service';
@@ -42,14 +43,18 @@ import { UsuarioService } from './Shared/usuario.service';
     
   ],
   imports: [
-  
   BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
     NgbModule,NgbCarouselModule, BrowserAnimationsModule,
     ModalModule.forRoot(),
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
+    CarouselModule.forRoot(),
+    
 
   ],
   providers: [

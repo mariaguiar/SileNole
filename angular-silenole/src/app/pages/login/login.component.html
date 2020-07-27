@@ -8,19 +8,27 @@
            </button>
         </div>
         <div class="modal-body">
-          <form #form=ngForm (ngSubmit)="onSubmit(form)">
+          <form #form= "ngForm" method="post" (ngSubmit)="onSubmit(form)">
             <div class="form-group">
               <label for="recipient-name" class="col-form-label">Email:</label>
-              <input type="email" class="form-control border-success" id="recipient-name" [(ngModel)]="usuario.email">
+              <input type="email" class="form-control border-success" id="email" name="email" [(ngModel)]="email" #email="ngModel"  required>
+              <div *ngIf="userForm.submitted && email.invalid" class="invalid-feedback">
+              
+              </div>
             </div>
+            
             <div class="form-group">
               <label for="recipient-name" class="col-form-label">Contraseña:</label>
-              <input type="password" class="form-control border-success" id="recipient-name" [(ngModel)]="usuario.password" >
+              <input type="password" class="form-control border-success" name="password" id="password" [(ngModel)]="password"  #passsword="ngModel"   required>
+              
             </div>
+            
+        
           </form>
         </div>
+       
         <div class="modal-footer">
-          <button type="button" class="btn btn-success" [routerLink]="['/home']" (click)="aparecerF()" (click)="modalRef.hide()"
+          <button type="button" class="btn btn-success" (click)="login()" (click)="modalRef.hide()"
             >Ingresar</button>
         </div>
       </ng-template>
@@ -100,36 +108,31 @@
        <hr class="border border-success">
        <hr>
 
-       
+      <carousel class="carrusel row d-flex justify-content-center ml-5 mr-5 mt-3 mb-5">
+        <slide>
+          <img src="assets/img/caja4.jpg" alt="first slide"
+            style="display: block; height: 350px; width: 1200px; opacity: 0.8;">
+          <div class="carousel-caption d-none d-md-block  text-success">
+            <h3 style="font-size: xxx-large;">FÁCIL</h3>
+            <p style="color: black;">Regístrate y sube los productos que no utilices o que quieras intercambiar.</p>
+          </div>
+        </slide>
+        <slide>
+          <img src="assets/img/comodin.jpg" alt="second slide"
+            style="display: block; height: 350px; width: 1200px; opacity: 0.8;">
+          <div class="carousel-caption d-none d-md-block  text-success">
+            <h3 style="font-size: xxx-large;">RÁPIDO</h3>
+            <p style="color: black;">Utiliza los filtros para buscar productos y encuentra el que necesitas.</p>
+          </div>
+        </slide>
+        <slide>
+          <img src="assets/img/manos8.jpg" alt="third slide"
+            style="display: block; height: 350px; width: 1200px; opacity: 0.8;">
+          <div class="carousel-caption d-none d-md-block  text-success">
+            <h3 style="font-size: xxx-large;">SENCILLO</h3>
+            <p style="color: black;">Manda un mensaje al propietario del producto, llegad a un acuerdo y ¡listo! </p>
+          </div>
+        </slide>
+      </carousel>
 
-      <div class="carrusel row d-flex justify-content-center ml-5 mr-5 mt-5">
-        <ngb-carousel class="carrusel2 col-sm-4 col-md-8 col-lg-12 d-flex justify-content-center">
-          <ng-template ngbSlide>
-            <div class="d-flex  justify-content-center">
-              <img class="img" src="assets/img/caja4.jpg" alt="Random first slide">
-            </div>
-            <div class="textocarrousel carousel-caption  text-success ">
-              <h3 style="font-size: xxx-large;">FÁCIL</h3>
-              <p style="color: black;">Regístrate y sube los productos que no utilices o que quieras intercambiar.</p>
-            </div>
-          </ng-template>
-          <ng-template ngbSlide>
-            <div class="d-flex  justify-content-center ">
-              <img class="img " src="assets/img/comodin.jpg" alt="Random second slide">
-            </div>
-            <div class="textocarrousel carousel-caption  text-success">
-              <h3 style="font-size: xxx-large;">RÁPIDO</h3>
-              <p style="color: black;">Utiliza los filtros para buscar productos y encuentra el que necesitas.</p>
-            </div>
-          </ng-template>
-          <ng-template ngbSlide>
-            <div class="d-flex justify-content-center">
-              <img class="img " src="assets/img/manos8.jpg" alt="Random third slide">
-            </div>
-            <div class="textocarrousel carousel-caption  text-success">
-              <h3 style="font-size: xxx-large;">SENCILLO</h3>
-              <p style="color: black;">Manda un mensaje al propietario del producto, llegad a un acuerdo y ¡listo! </p>
-            </div>
-          </ng-template>
-        </ngb-carousel>
-      </div> 
+      
