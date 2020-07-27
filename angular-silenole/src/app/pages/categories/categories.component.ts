@@ -10,20 +10,25 @@ import { Product } from 'src/app/models/product';
 
 export class CategoriesComponent implements OnInit {
 
-  public product= new Product(null,null,null,null,null,null)
-  public products: any;
   public categoria: any;
 
   constructor(public productService:ProductService) { 
-    this.products=this.productService.products;
+    
   }
 
   ngOnInit(): void {
   }
 
   pasarCategoria(categoria: string){
-    this.productService.categoriaSeleccionada=categoria;
-    console.log(this.productService.categoriaSeleccionada)
+    this.productService.actualizarCategoriaSeleccionada(categoria);
+    this.mostrarProductosPorCategoria()
+  }
+
+  mostrarProductosPorCategoria(){
+    this.productService.getProductsBySelectedCategory().subscribe((data)=>{
+      this.productService.products = data
+      console.log(data)
+    })
   }
 }
 

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Product } from '../models/product';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Nole } from '../models/nole';
-import { Observable, of } from 'rxjs';
+/* import { Observable, of, Subject } from 'rxjs'; */
 
 @Injectable({
   providedIn: 'root'
@@ -10,23 +10,36 @@ import { Observable, of } from 'rxjs';
 export class ProductService {
 
   public product: any
-  public products: any[];
+  public products: any;
   public idUsuario: number;
   public ownerActual: number
-  public categoriaSeleccionada: any;
+  public categoriaSeleccionada: any; 
+  /* public categoriaSeleccionada$ = new Subject<string>(); */
 
   private url = "http://localhost:3000/"
   
 
   constructor(private http: HttpClient) {
     console.log("funcionando servicio product");
-    this.categoriaSeleccionada = "Todo";
+    // this.categoriaSeleccionada = "Ropa";
   }
 
-  //PARA ACTUALIZAR CATEGORIA
-  getCategoriaSelecionada(): Observable<any> {
-    return of(this.categoriaSeleccionada);
+  actualizarCategoriaSeleccionada(newCat: any){
+    this.categoriaSeleccionada = newCat;
+    console.log(this.categoriaSeleccionada)
+    this.getProductsByCategory(this.categoriaSeleccionada)
+
+    // this.categoriaSeleccionada$.next(this.categoriaSeleccionada);
   }
+
+  /* getCategoriaSeleccionada$(): Observable<any> {
+    return this.categoriaSeleccionada$.asObservable();
+  } */
+
+  //PARA ACTUALIZAR CATEGORIA
+/*   getCategoriaSelecionada(): Observable<any> {
+    return of(this.categoriaSeleccionada);
+  } */
 
   obtenerProductos() {
     return this.products
@@ -56,6 +69,10 @@ export class ProductService {
     console.log("hola desde product.service")
     return this.http.get(this.url + "buscar/" + this.categoriaSeleccionada);
   }
+  /* getProductsBySelectedCategory(categoria: string) {
+    console.log("hola desde product.service")
+    return this.http.get(this.url + "buscar/" + categoria);
+  } */
 
   getProductsByCategory(categoria: string) {
     console.log("hola desde product.service")
