@@ -5,6 +5,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { UsuarioService } from 'src/app/shared/usuario.service';
 import { HttpClient } from "@angular/common/http";
 import { LoginService } from './../../shared/login.service';
+import { Router } from "@angular/router";
 
 
 @Component({
@@ -19,7 +20,7 @@ export class LoginComponent implements OnInit {
   email: string;
   password: string;  
 
-  constructor(public loginService:LoginService, public usuarioService:UsuarioService, public modalService:BsModalService, public servicio:ServService, private http: HttpClient) { 
+  constructor(private router:Router, public loginService:LoginService, public usuarioService:UsuarioService, public modalService:BsModalService, public servicio:ServService, private http: HttpClient) { 
     console.log("Funcionando servicio usuario")
     this.usuario
   }
@@ -49,14 +50,20 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-      const user = {email: this.email, password: this.password};
-      console.log(user)
-      this.loginService.login(user).subscribe( data => {
-        console.log(data[0]);
-        /* this.loginService.idUsuario=data[0].user_id */
-        this.loginService.usuarioActual=data[0]
-        /* this.loginService.actualizarUsuario(data[0]) */
-        console.log(this.loginService.usuarioActual.cp)
-      });
-    }
+    const user = {
+      email: this.email,
+      password: this.password
+    };
+    console.log(user)
+    this.loginService.login(user).subscribe(data => {
+      console.log(data[0]);
+      this.loginService.usuarioActual = data[0]
+      console.log(this.loginService.usuarioActual.cp)
+      if (data != undefined) {
+        this.router.navigate(["/home"])
+      } else {
+        console.log("Usuario Inexistente")
+      }
+    });
+  }
   }

@@ -4,6 +4,7 @@ import { Product } from 'src/app/models/product';
 import { UsuarioService } from 'src/app/shared/usuario.service';
 import { Nole } from 'src/app/models/nole';
 import { LoginService } from 'src/app/shared/login.service';
+import { MessageService } from 'src/app/shared/message.service';
 
 @Component({
   selector: 'app-owner',
@@ -18,7 +19,8 @@ export class OwnerComponent implements OnInit {
   public idUsuario: number
   public nombreOwner: string
 
-  constructor(public productService:ProductService, public usuarioService:UsuarioService,public loginService:LoginService) {
+  constructor(public productService:ProductService, public usuarioService:UsuarioService,public loginService:LoginService, 
+      public messageService:MessageService,) {
 
    }
 
@@ -41,6 +43,7 @@ export class OwnerComponent implements OnInit {
       this.products = data
       console.log(data)
     })
+    this.messageService.noleSeleccionado = newNole;
   }
 
   ngOnInit(): void {

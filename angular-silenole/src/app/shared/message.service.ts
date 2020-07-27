@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Message } from '../models/message';
+import { Nole } from '../models/nole';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MessageService {
 
-  private url = "http://localhost:3000/messages"
+  private url = "http://localhost:3000/"
   public message:Message
+
+  public noleSeleccionado = new Nole(0, 0);
  
   constructor(private http:HttpClient) { }
 
@@ -17,8 +20,8 @@ export class MessageService {
    return this.http.get(this.url + "/" + id + "/" + id2)
  }  //Devuelve la llamada al endpoint GET “/:user_id/:user_id2”
   
- public anyadirMessage(nuevoMensaje:Message){
-  return this.http.post(this.url, nuevoMensaje)
+ public postMessage(nuevoMensaje:Message){
+  return this.http.post(this.url + "messages/", nuevoMensaje)
  }  //Devuelve la llamada al endpoint POST “/" 
 
 }

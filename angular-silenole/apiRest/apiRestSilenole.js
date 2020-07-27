@@ -55,7 +55,7 @@ app.get("/siles", function (request, response) {
 app.get("/noles/:user_id", function (request, response) {
     var user_id = request.params.user_id;
     let params = [user_id];
-    let sql = "SELECT product.nombre, product.product_image FROM noles INNER JOIN product ON (noles.product_id = product.product_id) WHERE noles.user_id = ?"
+    let sql = "SELECT product.nombre, product.descripcion, product.product_image, noles.product_id, noles.chat_id FROM noles INNER JOIN product ON (noles.product_id = product.product_id) WHERE noles.user_id = ?"
     connection.query(sql, params, function(err, result){
         if (err){
             console.log(err)
@@ -121,42 +121,8 @@ app.delete("/siles", function (request, response) {
     response.send(result);
     })
 });
-// GET /buscar/:categoria = Obtiene todos los noles solicitados segun categoria
+// GET BUSCAR/CATEGORIA Obtiene los productos segun categoria
 app.get("/buscar/:categoria", function (request, response) {
-    var categoria = request.params.categoria;
-    let sql = "SELECT * FROM product WHERE categoria='"+categoria+"'"; 
-    connection.query(sql, function(err, result){
-        if (err){
-            console.log(err)
-            console.log("hola desde api")
-        }else{
-            console.log('Objetos en la categoria ' + categoria)
-            console.log(result)
-        } 
-    response.send(result);
-    })
-});
-// GET /buscar/:categoria = Obtiene todos los noles solicitados segun categoria
-/* app.get("/buscar/:categoria", function (request, response) {
-    var categoria = request.params.categoria;
-    let sql;
-    if(categoria==="Todo"){
-        sql = "SELECT * FROM product";
-    }else{
-        sql = "SELECT * FROM product WHERE categoria='"+categoria+"'"; 
-    }
-    connection.query(sql, function(err, result){
-        if (err){
-            console.log(err)
-            console.log("hola desde api")
-        }else{
-            console.log('Objetos en la categoria ' + categoria)
-            console.log(result)
-        } 
-    response.send(result);
-    })
-}); */
-/* app.get("/buscar/:categoria", function (request, response) {
     var categoria = request.params.categoria;
     let sql;
     let params = [];
@@ -176,7 +142,7 @@ app.get("/buscar/:categoria", function (request, response) {
         } 
     response.send(result);
     })
-}); */
+});
 /* ---------------------------------PRODUCTOS SIN HACER----------------------------------- */
 // GET /SILES/:DISTANCIA = Obtiene el todos los siles según distancia
 /* app.get("/siles/:distancia", function (request, response) {
@@ -209,6 +175,7 @@ app.get("/buscar/:categoria", function (request, response) {
 /* ---------------------------------FIN PRODUCTOS----------------------------------- */
 
 
+
 /* ---------------------------------USUARIOS FUNCIONANDO----------------------------------- */
 //Login y comparación de datos
 app.post("/user/login", function (request, response) {
@@ -227,6 +194,7 @@ app.post("/user/login", function (request, response) {
     response.send(result);
     })
     }
+
 });// GET /USERS/:USERID = Obtiene toda la información asociada al usuario 
 app.get("/user/:id", function (request, response) {
     var id = request.params.id;
@@ -241,6 +209,7 @@ app.get("/user/:id", function (request, response) {
     response.send(result);
     })
 });
+
 // POST /USERS/REGISTER = Introduce a un usuario en la base de datos.
 app.post("/user/register", function (request, response) {
     let name = request.body.name
@@ -323,18 +292,35 @@ app.delete("/user", function (request, response) {
 
 /* ---------------------------------MENSAJES FUNCIONANDO----------------------------------- */
 // POST /MESSAGES/ = Añade un nuevo mensaje.
-app.post("/messages/", function (request, response) {
-    let user_id  = request.body.user_id 
+app.post("/messages", function (request, response) {
+    let chat_id = request.body.chat_id
+    let sender_id  = request.body.sender_id 
     let product_id = request.body.product_id 
     let text = request.body.text
     let date = request.body.date
-    let params = [user_id , product_id ,text ,date]
-    let sql = "INSERT INTO messages (user_id, product_id ,text ,date) VALUES (?, ?, ?, ?)";
+    let params = [chat_id, sender_id , product_id ,text ,date]
+    let sql = "INSERT INTO messages (chat_id, sender_id, product_id ,text ,date) VALUES (?, ?, ?, ?, ?)";
     connection.query(sql, params, function(err, result){
         if (err){
             console.log(err)
         }else{
             console.log('Mensaje Ingresado')
+            console.log(result)
+        } 
+    response.send(result);
+    })
+});
+
+// GET /MESSAGES/: USERID/:OWNERID= Obtiene todos los mensajes intercambiados entre el usuario y el propietario del nole 
+ app.get("/messages/:chat_id", function (request, response) {
+    var chat_id = request.params.chat_id;
+    let params = [chat_id]
+    let sql = "SELECT user.name, messages.text, messages.date FROM messages INNER JOIN user ON (messages.sender_id = user.user_id)  WHERE messages.chat_id = ? ORDER BY messages.date";
+    connection.query(sql, params, function(err, result){
+        if (err){
+            console.log(err)
+        }else{
+            console.log('Objetos del Usuario')
             console.log(result)
         } 
     response.send(result);
@@ -364,8 +350,9 @@ app.post("/messages/", function (request, response) {
 app.post("/noles/", function (request, response) {
     let uid  = request.body.user_id 
     let pid = request.body.product_id 
-    let params = [uid , pid]
-    let sql = "INSERT INTO noles (user_id, product_id ) VALUES (?, ?)";
+    let chat_id = request.body.chat_id
+    let params = [uid , pid, chat_id]
+    let sql = "INSERT INTO noles (user_id, product_id, chat_id ) VALUES (?, ?, ?)";
     connection.query(sql, params, function(err, result){
         if (err){
             console.log(err)
@@ -379,7 +366,7 @@ app.post("/noles/", function (request, response) {
 /* ---------------------------------USUARIOS SIN HACER----------------------------------- */
 // HACER
 // GET /NOLES/:USERID = Obtiene todos los productos del resto de los usuarios /PARA MENSAJES
-app.get("/noles/:user_id", function (request, response) {
+/* app.get("/noles/:user_id", function (request, response) {
     var user_id = request.params.user_id;
     let params = [user_id]
     let sql = "SELECT * FROM product WHERE user_id = ?";
@@ -392,7 +379,7 @@ app.get("/noles/:user_id", function (request, response) {
         } 
     response.send(result);
     })
-});
+}); */
 /* ---------------------------------FIN NOLES----------------------------------- */
 // HACER
 // GET /buscar/ Obtiene los ultimos 4 productos agregados

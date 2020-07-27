@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Product } from '../models/product';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Nole } from '../models/nole';
-/* import { Observable, of, Subject } from 'rxjs'; */
 
 @Injectable({
   providedIn: 'root'
@@ -14,10 +13,9 @@ export class ProductService {
   public idUsuario: number;
   public ownerActual: number
   public categoriaSeleccionada: any; 
-  /* public categoriaSeleccionada$ = new Subject<string>(); */
-
-  private url = "http://localhost:3000/"
+  public idProductoSeleccionado: number;
   
+  private url = "http://localhost:3000/"  
 
   constructor(private http: HttpClient) {
     console.log("funcionando servicio product");
@@ -28,20 +26,9 @@ export class ProductService {
     this.categoriaSeleccionada = newCat;
     console.log(this.categoriaSeleccionada)
     this.getProductsByCategory(this.categoriaSeleccionada)
-
-    // this.categoriaSeleccionada$.next(this.categoriaSeleccionada);
   }
 
-  /* getCategoriaSeleccionada$(): Observable<any> {
-    return this.categoriaSeleccionada$.asObservable();
-  } */
-
-  //PARA ACTUALIZAR CATEGORIA
-/*   getCategoriaSelecionada(): Observable<any> {
-    return of(this.categoriaSeleccionada);
-  } */
-
-  obtenerProductos() {
+    obtenerProductos() {
     return this.products
   }
 
@@ -58,7 +45,7 @@ export class ProductService {
     return this.http.get(this.url + "noles/" + id);
   }
   postNole(newNoleRelation: Nole) {
-    return this.http.post(this.url + "noles/", newNoleRelation)
+     return this.http.post(this.url + "noles/", newNoleRelation)
   }
   putProduct(newProduct: Product) {
     console.log(newProduct);

@@ -5,6 +5,7 @@ import { Product } from 'src/app/models/product';
 import { Usuario } from './../../models/usuario';
 import { LoginService } from 'src/app/shared/login.service';
 import { Nole } from 'src/app/models/nole';
+import { MessageService } from 'src/app/shared/message.service';
 
 
 @Component({
@@ -25,7 +26,7 @@ export class SearchComponent implements OnInit {
 
   closeResult = '';
 
-  constructor(public productService: ProductService, public loginService: LoginService, private modalService: NgbModal) {}
+  constructor(public productService: ProductService, public loginService: LoginService, public messageService:MessageService, private modalService: NgbModal) {}
 
   mostrarProductos() {
     this.productService.getAllProducts().subscribe((data) => {
@@ -53,11 +54,13 @@ export class SearchComponent implements OnInit {
 
   relacionarProductoMensaje(pid) {
     let uid = this.loginService.usuarioActual.user_id;
+    this.productService.idProductoSeleccionado=pid;
     let newNole = new Nole(uid, pid);
     this.productService.postNole(newNole).subscribe((data) => {
       this.products = data
       console.log(data)
     })
+    this.messageService.noleSeleccionado = newNole;
   }
 
   ngOnInit(): void {}
