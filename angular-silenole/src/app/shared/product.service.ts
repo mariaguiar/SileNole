@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Product } from '../models/product';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Nole } from '../models/nole';
+import { LoginService } from './login.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,15 +18,15 @@ export class ProductService {
   
   private url = "http://localhost:3000/"  
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, public loginService:LoginService) {
     console.log("funcionando servicio product");
-    // this.categoriaSeleccionada = "Ropa";
+    this.idUsuario=this.loginService.usuarioActual.user_id
   }
 
   actualizarCategoriaSeleccionada(newCat: any){
     this.categoriaSeleccionada = newCat;
     console.log(this.categoriaSeleccionada)
-    this.getProductsByCategory(this.categoriaSeleccionada)
+    this.getProductsBySelectedCategory();
   }
 
     obtenerProductos() {
@@ -41,12 +42,7 @@ export class ProductService {
   postProduct(newProduct: Product) {
     return this.http.post(this.url + "products/", newProduct)
   }
-/*   getNolesByUser(id: number) {
-    return this.http.get(this.url + "noles/" + id);
-  }
-  postNole(newNoleRelation: Nole) {
-     return this.http.post(this.url + "noles/", newNoleRelation)
-  } */
+
   putProduct(newProduct: Product) {
     console.log(newProduct);
     return this.http.put(this.url+ "products/", newProduct)
@@ -54,16 +50,7 @@ export class ProductService {
 
   getProductsBySelectedCategory() {
     console.log("hola desde product.service")
-    return this.http.get(this.url + "buscar/" + this.categoriaSeleccionada);
-  }
-  /* getProductsBySelectedCategory(categoria: string) {
-    console.log("hola desde product.service")
-    return this.http.get(this.url + "buscar/" + categoria);
-  } */
-
-  getProductsByCategory(categoria: string) {
-    console.log("hola desde product.service")
-    return this.http.get(this.url + "buscar/" + categoria);
+    return this.http.get(this.url + "buscar/" + this.categoriaSeleccionada + "?filterUser=" + this.idUsuario);
   }
   
   public deleteProduct(id:number){

@@ -111,13 +111,15 @@ app.delete("/products", function (request, response) {
 // GET BUSCAR/CATEGORIA Obtiene los productos segun categoria
 app.get("/buscar/:categoria", function (request, response) {
     var categoria = request.params.categoria;
+    var filtrar_user_id = request.query.filterUser;
     let sql;
-    let params = [];
+    let params;
     if(categoria==="Todo"){
-        sql = "SELECT * FROM products";
+        params = [filtrar_user_id];
+        sql = "SELECT * FROM products WHERE user_id != ?";
     }else{
-        params= [categoria]
-        sql = "SELECT * FROM products WHERE categoria = ?"; 
+        params= [categoria, filtrar_user_id]
+        sql = "SELECT * FROM products WHERE categoria = ? AND user_id != ?"; 
     }
     connection.query(sql, params, function(err, result){
         if (err){
