@@ -45,11 +45,11 @@
           </div>
         </div> <!-- fin columna 1 -->
         <div class="col-12 col-sm-6 col-md-6 align-self-end mt-5 mb-5"> <!-- columna 2 -->
-          <div class="media media-chat ml-4 mt-4" *ngFor="let message of messagesNoles">
+          <div class="media media-chat ml-4 mr-3" *ngFor="let message of messagesNoles">
             <div class="media-body">
-              <!-- Mensaje: --> {{message.text}} <br>
-              {{message.date}} <br>
-              <!-- {{message.sender_id}} <br> -->
+                <div class="media-body"><b>{{message.name}}:</b> {{message.text}} <br>
+                <p class="text-right">{{message.date}}</p><hr>
+              </div>
             </div>
           </div>
           <div class="mt-2 align-self-end">
@@ -79,17 +79,17 @@
         <div class="col-12 col-sm-6 col-md-6 mt-5 mb-5"> <!-- columna 1 -->
           <div class="row align-items-end d-flex justify-content-center">
             <div class="col-10 card border border-success pt-2 pb-2 mt-1 mb-1" style="width: 4rem;"
-              *ngFor="let nole of noles">
+              *ngFor="let sile of siles">
               <div>
-                <div class="card border-0" style="max-width: 400px;" (click)="pasarNole(nole)">
+                <div class="card border-0" style="max-width: 400px;" (click)="pasarSile(sile)">
                   <div class="row no-gutters">
                     <div class="col-6 row align-items-center justify-content-center p-3">
-                      <img src="assets/img/{{nole.product_image}}" class="card-img" alt="{{nole.nombre}}">
+                      <img src="assets/img/{{sile.product_image}}" class="card-img" alt="{{sile.nombre}}">
                     </div>
                     <div class="col-6">
                       <div class="card-body">
-                        <h5 class="card-title">{{nole.nombre}}</h5>
-                        <h6 class="card-title">{{nole.descripcion}}</h6>
+                        <h5 class="card-title">{{sile.nombre}}</h5>
+                        <h6 class="card-title">{{sile.descripcion}}</h6><hr>
                       </div>
                     </div>
                   </div>
@@ -99,11 +99,9 @@
           </div>
         </div> <!-- fin columna 1 -->
         <div class="col-12 col-sm-6 col-md-6 align-self-end mt-5 mb-5"> <!-- columna 2 -->
-          <div class="media media-chat ml-4 mt-4" *ngFor="let message of messagesSiles">
-            <div class="media-body">
-              <!-- Mensaje: --> {{message.text}} <br>
-              {{message.date}} <br>
-              <!-- {{message.sender_id}} <br> -->
+          <div class="media media-chat ml-4 mr-3" *ngFor="let message of messagesSiles">
+            <div class="media-body"><b>{{message.name}}:</b> {{message.text}} <br>
+              <p class="text-right">{{message.date}}</p>
             </div>
           </div>
           <div class="mt-2 align-self-end">
@@ -113,7 +111,7 @@
               </div>
               <div class="form-group">
                 <button type="submit" class="btn btn-success btn-sm"
-                (click)="enviarMsgNoleSeleccionado(text.value)">Enviar Mensaje</button>
+                (click)="enviarMsgSileSeleccionado(text.value)">Enviar Mensaje</button>
               </div>
             </form>
           </div>

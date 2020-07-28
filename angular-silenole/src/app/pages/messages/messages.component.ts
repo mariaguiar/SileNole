@@ -89,14 +89,14 @@ export class MessagesComponent implements OnInit {
     }
 
     cargarMensajesSiles() {
-      let chat_id = this.messageService.noleSeleccionado.chat_id
+      let chat_id = this.messageService.sileSeleccionado.chat_id
       this.messageService.getMessages(chat_id).subscribe((data)=>{
         this.messagesSiles = data
         console.log(data)  
       })
     }
   
-    enviarMsgSileeSeleccionado(text:string){
+    enviarMsgSileSeleccionado(text:string){
       console.log('Hola desde enviarMsgSileeSeleccionado')
       console.log(text)
       let sender_id = this.loginService.usuarioActual.user_id;
