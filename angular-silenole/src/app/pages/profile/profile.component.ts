@@ -26,13 +26,15 @@ export class ProfileComponent implements OnInit {
     console.log(form.value)
   }
   modificarUsuario(idUsuario:number, name:string, password:string, email:string, comunidad:string, provincia:string, localidad:string, cp:number, user_image:string){
-    console.log('Usuario Añadido')
-    this.usuarioService.putUsuario(new Usuario(idUsuario, name, password, email, comunidad, provincia, localidad, cp, user_image)).subscribe((data)=>{
+    console.log('Usuario Modificado')
+    let userUpdated = new Usuario(idUsuario, name, password, email, comunidad, provincia, localidad, cp, user_image);
+    this.usuarioService.putUsuario(userUpdated).subscribe((data)=>{
       console.log(data)
     })
+    this.usuarioActual = userUpdated;
   }
   borrarUsuario(id:number){
-    console.log('Usuario Añadido')
+    console.log('Usuario Borrado')
     this.usuarioService.deleteUsuario(id).subscribe((data)=>{
       console.log(data)
     })

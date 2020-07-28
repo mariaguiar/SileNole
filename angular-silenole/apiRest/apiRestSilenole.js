@@ -206,8 +206,9 @@ app.post("/user/register", function (request, response) {
     let provincia = request.body.provincia
     let localidad = request.body.localidad
     let cp = request.body.cp
-    let params = [name, email, password, comunidad, provincia, localidad, cp]
-    let sql = "INSERT INTO user (name, email, password, comunidad, provincia, localidad, cp) VALUES ( ?, ?, ?, ?, ?, ?, ?)";
+    let user_image = request.body.user_image
+    let params = [name, email, password, comunidad, provincia, localidad, cp, user_image]
+    let sql = "INSERT INTO user (name, email, password, comunidad, provincia, localidad, cp, user_image) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?)";
     connection.query(sql, params, function(err, result){
         if (err){
             console.log(err)

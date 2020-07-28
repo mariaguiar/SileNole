@@ -65,8 +65,8 @@
               class="fa fa-user-circle-o" aria-hidden="true"></i>
               Ver Usuario</button>
             <button type="button" class="btn btn-outline-success btn-sm ml-1"
-              [routerLink]="['/message']"><i class="fa fa-envelope-open" aria-hidden="true"></i>
-              Enviar mensaje</button>
+              [routerLink]="['/message']"  (click)="relacionarProductoMensaje(producto.product_id)">
+              <i class="fa fa-envelope-open" aria-hidden="true"></i>Enviar mensaje</button>
           </div>
         </div>
 

@@ -16,9 +16,10 @@ import { Router } from "@angular/router";
 export class LoginComponent implements OnInit {
 
   public modalRef: BsModalRef;
-  public usuario=new Usuario(null,null,null,null,null,null,null,null,null)
+  public usuario=new Usuario(null,null,null,null,null,null,null,null,"perfil.jpg")
   email: string;
   password: string;  
+  
 
   constructor(private router:Router, public loginService:LoginService, public usuarioService:UsuarioService, public modalService:BsModalService, public servicio:ServService, private http: HttpClient) { 
     console.log("Funcionando servicio usuario")
@@ -37,10 +38,10 @@ export class LoginComponent implements OnInit {
     this.modalRef = this.modalService.show(template)
   }
 
-  newUsuario(user_id:number, name:string, password:string, email:string, comunidad:string, provincia:string, localidad:string, cp:number, user_image:string){
+  newUsuario(user_id:number, name:string, password:string, email:string, comunidad:string, provincia:string, localidad:string, cp:number){
     console.log('Usuario Añadido')
     console.log(this.usuarioService.usuario)
-    this.usuarioService.newUsuario(new Usuario(user_id, name, password, email, comunidad, provincia, localidad, cp, user_image)).subscribe((data)=>{
+    this.usuarioService.newUsuario(new Usuario(user_id, name, password, email, comunidad, provincia, localidad, cp, "perfil.jpg")).subscribe((data)=>{
       console.log(data)
     })
   }
@@ -54,6 +55,7 @@ export class LoginComponent implements OnInit {
       email: this.email,
       password: this.password
     };
+
     console.log(user)
     this.loginService.login(user).subscribe(data => {
       console.log(data[0]);

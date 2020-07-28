@@ -1,62 +1,41 @@
 <app-header></app-header>
 <app-categories></app-categories>
 
-     <!-- TÍTULO -->
+<!-- TÍTULO -->
 
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col text-success mt-5 mb-5 text-center">
-        <h2>Mensajes</h2>
-      </div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col text-success mt-5 mb-5 text-center">
+      <h2>Mensajes</h2>
     </div>
   </div>
+</div>
 
-    <!--CONTENEDORES-->
+<!-- -------------------------------------------------------  -->
 
-  <div class="bg-light border border-success ml-3 mr-3 mb-5">
-
-    <div class="container-fluid">
-      <div class="row justify-content-start ">
-
-
-        <!--PRODUCTOS-->
-
-
-        <div class="col-sm-12 col-md-10 col-lg-6 justify-content-center">
-
-          <div class="row justify-content-right mt-4">
-            <div class="col-md-12">
-              <div class="card card-bordered">
-
-                <div class="card-header align-items-center mb-1">
-                  <h4 class="card-title text-success "><strong>Noles</strong></h4>
-                </div>
-                <div class="container-fluid mb-5 ">
-                  <div class="row d-flex justify-content-center">
-                    <div class="col-10 border border-success pt-2 pb-2">
-
-                      <div class="row align-items-end d-flex justify-content-center">
-                        <div class="col-10 card border border-success pt-2 pb-2 mt-1 mb-1" style="width: 5rem; " *ngFor="let nole of noles">
-                          <div>
-                            <div class="card border-0" style="max-width: 540px;" (click)="pasarNole(nole)">
-                              <div class="row no-gutters">
-                                <div class="col-md-4">
-                                  <img src="assets/img/{{nole.product_image}}" class="card-img" alt="...">
-                                </div>
-                                <div class="col-md-8">
-                                  <div class="card-body">
-                                    <h5 class="card-title">{{nole.nombre}}</h5>
-                                    <h6 class="card-title">{{nole.descripcion}}</h6>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div>
-
-                          </div>
-                        </div>
-
+<div class="container-fluid col-10 bg-light border border-success mb-5">
+<!-- -------------------------------NOLES----------------------------- -->
+  <div class="row justify-content-center mt-5 mb-5 ">
+    <h3 class="text-success">Noles</h3>
+  </div>
+  <!-- NOLES -->
+  <div class="container-fluid border-success">
+    <div class="container-fluid border border-success"> <!-- Contenedor tarjeta / mensaje -->
+      <div class="row justify-content-center"> <!-- contenedor  -->
+        <div class="col-12 col-sm-6 col-md-6 mt-5 mb-5"> <!-- columna 1 -->
+          <div class="row align-items-end d-flex justify-content-center">
+            <div class="col-10 card border border-success pt-2 pb-2 mt-1 mb-1" style="width: 4rem;"
+              *ngFor="let nole of noles">
+              <div>
+                <div class="card border-0" style="max-width: 400px;" (click)="pasarNole(nole)">
+                  <div class="row no-gutters">
+                    <div class="col-6 row align-items-center justify-content-center p-3">
+                      <img src="assets/img/{{nole.product_image}}" class="card-img" alt="{{nole.nombre}}">
+                    </div>
+                    <div class="col-6">
+                      <div class="card-body">
+                        <h5 class="card-title">{{nole.nombre}}</h5>
+                        <h6 class="card-title">{{nole.descripcion}}</h6>
                       </div>
                     </div>
                   </div>
@@ -64,62 +43,87 @@
               </div>
             </div>
           </div>
+        </div> <!-- fin columna 1 -->
+        <div class="col-12 col-sm-6 col-md-6 align-self-end mt-5 mb-5"> <!-- columna 2 -->
+          <div class="media media-chat ml-4 mt-4" *ngFor="let message of messagesNoles">
+            <div class="media-body">
+              <!-- Mensaje: --> {{message.text}} <br>
+              {{message.date}} <br>
+              <!-- {{message.sender_id}} <br> -->
+            </div>
+          </div>
+          <div class="mt-2 align-self-end">
+            <form #discoForm="ngForm" (ngSubmit)="onSubmit(discoForm)">
+              <div class="form-group">
+                <input type="text" class="form-control" name="text" [(ngModel)]="message.text" #text="ngModel" required>
+              </div>
+              <div class="form-group">
+                <button type="submit" class="btn btn-success btn-sm"
+                (click)="enviarMsgNoleSeleccionado(text.value)">Enviar Mensaje</button>
+              </div>
+            </form>
+          </div>
+        </div> <!-- fin columna 2 -->
+      </div><!-- fin contenedor  -->
+    </div><!--  Fin Contenedor tarjeta / mensaje -->
+  </div>
 
-
-
-
-        <!-- MENSAJES -->
-
-
-        
-
-          <div class="row justify-content-right mt-4 mb-1">
-            <!-- contenedor chat -->
-            <div class="col">
-              <div class="card card-bordered">
-                <div class="card-header">
-                  <h4 class="card-title text-success justify-content-center"><strong>Mensajes</strong></h4>
-                </div>
-                <div class="ps-container ps-theme-default ps-active-y" id="chat-content"
-                  style="overflow-y: scroll !important; height:400px !important;">
-                  <div class="media media-chat ml-4 mt-4" *ngFor="let message of messagesNoles">
-                    <div class="media-body mb-3">
-                       <!-- Mensaje: --> {{message.text}} <br>
+<!-- -------------------------------SILES----------------------------- -->
+  <div class="row justify-content-center mt-5 mb-5 ">
+    <h3 class="text-success">Siles</h3>
+  </div>
+  <!-- NOLES -->
+  <div class="container-fluid border-success">
+    <div class="container-fluid border border-success mb-5"> <!-- Contenedor tarjeta / mensaje -->
+      <div class="row justify-content-center"> <!-- contenedor  -->
+        <div class="col-12 col-sm-6 col-md-6 mt-5 mb-5"> <!-- columna 1 -->
+          <div class="row align-items-end d-flex justify-content-center">
+            <div class="col-10 card border border-success pt-2 pb-2 mt-1 mb-1" style="width: 4rem;"
+              *ngFor="let nole of noles">
+              <div>
+                <div class="card border-0" style="max-width: 400px;" (click)="pasarNole(nole)">
+                  <div class="row no-gutters">
+                    <div class="col-6 row align-items-center justify-content-center p-3">
+                      <img src="assets/img/{{nole.product_image}}" class="card-img" alt="{{nole.nombre}}">
+                    </div>
+                    <div class="col-6">
+                      <div class="card-body">
+                        <h5 class="card-title">{{nole.nombre}}</h5>
+                        <h6 class="card-title">{{nole.descripcion}}</h6>
+                      </div>
                     </div>
                   </div>
-                 </div>
-                <div class="mt-2">
-                  <form #discoForm="ngForm" (ngSubmit)="onSubmit(discoForm)">
-
-                    <div class="form-group">
-                      <label>Mensaje</label><br>
-                      <input type="text" class="form-control" name="text" [(ngModel)]="message.text" #text="ngModel"
-                        required>
-                    </div>
-
-                    <div class="form-group">
-                      <!-- (click)="anyadir(null, usuarioActual.user_id, 10, text.value, fecha)" -->
-                      <button type="submit" class="btn btn-success btn-sm"
-                        (click)="enviarMsgNoleSeleccionado(text.value)">Enviar
-                        Mensaje</button>
-                    </div>
-                  </form>
                 </div>
-
               </div>
             </div>
           </div>
-
+        </div> <!-- fin columna 1 -->
+        <div class="col-12 col-sm-6 col-md-6 align-self-end mt-5 mb-5"> <!-- columna 2 -->
+          <div class="media media-chat ml-4 mt-4" *ngFor="let message of messagesSiles">
+            <div class="media-body">
+              <!-- Mensaje: --> {{message.text}} <br>
+              {{message.date}} <br>
+              <!-- {{message.sender_id}} <br> -->
             </div>
+          </div>
+          <div class="mt-2 align-self-end">
+            <form #discoForm="ngForm" (ngSubmit)="onSubmit(discoForm)">
+              <div class="form-group">
+                <input type="text" class="form-control" name="text" [(ngModel)]="message.text" #text="ngModel" required>
+              </div>
+              <div class="form-group">
+                <button type="submit" class="btn btn-success btn-sm"
+                (click)="enviarMsgNoleSeleccionado(text.value)">Enviar Mensaje</button>
+              </div>
+            </form>
+          </div>
+        </div> <!-- fin columna 2 -->
+      </div><!-- fin contenedor  -->
+    </div><!--  Fin Contenedor tarjeta / mensaje -->
+  </div>
+</div>
 
-        </div>
-
-        </div>
-
-       
-
-
-<app-footer></app-footer> 
-
+<!-- Footer -->
+<app-footer></app-footer>
 
  
