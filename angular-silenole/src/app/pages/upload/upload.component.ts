@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { ProductService } from 'src/app/shared/product.service';
 import { Product } from 'src/app/models/product';
 import { LoginService } from 'src/app/shared/login.service';
 import { Usuario } from 'src/app/models/usuario';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-upload',
@@ -16,9 +17,9 @@ export class UploadComponent implements OnInit {
   public product= new Product(null,null,null,null,null,null)
   public products: any[];
   public idProducto: number
-  
+  public modalRef: BsModalRef;
 
-  constructor(public productService:ProductService, public loginService:LoginService) {
+  constructor(public productService:ProductService, public loginService:LoginService, public modalService:BsModalService) {
     this.usuarioActual=this.loginService.usuarioActual
   }
 
@@ -39,6 +40,9 @@ export class UploadComponent implements OnInit {
     })
   }
   
+  openModal(Upload: TemplateRef<any>){
+    this.modalRef = this.modalService.show(Upload)
+  }
 
   ngOnInit(): void {
   }

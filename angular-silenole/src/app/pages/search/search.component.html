@@ -17,19 +17,19 @@
           <a ngbDropdownToggle class="nav-link dropdown-toggle text-success" data-toggle="dropdown" 
             role="button" aria-haspopup="true" aria-expanded="false">Por cercanía</a>
           <div ngbDropdownMenu class="dropdown-menu">
-            <a class="dropdown-item" href="#">Codigo Postal</a>
-            <a class="dropdown-item" href="#">Cuidad</a>
-            <a class="dropdown-item" href="#">Localidad</a>
-            <a class="dropdown-item" href="#">Comunidad Autonoma</a>
+            <a class="dropdown-item" (click)="buscarPorCp()">Codigo Postal</a>
+            <a class="dropdown-item">Cuidad</a>
+            <a class="dropdown-item">Localidad</a>
+            <a class="dropdown-item">Comunidad Autonoma</a>
           </div>
         </li>
         <li ngbDropdown class="nav-item dropdown">
           <a ngbDropdownToggle class="nav-link dropdown-toggle text-success" data-toggle="dropdown" 
             role="button" aria-haspopup="true" aria-expanded="false">Por tiempo</a>
           <div ngbDropdownMenu class="dropdown-menu text-success">
-            <a class="dropdown-item" href="#">Última semana</a>
-            <a class="dropdown-item" href="#">Último mes</a>
-            <a class="dropdown-item" href="#">Último año</a>
+            <a class="dropdown-item">Última semana</a>
+            <a class="dropdown-item">Último mes</a>
+            <a class="dropdown-item">Último año</a>
           </div>
         </li>
       </ul>

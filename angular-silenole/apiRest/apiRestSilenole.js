@@ -112,6 +112,13 @@ app.delete("/products", function (request, response) {
 app.get("/buscar/:categoria", function (request, response) {
     var categoria = request.params.categoria;
     var filtrar_user_id = request.query.filterUser;
+    //var location_type = request.query.locationType;
+    //var location_value = request.query.locationValue;
+    //var searchString = "";
+    //if (location_type != null && location_value != null) {
+    //    searchString = " AND " + location_type + " = " + location_value;
+    //    console.log(searchString);
+    //}
     let sql;
     let params;
     if(categoria==="Todo"){
@@ -389,34 +396,21 @@ app.get("/siles/:user_id", function (request, response) {
 /* ---------------------------------FIN NOLES----------------------------------- */
 // HACER
 // GET /buscar/ Obtiene los ultimos 4 productos agregados
-app.get("/buscar/", function (request, response) {
-    var id = request.params.id;
-    let sql = "SELECT * FROM products ORDER BY product_id DESC LIMIT 4";
-    connection.query(sql, function(err, result){
+app.get("/buscar-ultimos/", function (request, response) {
+    let filtrar_user_id = request.query.filterUser;
+    let params = [filtrar_user_id];
+    let sql = "SELECT * FROM products  WHERE user_id != ? ORDER BY product_id DESC LIMIT 4";
+    connection.query(sql, params, function(err, result){
         if (err){
             console.log(err)
         }else{
-            console.log('Objetos del Usuario')
+            console.log('Últimos productos añadidos')
             console.log(result)
         } 
     response.send(result);
     })
 });
-// HACER
-// GET /buscar/:categoria = Obtiene todos los noles solicitados segun categoria
-app.get("/buscar/:id", function (request, response) {
-    var id = request.params.id;
-    let sql = "SELECT * FROM products WHERE categoria ="+id;
-    connection.query(sql, function(err, result){
-        if (err){
-            console.log(err)
-        }else{
-            console.log('Objetos del Usuario')
-            console.log(result)
-        } 
-    response.send(result);
-    })
-});
+
 
 
 

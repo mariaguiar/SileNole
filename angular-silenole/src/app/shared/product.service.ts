@@ -3,6 +3,7 @@ import { Product } from '../models/product';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Nole } from '../models/nole';
 import { LoginService } from './login.service';
+import { Usuario } from '../models/usuario';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class ProductService {
 
   public product: any
   public products: any;
-  public idUsuario: number;
+  public usuarioActual: Usuario;
   public ownerActual: number
   public categoriaSeleccionada: any; 
   public idProductoSeleccionado: number;
@@ -20,7 +21,7 @@ export class ProductService {
 
   constructor(private http: HttpClient, public loginService:LoginService) {
     console.log("funcionando servicio product");
-    this.idUsuario=this.loginService.usuarioActual.user_id
+    this.usuarioActual=this.loginService.usuarioActual
   }
 
   actualizarCategoriaSeleccionada(newCat: any){
@@ -50,9 +51,20 @@ export class ProductService {
 
   getProductsBySelectedCategory() {
     console.log("hola desde product.service")
-    return this.http.get(this.url + "buscar/" + this.categoriaSeleccionada + "?filterUser=" + this.idUsuario);
+    return this.http.get(this.url + "buscar/" + this.categoriaSeleccionada + "?filterUser=" + this.usuarioActual.user_id);
+  }
+
+  getLatestProducts(){
+    console.log("obteniendo últimos productos")
+    console.log(this.usuarioActual.user_id)
+    return this.http.get(this.url + "buscar-ultimos/" + "?filterUser=" + this.usuarioActual.user_id) 
   }
   
+/*   getProductsBySelectedCategoryAndFilter(filter: String) {
+    console.log("hola desde product.service")
+    return this.http.get(this.url + "buscar/" + this.categoriaSeleccionada + "?filterUser=" + this.usuarioActual.user_id + filter);
+  } */
+
   public deleteProduct(id:number){
   let options = {
     headers: new HttpHeaders({

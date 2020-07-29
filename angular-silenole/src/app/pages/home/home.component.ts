@@ -19,21 +19,39 @@ export class HomeComponent implements OnInit {
 
   public usuarioActual = new Usuario(null, null, null, null, null, null, null, null, null)
   public product= new Product(null,null,null,null,null,null)
-  public products: any;
-  public idProducto: number
+  public productsUltimos: any;
+  public productsCercanos: any;
+    public idProducto: number
   public idUsuario: number=1
 
   constructor(public productService:ProductService, public loginService: LoginService, public messageService:MessageService, private modalService: NgbModal) {
-    this.mostrarProductosPorUsuario(this.loginService.usuarioActual.user_id)
-   }
-  
-   mostrarProductosPorUsuario(uid){
-    this.productService. getProductsByUser(uid).subscribe((data)=>{
-      this.products = data
+    this.mostrarUltimosProductos();
+    this.mostraProductosCercanos();
+  }
+
+  mostrarUltimosProductos(){
+    this.productService.getLatestProducts().subscribe((data) => {
+      this.productsUltimos = data
       console.log(data)
     })
   }
 
+  mostraProductosCercanos() {
+
+  }
+  
+/*    mostrarProductosPorUsuario(uid){
+    this.productService. getProductsByUser(uid).subscribe((data)=>{
+      this.products = data
+      console.log(data)
+    })
+  } */
+
+  pasarIdOwner(oid) {
+    this.productService.ownerActual = oid
+    console.log(this.productService.ownerActual)
+  }
+  
   relacionarProductoMensaje(pid) {
     let uid = this.loginService.usuarioActual.user_id;
     this.productService.idProductoSeleccionado=pid;

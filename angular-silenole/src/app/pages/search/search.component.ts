@@ -47,6 +47,15 @@ export class SearchComponent implements OnInit {
     console.log(this.productService.ownerActual)
   }
 
+  buscarPorCp() {
+    console.log("Buscar en el CP actual")
+    let locationfilter = "&locationType=cp&locationValue=" + this.loginService.usuarioActual.cp;
+/*     this.productService.getProductsBySelectedCategoryAndFilter(locationfilter).subscribe((data) => {
+      this.products = data
+      console.log(data)
+    }); */
+  }
+
   pasarIdProducto(pid) {
     this.idProducto = pid
     console.log(this.idProducto)

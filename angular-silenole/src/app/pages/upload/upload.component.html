@@ -2,6 +2,17 @@
 <app-header></app-header>
 <app-categories></app-categories>
 
+<!-- MODAL  -->
+<ng-template #Upload>
+  <div class="modal-body text-success text-center">
+    <form>
+      <div class="form-group">
+        <label for="recipient-name" class="col-form-label"><h3>Producto subido correctamente</h3></label>
+      </div>
+    </form>
+  </div>  
+</ng-template>
+
 <!-- FORMULARIO SUBIDA -->
 <div class="container-fluid ">
   <div class="row">
@@ -51,7 +62,8 @@
         </div>
         <div class="row justify-content-center my-4">
           <button type="submit" class="btn btn-success" 
-            (click)="anyadirSile(nombre.value, descripcion.value, categoria.value, usuarioActual.user_id, product_image.value.replace('C:\\fakepath\\',''))">Agregar</button>
+            (click)="anyadirSile(nombre.value, descripcion.value, categoria.value, usuarioActual.user_id, product_image.value.replace('C:\\fakepath\\',''))"
+            (click)= "openModal(Upload)">Agregar</button>
         </div>
       </form>
     </div>
