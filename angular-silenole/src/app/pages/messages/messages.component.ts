@@ -1,3 +1,4 @@
+  
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'src/app/shared/message.service';
 import { Message } from 'src/app/models/message';
@@ -17,11 +18,14 @@ import { Usuario } from 'src/app/models/usuario';
 export class MessagesComponent implements OnInit {
 
   public message=new Message(null,null,null,null,null ,null)
+  public message2=new Message(null,null,null,null,null ,null)
   public messagesNoles: any;
   public messagesSiles: any;
+  // public productoActual= new Product(null,null,null,null,null,null)
   public noles: any;
   public siles: any;
   public usuarioActual=new Usuario(null,null,null,null,null,null,null,null,null)
+  // public message1: Message
   public fecha = new Date();
 
   constructor(public usuarioService:UsuarioService, public messageService:MessageService, public productService:ProductService, public loginService:LoginService) { 
@@ -39,8 +43,8 @@ export class MessagesComponent implements OnInit {
     console.log(index)
     let borrado = this.noles.splice(index, 1);
     this.noles = borrado
-    this.cargarNoles()
-    this.cargarMensajesNoles()
+    //this.cargarNoles()
+    //this.cargarMensajesNoles()
     console.log("el nuevo array es"+this.noles)
   }
 
@@ -65,14 +69,16 @@ export class MessagesComponent implements OnInit {
     let chat_id = this.messageService.noleSeleccionado.chat_id
     let product_id = this.messageService.noleSeleccionado.product_id
     let date = new Date();
+    //let newMessage = new Message(null, chat_id, sender_id,  product_id, text, date);
+    //this.noles.push(newMessage);
     this.messageService.postMessage(new Message(null, chat_id, sender_id,  product_id, text, date)).subscribe((data)=>{
-    console.log(data)
+      console.log(data)
+      this.cargarMensajesNoles();
     })
-    this.cargarMensajesNoles();
+    
   }
 
   cargarNoles() {
-    console.log("Hola desde cargarNoles")
     let uid=this.loginService.usuarioActual.user_id
     this.messageService.getNolesByUser(uid).subscribe((data)=>{
       this.noles = data
@@ -81,7 +87,6 @@ export class MessagesComponent implements OnInit {
   }
 
   cargarMensajesNoles() {
-    console.log("Hola desde cargarMensajesNoles")
     let chat_id = this.messageService.noleSeleccionado.chat_id
     this.messageService.getMessages(chat_id).subscribe((data)=>{
       this.messagesNoles = data
@@ -106,7 +111,7 @@ export class MessagesComponent implements OnInit {
     }
   
     enviarMsgSileSeleccionado(text:string){
-      console.log('Hola desde enviarMsgSileSeleccionado')
+      console.log('Hola desde enviarMsgSileeSeleccionado')
       console.log(text)
       let sender_id = this.loginService.usuarioActual.user_id;
       let chat_id = this.messageService.sileSeleccionado.chat_id
@@ -114,8 +119,8 @@ export class MessagesComponent implements OnInit {
       let date = new Date();
       this.messageService.postMessage(new Message(null, chat_id, sender_id,  product_id, text, date)).subscribe((data)=>{
         console.log(data)
+        this.cargarMensajesSiles();
       })
-      this.cargarMensajesSiles();
     }
 
 

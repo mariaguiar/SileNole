@@ -48,10 +48,10 @@
           </div>
         </div> <!-- fin columna 1 -->
         <div class="col-12 col-sm-6 col-md-6 align-self-end mt-5 mb-5 scroll"> <!-- columna 2 -->
-          <div class="media media-chat ml-4 mr-3" *ngFor="let message of messagesNoles">
+          <div class="media media-chat ml-4 mr-3" *ngFor="let messageN of messagesNoles">
             <div class="media-body">
-                <div class="media-body"><b>{{message.name}}:</b> {{message.text}} <br>
-                <p class="text-right">{{message.date}}</p><hr>
+                <div class="media-body"><b>{{messageN.name}}:</b> {{messageN.text}} <br>
+                <p class="text-right">{{messageN.date}}</p><hr>
               </div>
             </div>
           </div>
@@ -113,19 +113,19 @@
           </div>
         </div> <!-- fin columna 1 -->
         <div class="col-12 col-sm-6 col-md-6 align-self-end mt-5 mb-5"> <!-- columna 2 -->
-          <div class="media media-chat ml-4 mr-3" *ngFor="let message of messagesSiles">
-            <div class="media-body"><b>{{message.name}}:</b> {{message.text}} <br>
-              <p class="text-right">{{message.date}}</p>
+          <div class="media media-chat ml-4 mr-3" *ngFor="let messageS of messagesSiles">
+            <div class="media-body"><b>{{messageS.name}}:</b> {{messageS.text}} <br>
+              <p class="text-right">{{messageS.date}}</p>
             </div>
           </div>
           <div class="mt-2 align-self-end">
             <form #discoForm="ngForm" (ngSubmit)="onSubmit(discoForm)">
               <div class="form-group">
-                <input type="text" class="form-control" name="text" [(ngModel)]="message.text" #text="ngModel" required>
+                <input type="text" class="form-control" name="text2" [(ngModel)]="message2.text" #text2="ngModel" required>
               </div>
               <div class="form-group">
                 <button type="submit" class="btn btn-success btn-sm"
-                (click)="enviarMsgSileSeleccionado(text.value)">Enviar Mensaje</button>
+                (click)="enviarMsgSileSeleccionado(text2.value)">Enviar Mensaje</button>
               </div>
             </form>
           </div>

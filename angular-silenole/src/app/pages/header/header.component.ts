@@ -4,6 +4,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import {ServService} from './../../serv.service'
 import { ProductService } from 'src/app/shared/product.service';
 import { Product } from 'src/app/models/product';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-header',
@@ -19,21 +20,34 @@ export class HeaderComponent implements OnInit {
 
   public product= new Product(null,null,null,null,null,null)
   public products: any;
+  form: FormGroup;
   
-  
-modalRef:BsModalRef
+  modalRef:BsModalRef
 
 constructor(public productService:ProductService, public servicio:ServService, private modalService: BsModalService) { }
 
-mostrarProductos(uid){
+/* mostrarProductos(uid){
   this.productService.getProductsByUser(uid).subscribe((data)=>{
     this.products = data
     console.log(data)
   })
 }
+
 mostrarTodosProductos(){
   this.productService.getAllProducts().subscribe((data)=>{
     this.products = data
+    console.log(data)
+  })
+} */
+
+onSubmit(form){
+  console.log(form.value)
+}
+
+buscarProducto(clave: string){
+  console.log(clave)
+  this.productService.getProductsByName(clave).subscribe((data)=>{
+    this.productService.products = data
     console.log(data)
   })
 }

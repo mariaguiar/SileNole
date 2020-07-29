@@ -21,10 +21,13 @@ export class ProfileComponent implements OnInit {
     }
 
   ngOnInit(): void {
+    this.usuarioActual=this.loginService.usuarioActual
   }
+
   onSubmit(form){
     console.log(form.value)
   }
+
   modificarUsuario(idUsuario:number, name:string, password:string, email:string, comunidad:string, provincia:string, localidad:string, cp:number, user_image:string){
     console.log('Usuario Modificado')
     let userUpdated = new Usuario(idUsuario, name, password, email, comunidad, provincia, localidad, cp, user_image);
@@ -33,6 +36,7 @@ export class ProfileComponent implements OnInit {
     })
     this.usuarioActual = userUpdated;
   }
+
   borrarUsuario(id:number){
     console.log('Usuario Borrado')
     this.usuarioService.deleteUsuario(id).subscribe((data)=>{
@@ -47,6 +51,7 @@ export class ProfileComponent implements OnInit {
       this.closeResult = `${this.getDismissReason(reason)}`;
     });
   }
+
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';

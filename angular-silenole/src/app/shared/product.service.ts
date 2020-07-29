@@ -21,6 +21,7 @@ export class ProductService {
 
   constructor(private http: HttpClient, public loginService:LoginService) {
     console.log("funcionando servicio product");
+    console.log(this.loginService.usuarioActual)
     this.usuarioActual=this.loginService.usuarioActual
   }
 
@@ -49,6 +50,11 @@ export class ProductService {
     return this.http.put(this.url+ "products/", newProduct)
   }
 
+  getProductsByName(clave: string) {
+    console.log("hola desde getProductsByName " + clave)
+    return this.http.get(this.url + "buscar/?filterProductName=" + clave + "&filterUser=" + this.usuarioActual.user_id);
+  }
+
   getProductsBySelectedCategory() {
     console.log("hola desde product.service")
     return this.http.get(this.url + "buscar/" + this.categoriaSeleccionada + "?filterUser=" + this.usuarioActual.user_id);
@@ -59,11 +65,12 @@ export class ProductService {
     console.log(this.usuarioActual.user_id)
     return this.http.get(this.url + "buscar-ultimos/" + "?filterUser=" + this.usuarioActual.user_id) 
   }
-  getClosestProducts(){//ver si está bien-----------------------------------------------------TERMINAR
+  getClosestProducts(){
     console.log("obteniendo productos cercanos")
+    console.log(this.usuarioActual)
     console.log(this.usuarioActual.user_id)
     console.log(this.usuarioActual.localidad)
-    return this.http.get(this.url + "buscar-cercanos/" + "?filterUser=" + this.usuarioActual.user_id && "?filterWhere=" + this.usuarioActual.localidad) 
+    return this.http.get(this.url + "buscar-cercanos/" + "?filterUser=" + this.usuarioActual.user_id + "&filterWhere=" + this.usuarioActual.localidad) 
   }
   
 /*   getProductsBySelectedCategoryAndFilter(filter: String) {

@@ -8,6 +8,7 @@ import { LoginService } from './../../shared/login.service';
 import { Router } from "@angular/router";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { validarQueSeanIguales } from '../../shared/app.validator';
+import { ProductService } from 'src/app/shared/product.service';
 
 
 @Component({
@@ -21,7 +22,9 @@ export class LoginComponent implements OnInit {
   email: string;
   password: string;  
   form: FormGroup;
-  constructor(private router:Router,public loginService:LoginService, public usuarioService:UsuarioService, public modalService:BsModalService, public servicio:ServService, private http: HttpClient,private fb: FormBuilder) { 
+  constructor(private router:Router,public loginService:LoginService, public usuarioService:UsuarioService,
+      public productService:ProductService, public modalService:BsModalService, public servicio:ServService, 
+      private http: HttpClient,private fb: FormBuilder) { 
     console.log("Funcionando servicio usuario")
     this.usuario
   }
@@ -75,7 +78,8 @@ export class LoginComponent implements OnInit {
     this.loginService.login(user).subscribe(data => {
       console.log(data[0]);
       this.loginService.usuarioActual = data[0]
-      console.log(this.loginService.usuarioActual.cp)
+      this.productService.usuarioActual = data[0]
+      console.log(this.loginService.usuarioActual)
       if (data != undefined) {
         this.router.navigate(["/home"])
       } else {

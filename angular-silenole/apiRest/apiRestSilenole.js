@@ -410,7 +410,25 @@ app.get("/siles/:user_id", function (request, response) {
 });
 
 /* ---------------------------------FIN NOLES----------------------------------- */
-// HACER
+// GET /buscar/ por nombre de producto
+app.get("/buscar/", function (request, response) {
+    let filtrar_user_id = request.query.filterUser;
+    let filtrar_name = "%" + request.query.filterProductName + "%";
+    console.log(filtrar_name)
+    let params = [filtrar_user_id, filtrar_name, filtrar_name];
+    let sql = "SELECT products.nombre, products.descripcion, products.product_image, products.user_id FROM products INNER JOIN user ON (user.user_id = products.user_id) WHERE user.user_id != ? AND (products.nombre LIKE ? OR products.descripcion LIKE ?) ORDER BY product_id";
+    console.log(sql);
+    connection.query(sql, params, function(err, result){
+        if (err){
+            console.log(err)
+        }else{
+            console.log('Buscar por Clave')
+            console.log(result)
+        } 
+    response.send(result);
+    })
+});
+
 // GET /buscar/ Obtiene los ultimos 4 productos agregados
 app.get("/buscar-ultimos/", function (request, response) {
     let filtrar_user_id = request.query.filterUser;
@@ -425,17 +443,18 @@ app.get("/buscar-ultimos/", function (request, response) {
         } 
     response.send(result);
     })
-});// CORREGIR ERRORES ---------------------------------------------TERMINAR
+});
 app.get("/buscar-cercanos/", function (request, response) {
     let filtrar_user_id = request.query.filterUser;
     let filtrar_where = request.query.filterWhere;
     let params = [filtrar_user_id, filtrar_where];
+    console.log(filtrar_user_id,filtrar_where)
     let sql = "SELECT * FROM user INNER JOIN products ON (user.user_id=products.user_id) WHERE user.user_id != ? AND user.localidad = ? ORDER BY product_id DESC LIMIT 4"
     connection.query(sql, params, function(err, result){
         if (err){
             console.log(err)
         }else{
-            console.log('Últimos productos añadidos')
+            console.log('Productos cercanos añadidos')
             console.log(result)
         } 
     response.send(result);

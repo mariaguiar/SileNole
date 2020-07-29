@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit {
       console.log(data)
     })
   }
-// VER SI ESTA BIEN --------- TERMINAR
+
   mostraProductosCercanos() {
     this.productService.getClosestProducts().subscribe((data) => {
       this.productsCercanos = data
