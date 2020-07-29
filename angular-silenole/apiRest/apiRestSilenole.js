@@ -323,6 +323,22 @@ app.post("/messages", function (request, response) {
     response.send(result);
     })
 });
+// HACER
+// DELETE PARA BORRAR UN PRODUCTO DEL CHAT
+/* app.delete("/messages", function (request, response) {
+    let user_id = request.body.user_id
+    let params = [user_id]
+    let sql = "DELETE FROM user WHERE user_id = ?";
+    connection.query(sql, params, function(err, result){
+        if (err){
+            console.log(err)
+        }else{
+            console.log('Usuario eliminado')
+            console.log(result)
+        } 
+    response.send(result);
+    })
+}); */
 /* ---------------------------------MENSAJES SIN HACER----------------------------------- */
 // GET /MESSAGES/: USERID/:OWNERID= Obtiene todos los mensajes intercambiados entre el usuario y el propietario del nole 
 /* app.get("/messages/:user_id/:user_id2/:product_id", function (request, response) {
@@ -399,7 +415,22 @@ app.get("/siles/:user_id", function (request, response) {
 app.get("/buscar-ultimos/", function (request, response) {
     let filtrar_user_id = request.query.filterUser;
     let params = [filtrar_user_id];
-    let sql = "SELECT * FROM products  WHERE user_id != ? ORDER BY product_id DESC LIMIT 4";
+    let sql = "SELECT * FROM products WHERE user_id != ? ORDER BY product_id DESC LIMIT 4";
+    connection.query(sql, params, function(err, result){
+        if (err){
+            console.log(err)
+        }else{
+            console.log('Últimos productos añadidos')
+            console.log(result)
+        } 
+    response.send(result);
+    })
+});// CORREGIR ERRORES ---------------------------------------------TERMINAR
+app.get("/buscar-cercanos/", function (request, response) {
+    let filtrar_user_id = request.query.filterUser;
+    let filtrar_where = request.query.filterWhere;
+    let params = [filtrar_user_id, filtrar_where];
+    let sql = "SELECT * FROM user INNER JOIN products ON (user.user_id=products.user_id) WHERE user.user_id != ? AND user.localidad = ? ORDER BY product_id DESC LIMIT 4"
     connection.query(sql, params, function(err, result){
         if (err){
             console.log(err)

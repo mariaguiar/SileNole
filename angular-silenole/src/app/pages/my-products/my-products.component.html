@@ -7,7 +7,7 @@
   <div class="container-fluid">
     <div class="row d-flex justify-content-center">
       <div class="col-10 bg-light border border-success text-success mb-5 mt-5">
-        <form #uploadForm="ngForm" (ngSubmit)="onSubmit(uploadForm)">
+        <form #uploadForm="ngForm" (ngSubmit)="onSubmit(uploadForm); uploadForm.reset()">
           <div class="form-group mt-3">
             <label for="exampleFormControlFile1">Carga una Foto</label>
             <input type="file" class="form-control-file" name="product_image" [(ngModel)]="productoActual.product_image"
@@ -46,7 +46,7 @@
           <div class="row justify-content-center my-4">
             <button type="submit" class="btn btn-success mr-1"
               (click)="modificarSile(productoActual.product_id, nombre.value, descripcion.value, categoria.value, idUsuario, product_image.value.replace('C:\\fakepath\\',''))"
-              (click)="modal.dismiss('Cross click')">Modificar Producto</button>
+              (click)= "openModal(modificadoModal)" (click)="modal.dismiss('Cross click')">Modificar Producto</button>
               <button type="submit" class="btn btn-danger ml-1"
               (click)="modificarSile(productoActual.product_id, nombre.value, descripcion.value, categoria.value, idUsuario, product_image.value.replace('C:\\fakepath\\',''))"
               (click)="modal.dismiss('Cross click')">Cancelar</button>
@@ -57,6 +57,20 @@
   </div>
 </ng-template>
 <pre>{{ closeResult }}</pre>
+
+<!-- MODAL  producto modificado correctamente-->
+<ng-template #modificadoModal>
+  <div class="modal-body text-success text-center">
+    <form>
+      <div class="form-group">
+        <label for="recipient-name" class="col-form-label"><h3>Producto modificado correctamente</h3></label>
+      </div>
+    </form>
+  </div>  
+  <div class="d-flex justify-content-center mb-3">
+    <button type="button" class="btn btn-success"  [routerLink]="['/siles']" (click)="modalRef.hide()">Volver</button> 
+  </div>
+</ng-template>
 
 <!-- MODAL ELIMINAR PRODUCTO -->
 <ng-template #contentMDP let-modal>

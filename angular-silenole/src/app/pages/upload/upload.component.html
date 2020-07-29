@@ -11,6 +11,10 @@
       </div>
     </form>
   </div>  
+  <div class="d-flex justify-content-center mb-3">
+    <button type="button" class="btn btn-success"  [routerLink]="['/siles']" (click)="modalRef.hide()">Ir a mis Siles</button> &nbsp;
+    <button type="button" class="btn btn-success"  [routerLink]="['/subir']" (click)="!uploadForm.valid" (click)="modalRef.hide()">Subir otro</button> 
+  </div>
 </ng-template>
 
 <!-- FORMULARIO SUBIDA -->
@@ -24,7 +28,7 @@
 <div class="container-fluid">
   <div class="row d-flex justify-content-center">
     <div class="col-10 col-sm-8 col-md-6 bg-light border border-success text-success mb-5">
-      <form #uploadForm="ngForm" (ngSubmit)="onSubmit(uploadForm)">
+      <form #uploadForm="ngForm" (ngSubmit)="onSubmit(uploadForm); uploadForm.reset()">
         <div class="form-group mt-3">
           <label for="exampleFormControlFile1">Carga una Foto</label>
           <input type="file" class="form-control-file" name="product_image" [(ngModel)]="product.product_image"

@@ -6,6 +6,8 @@ import { UsuarioService } from 'src/app/shared/usuario.service';
 import { HttpClient } from "@angular/common/http";
 import { LoginService } from './../../shared/login.service';
 import { Router } from "@angular/router";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { validarQueSeanIguales } from '../../shared/app.validator';
 
 
 @Component({
@@ -14,14 +16,12 @@ import { Router } from "@angular/router";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
   public modalRef: BsModalRef;
-  public usuario=new Usuario(null,null,null,null,null,null,null,null,"perfil.jpg")
+  public usuario=new Usuario(null,null,null,null,null,null,null,null,null)
   email: string;
   password: string;  
-  
-
-  constructor(private router:Router, public loginService:LoginService, public usuarioService:UsuarioService, public modalService:BsModalService, public servicio:ServService, private http: HttpClient) { 
+  form: FormGroup;
+  constructor(private router:Router,public loginService:LoginService, public usuarioService:UsuarioService, public modalService:BsModalService, public servicio:ServService, private http: HttpClient,private fb: FormBuilder) { 
     console.log("Funcionando servicio usuario")
     this.usuario
   }
@@ -32,7 +32,22 @@ export class LoginComponent implements OnInit {
   console.log(this.servicio.aparecer)
   }
 
-  ngOnInit(){ }
+  ngOnInit() {
+    this.initForm();
+  }
+  initForm() {
+    this.form = this.fb.group({
+      'password':  ['', Validators.required],
+      'confirmarPassword': ['', Validators.required]
+    }, {
+      validators: validarQueSeanIguales
+    });
+  }
+  equals(): boolean {
+    return this.form.hasError('noSonIguales') &&
+      this.form.get('password').dirty &&
+      this.form.get('confirmarPassword').dirty;
+  }
 
   openModal(template: TemplateRef<any>){
     this.modalRef = this.modalService.show(template)

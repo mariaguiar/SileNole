@@ -59,6 +59,12 @@ export class ProductService {
     console.log(this.usuarioActual.user_id)
     return this.http.get(this.url + "buscar-ultimos/" + "?filterUser=" + this.usuarioActual.user_id) 
   }
+  getClosestProducts(){//ver si está bien-----------------------------------------------------TERMINAR
+    console.log("obteniendo productos cercanos")
+    console.log(this.usuarioActual.user_id)
+    console.log(this.usuarioActual.localidad)
+    return this.http.get(this.url + "buscar-cercanos/" + "?filterUser=" + this.usuarioActual.user_id && "?filterWhere=" + this.usuarioActual.localidad) 
+  }
   
 /*   getProductsBySelectedCategoryAndFilter(filter: String) {
     console.log("hola desde product.service")

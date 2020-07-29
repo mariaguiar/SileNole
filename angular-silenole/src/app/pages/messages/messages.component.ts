@@ -19,11 +19,9 @@ export class MessagesComponent implements OnInit {
   public message=new Message(null,null,null,null,null ,null)
   public messagesNoles: any;
   public messagesSiles: any;
-  // public productoActual= new Product(null,null,null,null,null,null)
   public noles: any;
   public siles: any;
   public usuarioActual=new Usuario(null,null,null,null,null,null,null,null,null)
-  // public message1: Message
   public fecha = new Date();
 
   constructor(public usuarioService:UsuarioService, public messageService:MessageService, public productService:ProductService, public loginService:LoginService) { 
@@ -35,6 +33,15 @@ export class MessagesComponent implements OnInit {
   }
   onSubmit(form){
     console.log(form.value)
+  }
+// No funicona aun TERMINAR
+  eliminarNoleCardMsg(index){
+    console.log(index)
+    let borrado = this.noles.splice(index, 1);
+    this.noles = borrado
+    this.cargarNoles()
+    this.cargarMensajesNoles()
+    console.log("el nuevo array es"+this.noles)
   }
 
   pasarNole(nole){
@@ -65,6 +72,7 @@ export class MessagesComponent implements OnInit {
   }
 
   cargarNoles() {
+    console.log("Hola desde cargarNoles")
     let uid=this.loginService.usuarioActual.user_id
     this.messageService.getNolesByUser(uid).subscribe((data)=>{
       this.noles = data
@@ -73,6 +81,7 @@ export class MessagesComponent implements OnInit {
   }
 
   cargarMensajesNoles() {
+    console.log("Hola desde cargarMensajesNoles")
     let chat_id = this.messageService.noleSeleccionado.chat_id
     this.messageService.getMessages(chat_id).subscribe((data)=>{
       this.messagesNoles = data

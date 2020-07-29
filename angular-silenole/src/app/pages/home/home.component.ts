@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
   public product= new Product(null,null,null,null,null,null)
   public productsUltimos: any;
   public productsCercanos: any;
-    public idProducto: number
+  public idProducto: number
   public idUsuario: number=1
 
   constructor(public productService:ProductService, public loginService: LoginService, public messageService:MessageService, private modalService: NgbModal) {
@@ -35,9 +35,12 @@ export class HomeComponent implements OnInit {
       console.log(data)
     })
   }
-
+// VER SI ESTA BIEN --------- TERMINAR
   mostraProductosCercanos() {
-
+    this.productService.getClosestProducts().subscribe((data) => {
+      this.productsCercanos = data
+      console.log(data)
+    })
   }
   
 /*    mostrarProductosPorUsuario(uid){

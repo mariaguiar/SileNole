@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { ProductService } from 'src/app/shared/product.service';
 import { Product } from 'src/app/models/product';
 import { LoginService } from 'src/app/shared/login.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 
 @Component({
@@ -18,7 +19,9 @@ export class MyProductsComponent implements OnInit {
   public idProducto: number
   public idUsuario: number
 
-  constructor(public productService:ProductService, public loginService:LoginService, private modalService: NgbModal) { 
+  modalRef:BsModalRef;
+
+  constructor(public productService:ProductService, public loginService:LoginService, private modalService: NgbModal, private modalServices: BsModalService) { 
     this.mostrarProductos(this.idUsuario=this.loginService.usuarioActual.user_id)
   }
   
@@ -82,5 +85,8 @@ export class MyProductsComponent implements OnInit {
     }  else {
       return '';
     }
+  }
+  openModal(modificadoModal: TemplateRef<any>){
+    this.modalRef = this.modalServices.show(modificadoModal)
   }
 }

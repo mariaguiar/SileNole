@@ -32,14 +32,16 @@
      </button>
   </div>
   <div class="modal-body">
-    <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
+    <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)" [formGroup]="form">
       <div class="form-group">
         <label for="recipient-name" class="col-form-label">Nombre Usuario:</label>
-        <input type="text" class="form-control border-success" name="name" [(ngModel)]="usuario.name" #name="ngModel" required>
+        <input type="text" class="form-control border-success" name="name" [(ngModel)]="usuario.name" #name="ngModel" [class.is-invalid]="name.invalid && name.touched" required>
+        <small *ngIf ="name.invalid && name.touched" 
+         class="form-text text-danger">Ingrese un nombre</small>
       </div>
       <div class="form-group">
         <label for="recipient-name" class="col-form-label" >Email:</label>
-        <input type="email" class="form-control border-success" name="email" [(ngModel)]="usuario.email" #email="ngModel" required>
+        <input type="email" class="form-control border-success" name="email" [(ngModel)]="usuario.email" #email="ngModel" [class.is-invalid]="email.invalid && email.touched" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" required>
       </div>
       <div class="form-group">
         <label for="recipient-name" class="col-form-label">Comunidad Autónoma:</label>
@@ -58,18 +60,19 @@
         <input type="number" class="form-control border-success" name="cp" [(ngModel)]="usuario.cp" #cp="ngModel" required>
       </div>
       <div class="form-group">
-        <label for="recipient-name" class="col-form-label">Confirmar contraseña:</label>
-        <input type="password" class="form-control border-success" name="password" [(ngModel)]="usuario.password" #password="ngModel"required>
+        <label for="recipient-name" for="password" class="col-form-label">Contraseña:</label>
+        <input type="password" class="form-control border-success" formControlName="password"  [(ngModel)]="usuario.password"   pattern="[a-z0-9._%+-]" required>
       </div>
-      <div class="form-group">
-        <label for="recipient-name" class="col-form-label">Contraseña:</label>
-        <input type="password" class="form-control border-success" name="password" [(ngModel)]="usuario.password" #password="ngModel"required>
+      <div class="form-group ">
+        <label for="recipient-name" for="confirmPassword" class="col-form-label">Confirma la contraseña:</label>
+        <input type="password" class="form-control border-success"  formControlName="confirmarPassword" required>
+        <span  *ngIf="equals()" id="span">Las contraseñas no coinciden</span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" [routerLink]="['/']" (click)="aparecerF()" (click)="modalRef.hide()" (click)="newUsuario(null, name.value, password, email.value, comunidad.value, provincia.value, localidad.value, cp.value)"
+         >Registrarse</button>
       </div>
     </form>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-success" [routerLink]="['/home']" (click)="aparecerF()" (click)="modalRef.hide()" (click)="newUsuario(null, name.value, password.value, email.value, comunidad.value, provincia.value, localidad.value, cp.value)"
-     >Registrarse</button>
   </div>
 </ng-template>
 
