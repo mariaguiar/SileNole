@@ -10,5 +10,5 @@
 {
     font-size: 4em;
 }
-.scroll { height: 450px; overflow-y: scroll;}
+.scroll { height: 400px; overflow-y: scroll;}
 .largo { width: 50%; text-align: right;}

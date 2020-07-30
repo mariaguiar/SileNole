@@ -59,11 +59,11 @@
       </div>
       <div class="form-group">
         <label for="recipient-name" class="col-form-label">Confirmar contraseña:</label>
-        <input type="password" class="form-control border-success" name="password" [(ngModel)]="usuario.password" #password="ngModel"required>
+        <input type="password" class="form-control border-success" name="password" (ngModel)="usuario.password" #password="ngModel"required>
       </div>
       <div class="form-group">
         <label for="recipient-name" class="col-form-label">Contraseña:</label>
-        <input type="password" class="form-control border-success" name="password" [(ngModel)]="usuario.password" #password="ngModel"required>
+        <input type="password" class="form-control border-success" name="password2" (ngModel)="usuario2.password" #password2="ngModel"required>
       </div>
     </form>
   </div>

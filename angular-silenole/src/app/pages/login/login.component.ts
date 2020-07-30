@@ -19,8 +19,10 @@ import { ProductService } from 'src/app/shared/product.service';
 export class LoginComponent implements OnInit {
   public modalRef: BsModalRef;
   public usuario=new Usuario(null,null,null,null,null,null,null,null,null)
+  public usuario2=new Usuario(null,null,null,null,null,null,null,null,null)
   email: string;
-  password: string;  
+  password: string; 
+  password2: string; 
   form: FormGroup;
   constructor(private router:Router,public loginService:LoginService, public usuarioService:UsuarioService,
       public productService:ProductService, public modalService:BsModalService, public servicio:ServService, 
