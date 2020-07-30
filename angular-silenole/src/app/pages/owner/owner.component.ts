@@ -13,7 +13,7 @@ import { MessageService } from 'src/app/shared/message.service';
 })
 export class OwnerComponent implements OnInit {
 
-  public productoActual= new Product(null,null,null,null,null,null)
+  public productoActual= new Product(null,null,null,null,null,null,null)
   public products: any;
   public idProducto: number
   public idUsuario: number
@@ -34,10 +34,12 @@ export class OwnerComponent implements OnInit {
   }
 
   obtenerOwnerInfo(uid){
+    console.log(uid)
     this.usuarioService.getUsuario(uid).subscribe((data)=>{
+      console.log(data)
       this.nombreOwner = data[0].name
       this.imagenOwner = data[0].user_image;
-      console.log(data)
+
     })
   }
 

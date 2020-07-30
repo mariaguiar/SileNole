@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit {
   this.collapsed = !this.collapsed;
   }
 
-  public product= new Product(null,null,null,null,null,null)
+  public product= new Product(null,null,null,null,null,null, null)
   public products: any;
   form: FormGroup;
   

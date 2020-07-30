@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
   closeResult = '';
 
   public usuarioActual = new Usuario(null, null, null, null, null, null, null, null, null)
-  public product= new Product(null,null,null,null,null,null)
+  public product= new Product(null,null,null,null,null,null,null)
   public productsUltimos: any;
   public productsCercanos: any;
   public idProducto: number

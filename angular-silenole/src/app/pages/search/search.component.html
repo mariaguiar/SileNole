@@ -17,28 +17,29 @@
           <a ngbDropdownToggle class="nav-link dropdown-toggle text-success" data-toggle="dropdown" 
             role="button" aria-haspopup="true" aria-expanded="false">Por cercanía</a>
           <div ngbDropdownMenu class="dropdown-menu">
-            <a class="dropdown-item" (click)="buscarPorCp()">Codigo Postal</a>
-            <a class="dropdown-item">Localidad</a>
-            <a class="dropdown-item">Provincia</a>
-            <a class="dropdown-item">Comunidad Autonoma</a>
+            <a class="dropdown-item" (click)="buscarPorUbicacion('cp', usuarioActual.cp)">Codigo Postal</a>
+            <a class="dropdown-item" (click)="buscarPorUbicacion('localidad', usuarioActual.localidad)">Localidad</a>
+            <a class="dropdown-item" (click)="buscarPorUbicacion('provincia', usuarioActual.provincia)">Provincia</a>
+            <a class="dropdown-item" (click)="buscarPorUbicacion('comunidad', usuarioActual.comunidad)">Comunidad Autonoma</a>
           </div>
         </li>
         <li ngbDropdown class="nav-item dropdown">
           <a ngbDropdownToggle class="nav-link dropdown-toggle text-success" data-toggle="dropdown" 
             role="button" aria-haspopup="true" aria-expanded="false">Por tiempo</a>
           <div ngbDropdownMenu class="dropdown-menu text-success">
-            <a class="dropdown-item">Última semana</a>
-            <a class="dropdown-item">Último mes</a>
-            <a class="dropdown-item">Último año</a>
+            <a class="dropdown-item" (click)="buscarPorDias(7)">Última semana</a>
+            <a class="dropdown-item" (click)="buscarPorDias(30)">Último mes</a>
+            <a class="dropdown-item" (click)="buscarPorDias(365)">Último año</a>
           </div>
         </li>
       </ul>
     </div>
     <div class="col-12 col-sm-12 col-md-6 d-flex justify-content-center justify-content-sm-center justify-content-md-start">
         <form class="form-inline my-2 my-lg-0">
-        <input class="form-control" type="search" placeholder="Por Usuario" aria-label="Search">
+        <input class="form-control" type="search" placeholder="Buscar un Usuario" aria-label="Search" name="name" [(ngModel)]="usuario.name"
+        #name="ngModel" required>
         <button class="btn btn-outline-success my-2 my-sm-0 active d-flex justify-content-center justify-content-sm-center" role="button" aria-pressed="true"
-            type="button" [routerLink]="['/buscar']">Buscar</button>
+            type="button"  (click)="buscarUsuario(name.value)" >Buscar</button>
         </form>
     </div>
   </div>

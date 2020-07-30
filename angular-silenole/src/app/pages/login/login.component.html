@@ -32,30 +32,42 @@
      </button>
   </div>
   <div class="modal-body">
-    <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
+    <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)" >
       <div class="form-group">
         <label for="recipient-name" class="col-form-label">Nombre Usuario:</label>
-        <input type="text" class="form-control border-success" name="name" [(ngModel)]="usuario.name" #name="ngModel" required>
+        <input type="text" class="form-control border-success" name="name" [(ngModel)]="usuario.name" #name="ngModel" [class.is-invalid]="name.invalid && name.touched" required>
+        <small *ngIf ="name.invalid && name.touched" 
+         class="form-text text-danger">Introduce tu nombre</small>
       </div>
       <div class="form-group">
         <label for="recipient-name" class="col-form-label" >Email:</label>
-        <input type="email" class="form-control border-success" name="email" [(ngModel)]="usuario.email" #email="ngModel" required>
+        <input type="email" class="form-control border-success" name="email" [(ngModel)]="usuario.email" #email="ngModel" [class.is-invalid]="email.invalid && email.touched" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" required>
+        <small *ngIf ="email.invalid && email.touched" 
+        class="form-text text-danger">Introduce un email valido</small>
       </div>
       <div class="form-group">
         <label for="recipient-name" class="col-form-label">Comunidad Autónoma:</label>
-        <input type="text" class="form-control border-success" name="comunidad" [(ngModel)]="usuario.comunidad" #comunidad="ngModel" required>
+        <input type="text" class="form-control border-success" name="comunidad" [(ngModel)]="usuario.comunidad" #comunidad="ngModel" [class.is-invalid]="comunidad.invalid && comunidad.touched" required>
+        <small *ngIf ="comunidad.invalid && comunidad.touched" 
+        class="form-text text-danger">Introduce tu comunidad</small>
       </div>
       <div class="form-group">
         <label for="recipient-name" class="col-form-label">Provincia:</label>
-        <input type="text" class="form-control border-success" name="provincia" [(ngModel)]="usuario.provincia" #provincia="ngModel" required>
+        <input type="text" class="form-control border-success" name="provincia" [(ngModel)]="usuario.provincia" #provincia="ngModel" [class.is-invalid]="provincia.invalid && provincia.touched" required>
+        <small *ngIf ="provincia.invalid && provincia.touched" 
+        class="form-text text-danger">Introduce tu provincia</small>
       </div>
       <div class="form-group">
         <label for="recipient-name" class="col-form-label">Localidad:</label>
-        <input type="text" class="form-control border-success" name="localidad" [(ngModel)]="usuario.localidad" #localidad="ngModel" required>
+        <input type="text" class="form-control border-success" name="localidad" [(ngModel)]="usuario.localidad" #localidad="ngModel" [class.is-invalid]="localidad.invalid && localidad.touched" required>
+        <small *ngIf ="localidad.invalid && localidad.touched" 
+        class="form-text text-danger">Introduce tu localidad</small>
       </div>
       <div class="form-group">
         <label for="recipient-name" class="col-form-label">CP:</label>
-        <input type="number" class="form-control border-success" name="cp" [(ngModel)]="usuario.cp" #cp="ngModel" required>
+        <input type="number" class="form-control border-success" name="cp" [(ngModel)]="usuario.cp" #cp="ngModel" [class.is-invalid]="cp.invalid && cp.touched" required>
+        <small *ngIf ="cp.invalid && cp.touched" 
+        class="form-text text-danger">Introduce tu Codigo Postal</small>
       </div>
       <div class="form-group">
         <label for="recipient-name" class="col-form-label">Contraseña:</label>
@@ -66,15 +78,12 @@
         <input type="password" class="form-control border-success" name="password2" (ngModel)="usuario2.password" #password2="ngModel"required>
       </div>
       <span  *ngIf="equals" id="span">Las contraseñas no coinciden</span>
-    </form>
+      </form>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-success" (click)="registrarUsuario(null, name.value, password.value, password2.value, email.value, comunidad.value, provincia.value, localidad.value, cp.value)"
      >Registrarse</button>
-  </div>
-  <!-- <div class="modal-footer">
-    <button type="button" class="btn btn-success" (click)="compararPassword(password.value,password2.value)" >prueba</button>[routerLink]="['/home']" (click)="modalRef.hide()"
-  </div> -->
+  </div> 
 </ng-template>
 
 

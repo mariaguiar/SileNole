@@ -14,7 +14,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 export class MyProductsComponent implements OnInit {
 
   closeResult = '';
-  public productoActual= new Product(null,null,null,null,null,null)
+  public productoActual= new Product(null,null,null,null,null,null,null)
   public products: any;
   public idProducto: number
   public idUsuario: number
@@ -51,7 +51,8 @@ export class MyProductsComponent implements OnInit {
   /* PARA MODIFICAR PRODUCTOS */
   modificarSile(product_id: number, nombre: string, descripcion: string, categoria: string, user_id: number, product_image: string){
     console.log('Hola desde modificarSile')
-    this.productService.putProduct(new Product(product_id, nombre, descripcion, categoria, user_id, product_image)).subscribe((data)=>{
+    let date = new Date();
+    this.productService.putProduct(new Product(product_id, nombre, descripcion, categoria, user_id, product_image, date)).subscribe((data)=>{
       console.log(data)
       this.mostrarProductos(this.idUsuario)      
     })

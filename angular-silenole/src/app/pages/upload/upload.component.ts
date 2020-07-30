@@ -14,7 +14,7 @@ export class UploadComponent implements OnInit {
 
   public usuarioActual=new Usuario(null,null,null,null,null,null,null,null,null)
 
-  public product= new Product(null,null,null,null,null,null)
+  public product= new Product(null,null,null,null,null,null,null)
   public products: any[];
   public idProducto: number
   public modalRef: BsModalRef;
@@ -35,7 +35,8 @@ export class UploadComponent implements OnInit {
   anyadirSile(nombre: string, descripcion: string, categoria: string, user_id: number, product_image: string){
     console.log('Hola desde anyadir')
     console.log(this.productService.product)
-    this.productService.postProduct(new Product(null, nombre, descripcion, categoria, user_id, product_image)).subscribe((data)=>{
+    let date = new Date();
+    this.productService.postProduct(new Product(null, nombre, descripcion, categoria, user_id, product_image, date)).subscribe((data)=>{
       console.log(data)
     })
   }

@@ -22,13 +22,16 @@ export class UsuarioService {
       return this.http.get(this.url + "user/" + id)
     }
   }
+
   newUsuario(nuevoUsuario: Usuario){
     console.log(this.url)
     return this.http.post(this.url + "user/register", nuevoUsuario)
   }
+
   putUsuario(cambios: Usuario){
     return this.http.put(this.url + "user", cambios)
   }
+
   deleteUsuario(id: number){
     const options = {
       headers: new HttpHeaders({
@@ -40,4 +43,5 @@ export class UsuarioService {
     };
     return this.http.delete(this.url + "user/", options)
   }
+  
 }

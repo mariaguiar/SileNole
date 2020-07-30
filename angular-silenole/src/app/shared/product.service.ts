@@ -59,12 +59,28 @@ export class ProductService {
     console.log("hola desde product.service")
     return this.http.get(this.url + "buscar/" + this.categoriaSeleccionada + "?filterUser=" + this.usuarioActual.user_id);
   }
+  
+  getProductsBySelectedCategoryAndCp(cp: number) {
+    console.log("hola desde product.service")
+    return this.http.get(this.url + "buscar-cercanos/categoria/" + this.categoriaSeleccionada + "/cp/" + cp + "?filterUser=" + this.usuarioActual.user_id);
+  }
+
+  getProductsBySelectedCategoryAndLocation(tipo_loc:string, valor_loc:any) {
+    console.log("hola desde product.service")
+    return this.http.get(this.url + "buscar-cercanos/categoria/" + this.categoriaSeleccionada + "/" + tipo_loc + "/" + valor_loc + "?filterUser=" + this.usuarioActual.user_id);
+  }
+
+  getProductsBySelectedCategoryAndDays(dias: number) {
+    console.log("hola desde product.service")
+    return this.http.get(this.url + "buscar-ultimos/" + "?filterUser=" + this.usuarioActual.user_id + "&days=" + dias);
+  }
 
   getLatestProducts(){
     console.log("obteniendo últimos productos")
     console.log(this.usuarioActual.user_id)
     return this.http.get(this.url + "buscar-ultimos/" + "?filterUser=" + this.usuarioActual.user_id) 
   }
+
   getClosestProducts(){
     console.log("obteniendo productos cercanos")
     console.log(this.usuarioActual)
@@ -73,10 +89,11 @@ export class ProductService {
     return this.http.get(this.url + "buscar-cercanos/" + "?filterUser=" + this.usuarioActual.user_id + "&filterWhere=" + this.usuarioActual.localidad) 
   }
   
-/*   getProductsBySelectedCategoryAndFilter(filter: String) {
-    console.log("hola desde product.service")
-    return this.http.get(this.url + "buscar/" + this.categoriaSeleccionada + "?filterUser=" + this.usuarioActual.user_id + filter);
-  } */
+  getOwnerByName(nombreUsuario: string) {
+    console.log("obteniendo usuario por nombre")
+    return this.http.get(this.url + "buscar/usuario/" + nombreUsuario);
+  }
+
 
   public deleteProduct(id:number){
   let options = {

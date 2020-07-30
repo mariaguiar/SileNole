@@ -60,8 +60,9 @@ app.post("/products", function (request, response) {
     let categoria = request.body.categoria
     let user_id  = request.body.user_id 
     let product_image = request.body.product_image
-    let params = [nombre, descripcion, categoria, user_id, product_image]
-    let sql = `INSERT INTO products (nombre, descripcion, categoria, user_id , product_image) VALUES ( ?, ?, ?, ?, ?)`;
+    let date = request.body.date
+    let params = [nombre, descripcion, categoria, user_id, product_image, date]
+    let sql = `INSERT INTO products (nombre, descripcion, categoria, user_id , product_image, date) VALUES ( ?, ?, ?, ?, ?, ?)`;
     connection.query(sql, params, function(err, result){
         if (err){
             console.log(err)
@@ -81,8 +82,9 @@ app.put("/products", function (request, response) {
     let categoria = request.body.categoria
     let user_id  = request.body.user_id 
     let product_image = request.body.product_image
-    let params = [nombre, descripcion, categoria, user_id , product_image]
-    let sql = "UPDATE products SET nombre = ?, descripcion = ?, categoria = ?, user_id = ?, product_image = ? WHERE product_id ="+product_id;
+    let date = request.body.date
+    let params = [nombre, descripcion, categoria, user_id , product_image, date]
+    let sql = "UPDATE products SET nombre = ?, descripcion = ?, categoria = ?, user_id = ?, product_image = ?, date = ? WHERE product_id =" + product_id;
     connection.query(sql, params, function(err, result){
         if (err){
             console.log(err)
@@ -108,37 +110,7 @@ app.delete("/products", function (request, response) {
     response.send(result);
     })
 });
-// GET BUSCAR/CATEGORIA Obtiene los productos segun categoria
-app.get("/buscar/:categoria", function (request, response) {
-    var categoria = request.params.categoria;
-    var filtrar_user_id = request.query.filterUser;
-    //var location_type = request.query.locationType;
-    //var location_value = request.query.locationValue;
-    //var searchString = "";
-    //if (location_type != null && location_value != null) {
-    //    searchString = " AND " + location_type + " = " + location_value;
-    //    console.log(searchString);
-    //}
-    let sql;
-    let params;
-    if(categoria==="Todo"){
-        params = [filtrar_user_id];
-        sql = "SELECT * FROM products WHERE user_id != ?";
-    }else{
-        params= [categoria, filtrar_user_id]
-        sql = "SELECT * FROM products WHERE categoria = ? AND user_id != ?"; 
-    }
-    connection.query(sql, params, function(err, result){
-        if (err){
-            console.log(err)
-            console.log("hola desde api")
-        }else{
-            console.log('Objetos en la categoria ' + categoria)
-            console.log(result)
-        } 
-    response.send(result);
-    })
-});
+
 /* ---------------------------------PRODUCTOS SIN HACER----------------------------------- */
 // GET /SILES/:DISTANCIA = Obtiene el todos los siles según distancia
 /* app.get("/siles/:distancia", function (request, response) {
@@ -410,13 +382,55 @@ app.get("/siles/:user_id", function (request, response) {
 });
 
 /* ---------------------------------FIN NOLES----------------------------------- */
+
+app.get("/buscar/usuario/:nombre", function (request, response) {
+    var nombre = request.params.nombre;
+    console.log("buscando usuario ", nombre)
+    let params = [nombre];
+    let sql = "SELECT * FROM user WHERE name = ?";
+    connection.query(sql, params, function(err, result){
+        if (err){
+            console.log(err)
+        }else{
+            console.log('Usuario por nombre')
+            console.log(result)
+        } 
+    response.send(result);
+    })
+});
+
+// GET BUSCAR/CATEGORIA Obtiene los productos segun categoria
+app.get("/buscar/:categoria", function (request, response) {
+    var categoria = request.params.categoria;
+    var filtrar_user_id = request.query.filterUser;
+    let sql;
+    let params;
+    if(categoria === "Todo"){
+        params = [filtrar_user_id];
+        sql = "SELECT * FROM products WHERE user_id != ?";
+    }else{
+        params = [categoria, filtrar_user_id]
+        sql = "SELECT * FROM products WHERE categoria = ? AND user_id != ?"; 
+    }
+    connection.query(sql, params, function(err, result){
+        if (err){
+            console.log(err)
+            console.log("hola desde api")
+        }else{
+            console.log('Objetos en la categoria ' + categoria)
+            console.log(result)
+        } 
+    response.send(result);
+    })
+});
+
 // GET /buscar/ por nombre de producto
 app.get("/buscar/", function (request, response) {
     let filtrar_user_id = request.query.filterUser;
     let filtrar_name = "%" + request.query.filterProductName + "%";
     console.log(filtrar_name)
     let params = [filtrar_user_id, filtrar_name, filtrar_name];
-    let sql = "SELECT products.nombre, products.descripcion, products.product_image, products.user_id FROM products INNER JOIN user ON (user.user_id = products.user_id) WHERE user.user_id != ? AND (products.nombre LIKE ? OR products.descripcion LIKE ?) ORDER BY product_id";
+    let sql = "SELECT products.nombre, products.descripcion, products.product_image, products.user_id FROM products INNER JOIN user ON (user.user_id = products.user_id) WHERE user.user_id != ? AND (products.nombre LIKE ? OR products.descripcion LIKE ?) ORDER BY product_id DESC";
     console.log(sql);
     connection.query(sql, params, function(err, result){
         if (err){
@@ -432,8 +446,20 @@ app.get("/buscar/", function (request, response) {
 // GET /buscar/ Obtiene los ultimos 4 productos agregados
 app.get("/buscar-ultimos/", function (request, response) {
     let filtrar_user_id = request.query.filterUser;
-    let params = [filtrar_user_id];
-    let sql = "SELECT * FROM products WHERE user_id != ? ORDER BY product_id DESC LIMIT 4";
+    let filtrar_fecha = request.query.days;
+    let params;
+    let sql;
+    if (filtrar_fecha != null) {
+        date = new Date();
+        date.setDate(date.getDate() - filtrar_fecha)
+        console.log("fitrando dias", filtrar_fecha, date);
+        params = [filtrar_user_id, date];
+        sql = "SELECT * FROM products WHERE user_id != ? AND date > ? ORDER BY product_id DESC";
+    } else {
+        params = [filtrar_user_id];
+        sql = "SELECT * FROM products WHERE user_id != ? ORDER BY product_id DESC LIMIT 4";
+    }
+
     connection.query(sql, params, function(err, result){
         if (err){
             console.log(err)
@@ -444,6 +470,7 @@ app.get("/buscar-ultimos/", function (request, response) {
     response.send(result);
     })
 });
+
 app.get("/buscar-cercanos/", function (request, response) {
     let filtrar_user_id = request.query.filterUser;
     let filtrar_where = request.query.filterWhere;
@@ -461,8 +488,56 @@ app.get("/buscar-cercanos/", function (request, response) {
     })
 });
 
+app.get("/buscar-cercanos/categoria/:categoria/:tipo_loc/:valor_loc", function (request, response) {
+    var categoria = request.params.categoria;
+    var tipo_loc = "user." + request.params.tipo_loc
+    var valor_loc = request.params.valor_loc;
+    let filtrar_user_id = request.query.filterUser;
+    console.log(filtrar_user_id, categoria, tipo_loc, valor_loc)
+    let sql;
+    let params;
+    if(categoria === "Todo"){
+        params = [filtrar_user_id, valor_loc];
+        sql = "SELECT products.nombre, products.descripcion, products.product_image, products.user_id FROM products INNER JOIN user ON (user.user_id = products.user_id) WHERE user.user_id != ? AND " + tipo_loc + " = ? ORDER BY products.product_id DESC";
+    }else{
+        params = [categoria, filtrar_user_id, tipo_loc, valor_loc];
+        sql = "SELECT products.nombre, products.descripcion, products.product_image, products.user_id FROM products INNER JOIN user ON (user.user_id = products.user_id) WHERE categoria = ? AND user.user_id != ? AND ? = ? ORDER BY products.product_id DESC"; 
+    }
+    connection.query(sql, params, function(err, result){
+        if (err){
+            console.log(err)
+        }else{
+            console.log('Productos cercanos por CP y Categoria')
+            console.log(result)
+        } 
+    response.send(result);
+    })
+});
 
-
+/* app.get("/buscar-cercanos/categoria/:categoria/cp/:cp", function (request, response) {
+    var categoria = request.params.categoria;
+    var cp = request.params.cp;
+    let filtrar_user_id = request.query.filterUser;
+    console.log(filtrar_user_id, categoria, cp)
+    let sql;
+    let params;
+    if(categoria === "Todo"){
+        params = [filtrar_user_id, cp];
+        sql = "SELECT products.nombre, products.descripcion, products.product_image, products.user_id FROM products INNER JOIN user ON (user.user_id = products.user_id) WHERE user.user_id != ? AND user.cp = ? ORDER BY products.product_id";
+    }else{
+        params = [categoria, filtrar_user_id, cp];
+        sql = "SELECT products.nombre, products.descripcion, products.product_image, products.user_id FROM products INNER JOIN user ON (user.user_id = products.user_id) WHERE categoria = ? AND user.user_id != ? AND user.cp = ? ORDER BY products.product_id"; 
+    }
+    connection.query(sql, params, function(err, result){
+        if (err){
+            console.log(err)
+        }else{
+            console.log('Productos cercanos por CP y Categoria')
+            console.log(result)
+        } 
+    response.send(result);
+    } )
+}); */
 
 // PARA BORRAR UN USUARIO
 /* app.post("/user/delete", function (request, response) {
