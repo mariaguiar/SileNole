@@ -58,19 +58,23 @@
         <input type="number" class="form-control border-success" name="cp" [(ngModel)]="usuario.cp" #cp="ngModel" required>
       </div>
       <div class="form-group">
-        <label for="recipient-name" class="col-form-label">Confirmar contraseña:</label>
+        <label for="recipient-name" class="col-form-label">Contraseña:</label>
         <input type="password" class="form-control border-success" name="password" (ngModel)="usuario.password" #password="ngModel"required>
       </div>
       <div class="form-group">
-        <label for="recipient-name" class="col-form-label">Contraseña:</label>
+        <label for="recipient-name" class="col-form-label">Confirmar contraseña:</label>
         <input type="password" class="form-control border-success" name="password2" (ngModel)="usuario2.password" #password2="ngModel"required>
       </div>
+      <span  *ngIf="equals" id="span">Las contraseñas no coinciden</span>
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-success" [routerLink]="['/home']" (click)="aparecerF()" (click)="modalRef.hide()" (click)="newUsuario(null, name.value, password.value, email.value, comunidad.value, provincia.value, localidad.value, cp.value)"
+    <button type="button" class="btn btn-success" (click)="registrarUsuario(null, name.value, password.value, password2.value, email.value, comunidad.value, provincia.value, localidad.value, cp.value)"
      >Registrarse</button>
   </div>
+  <!-- <div class="modal-footer">
+    <button type="button" class="btn btn-success" (click)="compararPassword(password.value,password2.value)" >prueba</button>[routerLink]="['/home']" (click)="modalRef.hide()"
+  </div> -->
 </ng-template>
 
 

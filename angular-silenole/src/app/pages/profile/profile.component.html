@@ -43,21 +43,25 @@
           <div class="col-lg-8 col-md-10 col-sm-10">
 
             <div class="d-flex justify-content-center">
-              <img src="assets/img/{{usuarioActual.user_image}}" class="card-img mb-3" style="max-width: 160px;" alt="Agrega tu">
+              <img src="{{usuarioActual.user_image}}" class="card-img mb-3" style="max-width: 160px;" alt="Agrega tu">
             </div>
 
-            <div class="row justify-content-center mt-3 mb-2">
+            <!-- <div class="row justify-content-center mt-3 mb-2">
               <div class="text-success">Cambiar foto de perfil</div>
+            </div> -->
+
+            <!-- <div class="form-group">
+
+              <input type="text" class="form-control border-success text-success" name="user_image" (ngModel)="usuarioActual.user_image" #user_image="ngModel" required style="font-size: smaller; max-width: max-content;">
             </div>
-
-            <div class="row justify-content-center ">
-
-              <div><input type="file" class="text-success" name="user_image" [(ngModel)]="usuarioActual.user_image" #user_image="ngModel" required style="font-size: smaller; max-width: max-content;"></div>
-            </div>
-
+ -->
 
           </div>
         </div>
+      </div>
+      <div class="form-group">
+        <label for="recipient-name" class="col-form-label text-center">Cambiar foto de perfil</label>
+        <input type="text" class="form-control border-success text-success" name="user_image" [(ngModel)]="usuarioActual.user_image" #user_image="ngModel" required >
       </div>
 
         <div class="form-group">
@@ -90,14 +94,15 @@
         </div>
         <div class="form-group">
           <label for="recipient-name" class="col-form-label">Confirmar contraseña:</label>
-          <input type="password" class="form-control border-success" name="password" [(ngModel)]="usuarioActual.password" #password="ngModel"required>
+          <input type="password" class="form-control border-success" name="password2" (ngModel)="usuario3.password" #password2="ngModel"required>
         </div>
+        <span  *ngIf="equals" id="span">Las contraseñas no coinciden</span>
       </form>
     </div>
     <div class="container-fluid">
       <div class="row align-items-center d-flex justify-content-center">
         <div class="my-1">
-          <button type="button" class="btn btn-success" [routerLink]="['/usuario']" (click)="modificarUsuario(usuarioActual.user_id, name.value, password.value, email.value, comunidad.value, provincia.value, localidad.value, cp.value, user_image.value.replace('C:\\fakepath\\','') )">Actualizar Perfil</button>
+          <button type="button" class="btn btn-success" [routerLink]="['/usuario']" (click)="registrarUsuario(usuarioActual.user_id, name.value, password.value, password2.value, email.value, comunidad.value, provincia.value, localidad.value, cp.value, user_image.value.replace('C:\\fakepath\\','') )">Actualizar Perfil</button>
         </div> &nbsp;
       </div>
     </div>

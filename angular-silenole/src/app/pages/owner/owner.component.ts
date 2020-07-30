@@ -18,24 +18,29 @@ export class OwnerComponent implements OnInit {
   public idProducto: number
   public idUsuario: number
   public nombreOwner: string
+  public imagenOwner: string
 
   constructor(public productService:ProductService, public usuarioService:UsuarioService,public loginService:LoginService, 
       public messageService:MessageService,) {
-
+        this.obtenerOwnerInfo(this.productService.ownerActual)
+        this.mostrarProductos(this.productService.ownerActual)
    }
-
+  
   mostrarProductos(uid){
     this.productService.getProductsByUser(uid).subscribe((data)=>{
       this.products = data
       console.log(data)
     })
   }
-  obtenerOwnerName(uid){
+
+  obtenerOwnerInfo(uid){
     this.usuarioService.getUsuario(uid).subscribe((data)=>{
       this.nombreOwner = data[0].name
+      this.imagenOwner = data[0].user_image;
       console.log(data)
     })
   }
+
   relacionarProductoMensaje(pid){
     let uid=this.loginService.usuarioActual.user_id;
     let newNole= new Nole(uid,pid);
@@ -47,8 +52,7 @@ export class OwnerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.obtenerOwnerName(this.productService.ownerActual)
-    this.mostrarProductos(this.productService.ownerActual)
+
   }
 
 }

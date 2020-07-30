@@ -24,6 +24,8 @@ export class LoginComponent implements OnInit {
   password: string; 
   password2: string; 
   form: FormGroup;
+  public equals=false
+
   constructor(private router:Router,public loginService:LoginService, public usuarioService:UsuarioService,
       public productService:ProductService, public modalService:BsModalService, public servicio:ServService, 
       private http: HttpClient,private fb: FormBuilder) { 
@@ -41,30 +43,52 @@ export class LoginComponent implements OnInit {
     this.initForm();
   }
   initForm() {
-    this.form = this.fb.group({
+    /* this.form = this.fb.group({
       'password':  ['', Validators.required],
       'confirmarPassword': ['', Validators.required]
     }, {
       validators: validarQueSeanIguales
-    });
+    }); */
   }
-  equals(): boolean {
+  /* equals(): boolean {
     return this.form.hasError('noSonIguales') &&
       this.form.get('password').dirty &&
       this.form.get('confirmarPassword').dirty;
-  }
+  } */
 
   openModal(template: TemplateRef<any>){
     this.modalRef = this.modalService.show(template)
   }
 
+   registrarUsuario(user_id:number, name:string, password:string, password2:string, email:string, comunidad:string, provincia:string, localidad:string, cp:number){
+    // this.compararPassword(password,password2)
+    if(password===password2){
+      console.log("Contraseña correcta")
+      this.newUsuario(user_id, name, password, email, comunidad, provincia, localidad, cp)
+      this.modalRef.hide()
+    }else{
+     console.log("abrirModalError")
+      this.equals=true
+    }
+   }
+
   newUsuario(user_id:number, name:string, password:string, email:string, comunidad:string, provincia:string, localidad:string, cp:number){
     console.log('Usuario Añadido')
     console.log(this.usuarioService.usuario)
-    this.usuarioService.newUsuario(new Usuario(user_id, name, password, email, comunidad, provincia, localidad, cp, "perfil.jpg")).subscribe((data)=>{
+    this.usuarioService.newUsuario(new Usuario(user_id, name, password, email, comunidad, provincia, localidad, cp, "assets/img/perfil.jpg")).subscribe((data)=>{
       console.log(data)
     })
   }
+
+  /* compararPassword(p1,p2){
+    if(p1===p2){
+      console.log("Contraseña correcta")
+      this.router.navigate(["/home"])
+    }else{
+    console.log("abrirModalError")
+    this.equals=true
+    }
+  } */
 
   onSubmit(form){
       console.log(form.value)
@@ -89,4 +113,6 @@ export class LoginComponent implements OnInit {
       }
     });
   }
-  }
+
+
+}

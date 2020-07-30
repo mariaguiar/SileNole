@@ -14,6 +14,9 @@ export class ProfileComponent implements OnInit {
 
   closeResult = '';
   public usuarioActual=new Usuario(null,null,null,null,null,null,null,null,null)
+  public usuario=new Usuario(null,null,null,null,null,null,null,null,null)
+  public usuario3=new Usuario(null,null,null,null,null,null,null,null,null)
+  public equals=false
   
 
   constructor(public usuarioService:UsuarioService, public loginService:LoginService, private modalService: NgbModal) { 
@@ -27,6 +30,17 @@ export class ProfileComponent implements OnInit {
   onSubmit(form){
     console.log(form.value)
   }
+
+  registrarUsuario(user_id:number, name:string, password:string, password2:string, email:string, comunidad:string, provincia:string, localidad:string, cp:number, user_image:string){
+    if(password===password2){
+      console.log("Contraseña correcta")
+      this.modificarUsuario(user_id, name, password, email, comunidad, provincia, localidad, cp, user_image)
+      this.equals=false
+    }else{
+     console.log("abrirModalError")
+     this.equals=true
+     }
+   }
 
   modificarUsuario(idUsuario:number, name:string, password:string, email:string, comunidad:string, provincia:string, localidad:string, cp:number, user_image:string){
     console.log('Usuario Modificado')

@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
   public productsUltimos: any;
   public productsCercanos: any;
   public idProducto: number
-  public idUsuario: number=1
+  // public idUsuario: number=1
 
   constructor(public productService:ProductService, public loginService: LoginService, public messageService:MessageService, private modalService: NgbModal) {
     this.mostrarUltimosProductos();

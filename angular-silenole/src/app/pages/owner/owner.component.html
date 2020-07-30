@@ -9,7 +9,7 @@
       <p class="text-center">Usuario {{nombreOwner}}</p>
     </h4>
     <div class="card border-success mb-3" style="max-width: 5rem;">
-      <img src="assets/img/vector-person-icon.jpg" class="card-img-top" alt="...">
+      <img src="{{imagenOwner}}" class="card-img-top" alt="...">
     </div>
   </div>
 </div>
@@ -30,7 +30,7 @@
       <div class="row align-items-end d-flex justify-content-center">
 
         <div class="card border-0 mt-2" style="width: 18rem; height: 450px" *ngFor="let producto of products">
-          <img class="card-img-top m-auto" src="assets/img/{{producto.product_image}}" alt="Card image cap"
+          <img class="card-img-top m-auto" src="{{producto.product_image}}" alt="Card image cap"
             style="max-width: 200px; max-height: 200px">
           <div class="card-block ml-2 mr-2 text-center">
             <h4 class="card-title">Producto: {{producto.nombre}}</h4>
