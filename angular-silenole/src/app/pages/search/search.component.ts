@@ -1,12 +1,16 @@
+// COMPONENTE
 import { Component, OnInit} from '@angular/core';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import { ProductService } from 'src/app/shared/product.service';
+import { Router } from '@angular/router';
+// MODAL
+import { NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+// MODELO
 import { Product } from 'src/app/models/product';
 import { Usuario } from './../../models/usuario';
-import { LoginService } from 'src/app/shared/login.service';
 import { Nole } from 'src/app/models/nole';
+// SERVICIOS
+import { ProductService } from 'src/app/shared/product.service';
+import { LoginService } from 'src/app/shared/login.service';
 import { MessageService } from 'src/app/shared/message.service';
-import { Router } from '@angular/router';
 
 
 @Component({
@@ -18,15 +22,13 @@ import { Router } from '@angular/router';
 export class SearchComponent implements OnInit {
 
   public usuarioActual = new Usuario(null, null, null, null, null, null, null, null, null)
-
   public product = new Product(null, null, null, null, null, null, null)
   public products: any;
   public idProducto: number;
   public categoriaActual: any;
   public usuario = new Usuario(null, null, null, null, null, null, null, null, null)
 
-
-  closeResult = '';
+  closeResult = ''; //PARA EL MODAL
 
   constructor(private router:Router, public productService: ProductService, public loginService: LoginService, public messageService:MessageService, private modalService: NgbModal) {
     this.usuarioActual = this.loginService.usuarioActual;
@@ -50,15 +52,7 @@ export class SearchComponent implements OnInit {
     this.productService.ownerActual = oid
     console.log(this.productService.ownerActual)
   }
-
-/*   buscarPorCp() {
-    console.log("Buscar en el CP actual")
-    this.productService.getProductsBySelectedCategoryAndCp(this.loginService.usuarioActual.cp).subscribe((data) => {
-      this.productService.products = data
-      console.log(data)
-    });
-  } */
-
+  
   buscarPorUbicacion(tipo: string, valor: any) {
     console.log("Buscar en ubicacion")
     this.productService.getProductsBySelectedCategoryAndLocation(tipo, valor).subscribe((data) => {
@@ -66,7 +60,7 @@ export class SearchComponent implements OnInit {
       console.log(data)
     });
   }
-
+  
   buscarPorDias(dias: number) {
     console.log("Buscar por dias")
     this.productService.getProductsBySelectedCategoryAndDays(dias).subscribe((data) => {
@@ -74,7 +68,7 @@ export class SearchComponent implements OnInit {
       console.log(data)
     });
   }
-
+  
   buscarUsuario(nombreUsuario){
     console.log("Buscar usuario ", nombreUsuario)
     this.productService.getOwnerByName(nombreUsuario).subscribe((data) => {
@@ -83,12 +77,12 @@ export class SearchComponent implements OnInit {
       this.router.navigate(["/owner"])
     });
   }
-
+  
   pasarIdProducto(pid) {
     this.idProducto = pid
     console.log(this.idProducto)
   }
-
+  
   relacionarProductoMensaje(pid) {
     let uid = this.loginService.usuarioActual.user_id;
     this.productService.idProductoSeleccionado=pid;
@@ -99,7 +93,16 @@ export class SearchComponent implements OnInit {
     })
     this.messageService.noleSeleccionado = newNole;
   }
-
+  
   ngOnInit(): void {}
-
+  
 }
+
+
+/*   buscarPorCp() {
+    console.log("Buscar en el CP actual")
+    this.productService.getProductsBySelectedCategoryAndCp(this.loginService.usuarioActual.cp).subscribe((data) => {
+      this.productService.products = data
+      console.log(data)
+    });
+  } */

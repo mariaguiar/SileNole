@@ -1,19 +1,23 @@
+// COMPONENTE
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { ProductService } from 'src/app/shared/product.service';
-import { Product } from 'src/app/models/product';
-import { LoginService } from 'src/app/shared/login.service';
-import { Usuario } from 'src/app/models/usuario';
+// MODAL
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+// MODELO
+import { Product } from 'src/app/models/product';
+import { Usuario } from 'src/app/models/usuario';
+// SERVICIOS
+import { ProductService } from 'src/app/shared/product.service';
+import { LoginService } from 'src/app/shared/login.service';
 
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
   styleUrls: ['./upload.component.css']
 })
+
 export class UploadComponent implements OnInit {
 
   public usuarioActual=new Usuario(null,null,null,null,null,null,null,null,null)
-
   public product= new Product(null,null,null,null,null,null,null)
   public products: any[];
   public idProducto: number
@@ -41,6 +45,7 @@ export class UploadComponent implements OnInit {
     })
   }
   
+  //PARA ABRIR EL MODAL NGX
   openModal(Upload: TemplateRef<any>){
     this.modalRef = this.modalService.show(Upload)
   }

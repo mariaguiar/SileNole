@@ -1,10 +1,13 @@
+// COMPONENTE
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import {ServService} from './../../serv.service'
-import { ProductService } from 'src/app/shared/product.service';
-import { Product } from 'src/app/models/product';
 import { FormGroup } from '@angular/forms';
+// MODAL
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+// MODELO
+import { Product } from 'src/app/models/product';
+// SERVICIOS
+import { ProductService } from 'src/app/shared/product.service';
+
 
 @Component({
   selector: 'app-header',
@@ -13,18 +16,35 @@ import { FormGroup } from '@angular/forms';
 })
 export class HeaderComponent implements OnInit {
   
-  collapsed = true;
-  toggleCollapsed(): void {
-  this.collapsed = !this.collapsed;
-  }
-
   public product= new Product(null,null,null,null,null,null, null)
   public products: any;
-  form: FormGroup;
-  
+  form: FormGroup; // para obtener los datos del formulario
   modalRef:BsModalRef
 
-constructor(public productService:ProductService, public servicio:ServService, private modalService: BsModalService) { }
+constructor(public productService:ProductService, private modalService: BsModalService) { }
+
+
+  onSubmit(form) {
+    console.log(form.value)
+  }
+
+  buscarProducto(clave: string) {
+    console.log(clave)
+    this.productService.getProductsByName(clave).subscribe((data) => {
+      this.productService.products = data
+      console.log(data)
+    })
+  }
+
+  openModal(templateHeader: TemplateRef < any > ) {
+    this.modalRef = this.modalService.show(templateHeader)
+  }
+  
+  ngOnInit(): void {}
+  
+}
+
+
 
 /* mostrarProductos(uid){
   this.productService.getProductsByUser(uid).subscribe((data)=>{
@@ -39,19 +59,6 @@ mostrarTodosProductos(){
     console.log(data)
   })
 } */
-
-onSubmit(form){
-  console.log(form.value)
-}
-
-buscarProducto(clave: string){
-  console.log(clave)
-  this.productService.getProductsByName(clave).subscribe((data)=>{
-    this.productService.products = data
-    console.log(data)
-  })
-}
-
 /* mostrarProductosPorCategoria(){
   this.productService.categoriaSeleccionada="Todo";
   this.productService.getProductsBySelectedCategory().subscribe((data)=>{
@@ -59,13 +66,3 @@ buscarProducto(clave: string){
     console.log(data)
   })
 } */
-  ngOnInit(): void {
-  }
-  openModal(templateHeader: TemplateRef<any>){
-    this.modalRef = this.modalService.show(templateHeader)
-  }
-  /* public aparecerF2(){
-    this.servicio.aparecer=false
-    console.log(this.servicio.aparecer)
-    } */
-}

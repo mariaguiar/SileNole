@@ -1,8 +1,11 @@
+// COMPONENTE
 import { Component, OnInit } from '@angular/core';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import {ServService} from './../../serv.service'
-import { UsuarioService } from 'src/app/shared/usuario.service';
+// MODAL
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+// MODELO
 import { Usuario } from './../../models/usuario';
+// SERVICIOS
+import { UsuarioService } from 'src/app/shared/usuario.service';
 import { LoginService } from 'src/app/shared/login.service';
 
 @Component({
@@ -58,8 +61,16 @@ export class ProfileComponent implements OnInit {
     })
   }
 
+  //Para abrir los modales
   open3(content3) {
     this.modalService.open(content3, {ariaLabelledBy: 'modalEliminarCuenta'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `${this.getDismissReason(reason)}`;
+    });
+  }
+  openUm(usuarioSubido) {
+    this.modalService.open(usuarioSubido, {ariaLabelledBy: 'modalEliminarCuenta'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `${this.getDismissReason(reason)}`;

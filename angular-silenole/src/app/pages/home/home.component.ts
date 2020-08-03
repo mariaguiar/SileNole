@@ -1,12 +1,14 @@
+// COMPONENTE
 import { Component, OnInit } from '@angular/core';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import {ServService} from './../../serv.service'
-import { ProductService } from 'src/app/shared/product.service';
+// MODELOS
 import { Product } from 'src/app/models/product';
 import { Usuario } from './../../models/usuario';
-import { LoginService } from 'src/app/shared/login.service';
 import { Nole } from 'src/app/models/nole';
+// SERVICIOS
+import { ProductService } from 'src/app/shared/product.service';
+import { LoginService } from 'src/app/shared/login.service';
 import { MessageService } from 'src/app/shared/message.service';
+
 
 @Component({
   selector: 'app-home',
@@ -15,16 +17,13 @@ import { MessageService } from 'src/app/shared/message.service';
 })
 export class HomeComponent implements OnInit {
   
-  closeResult = '';
-
   public usuarioActual = new Usuario(null, null, null, null, null, null, null, null, null)
   public product= new Product(null,null,null,null,null,null,null)
   public productsUltimos: any;
   public productsCercanos: any;
   public idProducto: number
-  // public idUsuario: number=1
 
-  constructor(public productService:ProductService, public loginService: LoginService, public messageService:MessageService, private modalService: NgbModal) {
+  constructor(public productService:ProductService, public loginService: LoginService, public messageService:MessageService) {
     this.mostrarUltimosProductos();
     this.mostraProductosCercanos();
   }
@@ -43,13 +42,6 @@ export class HomeComponent implements OnInit {
     })
   }
   
-/*    mostrarProductosPorUsuario(uid){
-    this.productService. getProductsByUser(uid).subscribe((data)=>{
-      this.products = data
-      console.log(data)
-    })
-  } */
-
   pasarIdOwner(oid) {
     this.productService.ownerActual = oid
     console.log(this.productService.ownerActual)
@@ -66,15 +58,25 @@ export class HomeComponent implements OnInit {
     this.messageService.noleSeleccionado = newNole;
   }
 
-  /* public aparecerF(){
-  this.servicio.aparecer=true
-  console.log(this.servicio.aparecer)
+  
+  ngOnInit(): void { }
+
+  
+}
+
+/*    mostrarProductosPorUsuario(uid){
+    this.productService. getProductsByUser(uid).subscribe((data)=>{
+      this.products = data
+      console.log(data)
+    })
   } */
 
-  ngOnInit(): void {
-  }
+/* PARA EL MODAL
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+closeResult = ''; //ATRIBUTO DE LA CLASE
+private modalService: NgbModal // EN EL CONSTRUCTOR
 
-  open(content3) {
+open(content3) {
     this.modalService.open(content3, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
@@ -88,9 +90,4 @@ export class HomeComponent implements OnInit {
     }  else {
       return '';
     }
-  }
-}
-/* export class NgbdCarouselBasic {
-  constructor() 
-  {}  
-}*/
+  }*/

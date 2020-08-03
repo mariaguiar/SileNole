@@ -1,23 +1,14 @@
-.imagen
-{
-   
+.imagen{ 
     width: 250px;
     height: 200px;
-   
 }
 
-
-
-.perfil
-{
+.perfil{
     color: rgb(10, 121, 10); 
     text-align: center;
-    
-
 }
 
-.silenole
-{
+.silenole{
     font-size: 4em;
 }
 

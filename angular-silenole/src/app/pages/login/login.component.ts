@@ -1,21 +1,25 @@
+// COMPONENTE
 import { Component, OnInit, TemplateRef, } from '@angular/core';
-import { ServService } from './../../serv.service'
-import { Usuario } from './../../models/usuario';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { UsuarioService } from 'src/app/shared/usuario.service';
 import { HttpClient } from "@angular/common/http";
-import { LoginService } from './../../shared/login.service';
 import { Router } from "@angular/router";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { validarQueSeanIguales } from '../../shared/app.validator';
+/* import { validarQueSeanIguales } from '../../shared/notificacion'; */
+// MODAL
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+// MODELOS
+import { Usuario } from './../../models/usuario';
+// SERVICIOS
+import { UsuarioService } from 'src/app/shared/usuario.service';
+import { LoginService } from './../../shared/login.service';
 import { ProductService } from 'src/app/shared/product.service';
-
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+
 export class LoginComponent implements OnInit {
   public modalRef: BsModalRef;
   public usuario=new Usuario(null,null,null,null,null,null,null,null,null)
@@ -24,37 +28,35 @@ export class LoginComponent implements OnInit {
   password: string; 
   password2: string; 
   form: FormGroup;
-  public equals=false
+  // public equals=false
+  closeResult = '';
+  title = 'toaster-not'
+  notifyService: any;
 
   constructor(private router:Router,public loginService:LoginService, public usuarioService:UsuarioService,
-      public productService:ProductService, public modalService:BsModalService, public servicio:ServService, 
-      private http: HttpClient,private fb: FormBuilder) { 
+      public productService:ProductService, public modalService:BsModalService, 
+      private http: HttpClient,private fb: FormBuilder , private modalService2: NgbModal) { 
     console.log("Funcionando servicio usuario")
     this.usuario
   }
-  
-  ////////SERVICIO APARECER 
-  public aparecerF(){
-  this.servicio.aparecer=true
-  console.log(this.servicio.aparecer)
-  }
-
+    
   ngOnInit() {
     this.initForm();
   }
+
   initForm() {
-    /* this.form = this.fb.group({
+    this.form = this.fb.group({
       'password':  ['', Validators.required],
       'confirmarPassword': ['', Validators.required]
     }, {
-      validators: validarQueSeanIguales
-    }); */
+     /*  validators: validarQueSeanIguales */
+    });
   }
-  /* equals(): boolean {
+  equals(): boolean {
     return this.form.hasError('noSonIguales') &&
       this.form.get('password').dirty &&
       this.form.get('confirmarPassword').dirty;
-  } */
+  }
 
   openModal(template: TemplateRef<any>){
     this.modalRef = this.modalService.show(template)
@@ -64,21 +66,45 @@ export class LoginComponent implements OnInit {
     // this.compararPassword(password,password2)
     if(password===password2){
       console.log("Contraseña correcta")
-      this.newUsuario(user_id, name, password, email, comunidad, provincia, localidad, cp)
+      this.newUsuario(name, password, email, comunidad, provincia, localidad, cp)
       this.modalRef.hide()
     }else{
      console.log("abrirModalError")
-      this.equals=true
+      // this.equals=true
     }
    }
+   
+  newUsuario(name:string, password:string,  email:string, comunidad:string, provincia:string, localidad:string, cp:number){
+    console.log(this.usuarioService.usuario)
+    const pass1 = (<HTMLInputElement> document.getElementById ("pass1")).value
+    const pass2 = (<HTMLInputElement> document.getElementById ("pass2")).value
+    const nombre = (<HTMLInputElement> document.getElementById ("nombre")).value
+    if (pass1 === pass2 && nombre !== "") {
+      this.showToasterSuccess();
+      this.usuarioService.newUsuario(new Usuario(null,name, password, email, comunidad, provincia, localidad, cp,null)).subscribe((data)=>{
+        console.log(data)
+      })
+    }else{
+      this.showToasterError();
+    }
+  }
+  showToasterSuccess(){
+    this.notifyService.showSuccess("Registrado con Exito", "Bienvenido a SileNole")
+  }
+  showToasterError(){
+    this.notifyService.showError("Las contraseñas no coinciden", "")
+  }
+  showToasterInfo(){
+    this.notifyService.showInfo("Registrado con Exito", "")
+  }
 
-  newUsuario(user_id:number, name:string, password:string, email:string, comunidad:string, provincia:string, localidad:string, cp:number){
+  /* newUsuario(user_id:number, name:string, password:string, email:string, comunidad:string, provincia:string, localidad:string, cp:number){
     console.log('Usuario Añadido')
     console.log(this.usuarioService.usuario)
     this.usuarioService.newUsuario(new Usuario(user_id, name, password, email, comunidad, provincia, localidad, cp, "assets/img/perfil.jpg")).subscribe((data)=>{
       console.log(data)
     })
-  }
+  } */
 
   /* compararPassword(p1,p2){
     if(p1===p2){
@@ -110,8 +136,30 @@ export class LoginComponent implements OnInit {
         this.router.navigate(["/home"])
       } else {
         console.log("Usuario Inexistente")
+        this.router.navigate(["/"])
       }
+      /* if (data==undefined) {
+        console.log("Usuario Inexistente")
+        this.router.navigate(["/"])
+      } else {
+        this.router.navigate(["/home"])
+      } */
     });
+  }
+
+  openUr(usuarioSubido) {
+    this.modalService2.open(usuarioSubido, {ariaLabelledBy: 'modalEliminarCuenta'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `${this.getDismissReason(reason)}`;
+    });
+  }
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    }  else {
+      return '';
+    }
   }
 
 

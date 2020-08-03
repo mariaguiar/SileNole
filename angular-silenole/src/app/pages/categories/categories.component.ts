@@ -1,6 +1,9 @@
+// COMPONENTE
 import { Component, OnInit } from '@angular/core';
+// SERVICIOS
 import { ProductService } from 'src/app/shared/product.service';
-import { Product } from 'src/app/models/product';
+
+
 
 @Component({
   selector: 'app-categories',
@@ -30,5 +33,6 @@ export class CategoriesComponent implements OnInit {
       console.log(data)
     })
   }
+
 }
 

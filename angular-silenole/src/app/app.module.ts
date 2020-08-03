@@ -25,7 +25,7 @@ import {ServService} from './serv.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
-
+import { ToastrModule } from 'ngx-toastr'
 
 @NgModule({
   declarations: [
@@ -51,7 +51,8 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
     ReactiveFormsModule,
     NgbModule,NgbCarouselModule, BrowserAnimationsModule,
     ModalModule.forRoot(),
-    CarouselModule.forRoot()
+    CarouselModule.forRoot(),
+    ToastrModule.forRoot(),
   ],
   providers: [
     ServService

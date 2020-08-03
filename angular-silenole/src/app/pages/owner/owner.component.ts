@@ -1,16 +1,21 @@
+// COMPONENTE
 import { Component, OnInit } from '@angular/core';
-import { ProductService } from 'src/app/shared/product.service';
+// MODELO
 import { Product } from 'src/app/models/product';
-import { UsuarioService } from 'src/app/shared/usuario.service';
 import { Nole } from 'src/app/models/nole';
+// SERVICIOS
+import { ProductService } from 'src/app/shared/product.service';
 import { LoginService } from 'src/app/shared/login.service';
+import { UsuarioService } from 'src/app/shared/usuario.service';
 import { MessageService } from 'src/app/shared/message.service';
+
 
 @Component({
   selector: 'app-owner',
   templateUrl: './owner.component.html',
   styleUrls: ['./owner.component.css']
 })
+
 export class OwnerComponent implements OnInit {
 
   public productoActual= new Product(null,null,null,null,null,null,null)
@@ -39,7 +44,6 @@ export class OwnerComponent implements OnInit {
       console.log(data)
       this.nombreOwner = data[0].name
       this.imagenOwner = data[0].user_image;
-
     })
   }
 

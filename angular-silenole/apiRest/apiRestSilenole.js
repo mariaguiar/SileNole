@@ -111,35 +111,7 @@ app.delete("/products", function (request, response) {
     })
 });
 
-/* ---------------------------------PRODUCTOS SIN HACER----------------------------------- */
-// GET /SILES/:DISTANCIA = Obtiene el todos los siles según distancia
-/* app.get("/siles/:distancia", function (request, response) {
-    var distancia = request.params.distancia;
-    let sql = "SELECT * FROM user WHERE localidad ="+distancia;
-    connection.query(sql, function(err, result){
-        if (err){
-            console.log(err)
-        }else{
-            console.log('Objetos Propios')
-            console.log(result)
-        } 
-    response.send(result);
-    })
-}); */
-// GET /SILES/:TIEMPO = Obtiene el todos los siles según tiempo
-/* app.get("/siles/:tiempo", function (request, response) {
-    var distancia = request.params.distancia;
-    let sql = "SELECT * FROM user WHERE localidad ="+distancia;
-    connection.query(sql, function(err, result){
-        if (err){
-            console.log(err)
-        }else{
-            console.log('Objetos Propios')
-            console.log(result)
-        } 
-    response.send(result);
-    })
-}); */
+
 /* ---------------------------------FIN PRODUCTOS----------------------------------- */
 
 
@@ -254,8 +226,6 @@ app.delete("/user", function (request, response) {
     })
 }); */
 
-/* ---------------------------------USUARIOS SIN HACER----------------------------------- */
-
 
 /* ---------------------------------FIN USUARIOS----------------------------------- */
 
@@ -295,42 +265,10 @@ app.post("/messages", function (request, response) {
     response.send(result);
     })
 });
-// HACER
-// DELETE PARA BORRAR UN PRODUCTO DEL CHAT
-/* app.delete("/messages", function (request, response) {
-    let user_id = request.body.user_id
-    let params = [user_id]
-    let sql = "DELETE FROM user WHERE user_id = ?";
-    connection.query(sql, params, function(err, result){
-        if (err){
-            console.log(err)
-        }else{
-            console.log('Usuario eliminado')
-            console.log(result)
-        } 
-    response.send(result);
-    })
-}); */
-/* ---------------------------------MENSAJES SIN HACER----------------------------------- */
-// GET /MESSAGES/: USERID/:OWNERID= Obtiene todos los mensajes intercambiados entre el usuario y el propietario del nole 
-/* app.get("/messages/:user_id/:user_id2/:product_id", function (request, response) {
-    var id = request.params.user_id;
-    var id2 = request.params.user_id2;
-    var id3 = request.params.product_id;
-    let sql = "SELECT text FROM messages WHERE user_id ="+id+ "OR user_id2 ="+id2+"ORDER BY message_id";
-    connection.query(sql, function(err, result){
-        if (err){
-            console.log(err)
-        }else{
-            console.log('Objetos del Usuario')
-            console.log(result)
-        } 
-    response.send(result);
-    })
-}); */
+
 /* ---------------------------------FIN MENSAJES----------------------------------- */
 
-/* ---------------------------------NOLES FUNCIONANDO----------------------------------- */
+/* ---------------------------------NOLES / SILES FUNCIONANDO----------------------------------- */
 // POST /NOLES/ inserta la relacion entre usuario y producto //PARA MENSAJES
 app.post("/noles/", function (request, response) {
     let uid  = request.body.user_id 
@@ -381,7 +319,9 @@ app.get("/siles/:user_id", function (request, response) {
     })
 });
 
-/* ---------------------------------FIN NOLES----------------------------------- */
+/* ---------------------------------FIN NOLES / SILES----------------------------------- */
+
+/* ---------------------------------BUSCAR----------------------------------- */
 
 app.get("/buscar/usuario/:nombre", function (request, response) {
     var nombre = request.params.nombre;
@@ -539,22 +479,7 @@ app.get("/buscar-cercanos/categoria/:categoria/:tipo_loc/:valor_loc", function (
     } )
 }); */
 
-// PARA BORRAR UN USUARIO
-/* app.post("/user/delete", function (request, response) {
-    let email = request.body.email
-    let password = request.body.password
-    let params = [email, password]
-    let sql = "DELETE FROM user WHERE email = ? AND password = ?"
-    connection.query(sql, params, function(err, result){
-        if (err){
-            console.log(err)
-        }else{
-            console.log('Usuario eliminado')
-            console.log(result)
-        } 
-    response.send(result);
-    })
-}); */
+/* ---------------------------------FIN BUSCAR----------------------------------- */
 
 
 app.listen(3000);

@@ -1,13 +1,14 @@
-  
+// COMPONENTE
 import { Component, OnInit } from '@angular/core';
-import { MessageService } from 'src/app/shared/message.service';
+// MODELO
 import { Message } from 'src/app/models/message';
-import { ProductService } from 'src/app/shared/product.service';
-import { Product } from 'src/app/models/product';
-import { UsuarioService } from 'src/app/shared/usuario.service';
-import { Nole } from 'src/app/models/nole';
-import { LoginService } from 'src/app/shared/login.service';
 import { Usuario } from 'src/app/models/usuario';
+// SERVICIOS
+import { MessageService } from 'src/app/shared/message.service';
+import { ProductService } from 'src/app/shared/product.service';
+import { UsuarioService } from 'src/app/shared/usuario.service';
+import { LoginService } from 'src/app/shared/login.service';
+
 
 
 @Component({
@@ -17,15 +18,13 @@ import { Usuario } from 'src/app/models/usuario';
 })
 export class MessagesComponent implements OnInit {
 
-  public message=new Message(null,null,null,null,null ,null)
-  public message2=new Message(null,null,null,null,null ,null)
+  public message=new Message(null, null, null, null, null ,null)
+  public message2=new Message(null, null, null, null, null ,null)
   public messagesNoles: any;
   public messagesSiles: any;
-  // public productoActual= new Product(null,null,null,null,null,null)
   public noles: any;
   public siles: any;
-  public usuarioActual=new Usuario(null,null,null,null,null,null,null,null,null)
-  // public message1: Message
+  public usuarioActual=new Usuario(null, null, null, null, null, null, null, null, null)
   public fecha = new Date();
 
   constructor(public usuarioService:UsuarioService, public messageService:MessageService, public productService:ProductService, public loginService:LoginService) { 
@@ -38,7 +37,7 @@ export class MessagesComponent implements OnInit {
   onSubmit(form){
     console.log(form.value)
   }
-// No funicona aun TERMINAR
+// No funicona aun TERMINAR --------------------------------------------------------------------------------------
   eliminarNoleCardMsg(index){
     console.log(index)
     let borrado = this.noles.splice(index, 1);
@@ -46,7 +45,7 @@ export class MessagesComponent implements OnInit {
     //this.cargarNoles()
     //this.cargarMensajesNoles()
     console.log("el nuevo array es"+this.noles)
-  }
+  } // -----------------------------------------------------------------------------------------------------------
 
   pasarNole(nole){
     console.log("El chat seleccionado es: " + nole.chat_id);
