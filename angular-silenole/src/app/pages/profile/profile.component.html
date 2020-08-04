@@ -76,7 +76,9 @@
       </div>
       <div class="form-group">
         <label for="recipient-name" class="col-form-label text-center">Cambiar foto de perfil</label>
-        <input type="text" class="form-control border-success text-success" name="user_image" [(ngModel)]="usuarioActual.user_image" #user_image="ngModel" required >
+        <!-- <input type="file" class="form-control border-success text-success" name="user_image" [(ngModel)]="usuarioActual.user_image" #user_image="ngModel" required > -->
+        <input type="file" class="form-control border-success text-success" name="user_image" [(ngModel)]="usuarioActual.user_image" #user_image="ngModel" required 
+        (change)="onFileSelected($event)">
       </div>
 
         <div class="form-group">
@@ -117,7 +119,7 @@
     <div class="container-fluid">
       <div class="row align-items-center d-flex justify-content-center">
         <div class="my-1">
-          <button type="button" class="btn btn-success" (click)="registrarUsuario(usuarioActual.user_id, name.value, password.value, password2.value, email.value, comunidad.value, provincia.value, localidad.value, cp.value, user_image.value.replace('C:\\fakepath\\','') )"
+          <button type="button" class="btn btn-success" (click)="registrarUsuario(usuarioActual.user_id, name.value, password.value, password2.value, email.value, comunidad.value, provincia.value, localidad.value, cp.value)"
           (click)="open3(usuarioSubido)" >Actualizar Perfil</button>
         </div> &nbsp;
       </div>

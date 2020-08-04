@@ -1,5 +1,6 @@
 // COMPONENTE
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';  //para cargar la foto
 // MODAL
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 // MODELO
@@ -20,9 +21,10 @@ export class ProfileComponent implements OnInit {
   public usuario=new Usuario(null,null,null,null,null,null,null,null,null)
   public usuario3=new Usuario(null,null,null,null,null,null,null,null,null)
   public equals=false
+  selectedFile: File; //para cargar la foto
   
 
-  constructor(public usuarioService:UsuarioService, public loginService:LoginService, private modalService: NgbModal) { 
+  constructor(public usuarioService:UsuarioService, public loginService:LoginService, private modalService: NgbModal, private http: HttpClient) { 
     this.usuarioActual=this.loginService.usuarioActual
     }
 
@@ -33,8 +35,22 @@ export class ProfileComponent implements OnInit {
   onSubmit(form){
     console.log(form.value)
   }
-
-  registrarUsuario(user_id:number, name:string, password:string, password2:string, email:string, comunidad:string, provincia:string, localidad:string, cp:number, user_image:string){
+  //para cargar la foto
+  onFileSelected(event){
+    this.selectedFile = <File>event.target.files[0]
+  }
+  registrarUsuario(user_id:number, name:string, password:string, password2:string, email:string, comunidad:string, provincia:string, localidad:string, cp:number){
+    if(password===password2){
+      console.log("Contraseña correcta")
+      this.modificarUsuario(user_id, name, password, email, comunidad, provincia, localidad, cp)
+      this.equals=false
+    }else{
+     console.log("abrirModalError")
+     this.equals=true
+     }
+   }
+  
+ /*  registrarUsuario(user_id:number, name:string, password:string, password2:string, email:string, comunidad:string, provincia:string, localidad:string, cp:number, user_image:string){
     if(password===password2){
       console.log("Contraseña correcta")
       this.modificarUsuario(user_id, name, password, email, comunidad, provincia, localidad, cp, user_image)
@@ -43,11 +59,18 @@ export class ProfileComponent implements OnInit {
      console.log("abrirModalError")
      this.equals=true
      }
-   }
+   } */
 
-  modificarUsuario(idUsuario:number, name:string, password:string, email:string, comunidad:string, provincia:string, localidad:string, cp:number, user_image:string){
+  modificarUsuario(idUsuario:number, name:string, password:string, email:string, comunidad:string, provincia:string, localidad:string, cp:number){
     console.log('Usuario Modificado')
-    let userUpdated = new Usuario(idUsuario, name, password, email, comunidad, provincia, localidad, cp, user_image);
+    // let userImageName =  name + ".jpg";
+    let userImageUrl = this.usuarioService.urlImg + this.selectedFile.name;
+    const fd = new FormData()
+    fd.append('user_image',this.selectedFile, this.selectedFile.name);
+    let userUpdated = new Usuario(idUsuario, name, password, email, comunidad, provincia, localidad, cp, userImageUrl);
+    this.usuarioService.uploadImage(fd).subscribe((data)=>{
+      console.log(data)
+    })
     this.usuarioService.putUsuario(userUpdated).subscribe((data)=>{
       console.log(data)
     })

@@ -6,6 +6,7 @@ import { Nole } from '../models/nole';
 @Injectable({
   providedIn: 'root'
 })
+
 export class MessageService {
 
   private url = "http://localhost:3000/"

@@ -10,6 +10,7 @@ export class UsuarioService {
   public idUsuario: number;
   
   private url = "http://localhost:3000/"
+  public urlImg = "http://localhost:3100/"
   
   constructor(private http: HttpClient) { }
 
@@ -30,6 +31,10 @@ export class UsuarioService {
 
   putUsuario(cambios: Usuario){
     return this.http.put(this.url + "user", cambios)
+  }
+  //para la prueba carga de fotos
+  uploadImage(fd: FormData){
+    return this.http.post(this.urlImg + "upload-img", fd)
   }
 
   deleteUsuario(id: number){
