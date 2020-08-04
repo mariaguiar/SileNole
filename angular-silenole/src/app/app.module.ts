@@ -1,7 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+//Componentes
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './pages/header/header.component';
@@ -15,17 +17,17 @@ import { SearchComponent } from './pages/search/search.component';
 import { MessagesComponent } from './pages/messages/messages.component';
 import { MyProductsComponent } from './pages/my-products/my-products.component';
 import { ProductComponent } from './pages/product/product.component';
-import { NgbModule, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomeComponent } from './pages/home/home.component';
-//Modales ngx
+//Modales y Carrousel ngx
 import { ModalModule } from 'ngx-bootstrap/modal';
-
-//servicios
-import {ServService} from './serv.service';
+import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
-import { ToastrModule } from 'ngx-toastr'
+//Carrousel NG
+import { NgbModule, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
+
+
+
 
 @NgModule({
   declarations: [
@@ -52,11 +54,10 @@ import { ToastrModule } from 'ngx-toastr'
     NgbModule,NgbCarouselModule, BrowserAnimationsModule,
     ModalModule.forRoot(),
     CarouselModule.forRoot(),
+    CommonModule,
     ToastrModule.forRoot(),
   ],
-  providers: [
-    ServService
-  ],
+  providers: [ ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

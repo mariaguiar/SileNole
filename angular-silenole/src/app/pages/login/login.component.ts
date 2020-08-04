@@ -4,15 +4,17 @@ import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 /* import { validarQueSeanIguales } from '../../shared/notificacion'; */
+import { ToastrService } from 'ngx-toastr';
 // MODAL
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 // MODELOS
-import { Usuario } from './../../models/usuario';
+import { Usuario } from 'src/app/models/usuario';
 // SERVICIOS
 import { UsuarioService } from 'src/app/shared/usuario.service';
-import { LoginService } from './../../shared/login.service';
+import { LoginService } from 'src/app/shared/login.service';
 import { ProductService } from 'src/app/shared/product.service';
+
 
 @Component({
   selector: 'app-login',
@@ -35,7 +37,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private router:Router,public loginService:LoginService, public usuarioService:UsuarioService,
       public productService:ProductService, public modalService:BsModalService, 
-      private http: HttpClient,private fb: FormBuilder , private modalService2: NgbModal) { 
+      private http: HttpClient,private fb: FormBuilder , private modalService2: NgbModal, private toastr: ToastrService) { 
     console.log("Funcionando servicio usuario")
     this.usuario
   }
@@ -91,9 +93,11 @@ export class LoginComponent implements OnInit {
   showToasterSuccess(){
     this.notifyService.showSuccess("Registrado con Exito", "Bienvenido a SileNole")
   }
+
   showToasterError(){
     this.notifyService.showError("Las contraseñas no coinciden", "")
   }
+
   showToasterInfo(){
     this.notifyService.showInfo("Registrado con Exito", "")
   }
