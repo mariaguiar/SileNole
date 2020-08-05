@@ -69,3 +69,32 @@ app.post('/upload-img', async (req, res) => {
         res.status(500).send(err);
     }
 });
+app.post('/upload-imgProduct', async (req, res) => {
+    try {
+        if(!req.files) {
+            res.send({
+                status: false,
+                message: 'No file uploaded'
+            });
+        } else {
+            //Use the name of the input field (i.e. "avatar") to retrieve the uploaded file
+            let product_image = req.files.product_image;
+            
+            //Use the mv() method to place the file in upload directory (i.e. "uploads")
+            product_image.mv('./uploads/' + product_image.name);
+
+            //send response
+            res.send({
+                status: true,
+                message: 'File is uploaded',
+                data: {
+                    name: product_image.name,
+                    mimetype: product_image.mimetype,
+                    size: product_image.size
+                }
+            });
+        }
+    } catch (err) {
+        res.status(500).send(err);
+    }
+});

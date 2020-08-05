@@ -74,44 +74,52 @@
           </div>
         </div>
       </div>
-      <div class="form-group">
-        <label for="recipient-name" class="col-form-label text-center">Cambiar foto de perfil</label>
-        <!-- <input type="file" class="form-control border-success text-success" name="user_image" [(ngModel)]="usuarioActual.user_image" #user_image="ngModel" required > -->
-        <input type="file" class="form-control border-success text-success" name="user_image" [(ngModel)]="usuarioActual.user_image" #user_image="ngModel" required 
-        (change)="onFileSelected($event)">
-      </div>
-
+        <div class="form-group">
+          <label for="recipient-name" class="col-form-label text-center">Cambiar foto de perfil</label>
+          <!-- <input type="file" class="form-control border-success text-success" name="user_image" [(ngModel)]="usuarioActual.user_image" #user_image="ngModel" required > -->
+          <input type="file" class="form-control-file text-success" name="user_image" [(ngModel)]="usuarioActual.user_image" #user_image="ngModel" required 
+          (change)="onFileSelected($event)">
+          <small class="form-text text-muted">*Obligatorio.</small>
+        </div>
         <div class="form-group">
           <label for="recipient-name" class="col-form-label">Nombre Usuario:</label>
           <input type="text" class="form-control border-success" name="name" [(ngModel)]="usuarioActual.name" #name="ngModel" required>
+          <small class="form-text text-muted">*Obligatorio.</small>
         </div>
         <div class="form-group">
           <label for="recipient-name" class="col-form-label" >Email:</label>
           <input type="email" class="form-control border-success" name="email" [(ngModel)]="usuarioActual.email" #email="ngModel" required>
+          <small class="form-text text-muted">*Obligatorio.</small>
         </div>
         <div class="form-group">
           <label for="recipient-name" class="col-form-label">Comunidad Autónoma:</label>
           <input type="text" class="form-control border-success" name="comunidad" [(ngModel)]="usuarioActual.comunidad" #comunidad="ngModel" required>
+          <small class="form-text text-muted">*Obligatorio.</small>
         </div>
         <div class="form-group">
           <label for="recipient-name" class="col-form-label">Provincia:</label>
           <input type="text" class="form-control border-success" name="provincia" [(ngModel)]="usuarioActual.provincia" #provincia="ngModel" required>
+          <small class="form-text text-muted">*Obligatorio.</small>
         </div>
         <div class="form-group">
           <label for="recipient-name" class="col-form-label">Localidad:</label>
           <input type="text" class="form-control border-success" name="localidad" [(ngModel)]="usuarioActual.localidad" #localidad="ngModel" required>
+          <small class="form-text text-muted">*Obligatorio.</small>
         </div>
         <div class="form-group">
           <label for="recipient-name" class="col-form-label">CP:</label>
           <input type="number" class="form-control border-success" name="cp" [(ngModel)]="usuarioActual.cp" #cp="ngModel" required>
+          <small class="form-text text-muted">*Obligatorio.</small>
         </div>
         <div class="form-group">
           <label for="recipient-name" class="col-form-label">Contraseña:</label>
           <input type="password" class="form-control border-success" name="password" [(ngModel)]="usuarioActual.password" #password="ngModel"required>
+          <small class="form-text text-muted">*Obligatorio.</small>
         </div>
         <div class="form-group">
           <label for="recipient-name" class="col-form-label">Confirmar contraseña:</label>
           <input type="password" class="form-control border-success" name="password2" (ngModel)="usuario3.password" #password2="ngModel"required>
+          <small class="form-text text-muted">*Obligatorio.</small>
         </div>
         <span  *ngIf="equals" id="span">Las contraseñas no coinciden</span>
       </form>

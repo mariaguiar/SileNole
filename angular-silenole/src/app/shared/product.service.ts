@@ -17,12 +17,18 @@ export class ProductService {
   public categoriaSeleccionada: any; 
   public idProductoSeleccionado: number;
   
-  private url = "http://localhost:3000/"  
+  private url = "http://localhost:3000/" 
+  public urlImg = "http://localhost:3100/" 
 
   constructor(private http: HttpClient, public loginService:LoginService) {
     console.log("funcionando servicio product");
     console.log(this.loginService.usuarioActual)
     this.usuarioActual=this.loginService.usuarioActual
+  }
+
+  //para la prueba carga de fotos
+  uploadImageProduct(fd: FormData){
+    return this.http.post(this.urlImg + "upload-imgProduct", fd)
   }
 
   actualizarCategoriaSeleccionada(newCat: any){
@@ -31,7 +37,7 @@ export class ProductService {
     this.getProductsBySelectedCategory();
   }
 
-    obtenerProductos() {
+  obtenerProductos() {
     return this.products
   }
 
