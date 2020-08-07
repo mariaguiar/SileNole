@@ -7,7 +7,6 @@ const fileUpload = require('express-fileupload');
 const morgan = require('morgan');
 const _ = require('lodash'); //------------------------------------
 
-
 /* let mysql = require('mysql');
 let connection = mysql.createConnection({
     host: 'localhost',
@@ -69,6 +68,7 @@ app.post('/upload-img', async (req, res) => {
         res.status(500).send(err);
     }
 });
+
 app.post('/upload-imgProduct', async (req, res) => {
     try {
         if(!req.files) {

@@ -1,9 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Usuario } from './../models/usuario';
+import { Observable } from 'rxjs';//para el token
+
+
 @Injectable({
   providedIn: 'root'
 })
+
 export class UsuarioService {
 
   public usuario: Usuario;
@@ -13,6 +17,11 @@ export class UsuarioService {
   public urlImg = "http://localhost:3100/"
   
   constructor(private http: HttpClient) { }
+
+  //Para lo del token --------------------------------------------------------
+  login(nuevoUsuario: Usuario): Observable<any> { 
+    return this.http.post(this.url + "user/register", nuevoUsuario);
+  } //------------------------------------------------------------------------
 
   public autentificado:boolean = false
   
