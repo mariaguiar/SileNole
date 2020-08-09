@@ -8,6 +8,7 @@ import { Usuario } from './../../models/usuario';
 // SERVICIOS
 import { UsuarioService } from 'src/app/shared/usuario.service';
 import { LoginService } from 'src/app/shared/login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -24,12 +25,13 @@ export class ProfileComponent implements OnInit {
   selectedFile: File; //para cargar la foto
   
 
-  constructor(public usuarioService:UsuarioService, public loginService:LoginService, private modalService: NgbModal, private http: HttpClient) { 
+  constructor(public usuarioService:UsuarioService, public loginService:LoginService, private modalService: NgbModal, 
+    private router: Router, private http: HttpClient) { 
     this.usuarioActual=this.loginService.usuarioActual
     }
 
   ngOnInit(): void {
-    this.usuarioActual=this.loginService.usuarioActual
+    // this.usuarioActual=this.loginService.usuarioActual
   }
 
   onSubmit(form){
@@ -70,11 +72,13 @@ export class ProfileComponent implements OnInit {
     let userUpdated = new Usuario(idUsuario, name, password, email, comunidad, provincia, localidad, cp, userImageUrl);
     this.usuarioService.uploadImage(fd).subscribe((data)=>{
       console.log(data)
+      this.usuarioService.putUsuario(userUpdated).subscribe((data)=>{
+        console.log(data)
+        this.usuarioActual = userUpdated;
+        console.log(this.usuarioActual);
+        this.router.navigate(["/usuario"]);
+      })
     })
-    this.usuarioService.putUsuario(userUpdated).subscribe((data)=>{
-      console.log(data)
-    })
-    this.usuarioActual = userUpdated;
   }
 
   borrarUsuario(id:number){

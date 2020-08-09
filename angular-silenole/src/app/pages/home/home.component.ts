@@ -24,6 +24,7 @@ export class HomeComponent implements OnInit {
   public idProducto: number
 
   constructor(public productService:ProductService, public loginService: LoginService, public messageService:MessageService) {
+    this.productsCercanos = [];
     this.mostrarUltimosProductos();
     this.mostraProductosCercanos();
   }

@@ -22,7 +22,7 @@ export class ProductService {
 
   constructor(private http: HttpClient, public loginService:LoginService) {
     console.log("funcionando servicio product");
-    console.log(this.loginService.usuarioActual)
+    // console.log(this.loginService.usuarioActual)
     this.usuarioActual=this.loginService.usuarioActual
   }
 

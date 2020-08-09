@@ -1,15 +1,22 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var app = express();
-let cors = require('cors')
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+const cors = require('cors')
 //EXTRAS PARA LA PRUEBA CARGA DE FOTOS 
 const fileUpload = require('express-fileupload');
 const morgan = require('morgan');
 const _ = require('lodash'); //------------------------------------
+//PARA EL AUTENTICACIÓN REGISTER/LOGIN
+const bodyParserJSON = bodyParser.json();
+const bodyParserURLEncoded = bodyParser.urlencoded({ extended: true });
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const SECRET_KEY = 'secretkey123456';
 
 
-let mysql = require('mysql');
-let connection = mysql.createConnection({
+
+const mysql = require('mysql');
+const connection = mysql.createConnection({
     host: 'localhost',
     user: "root",
     password: null,
@@ -21,52 +28,17 @@ connection.connect(function(error){
     else
     console.log('Conexión correcta')
 });
+
 app.use(cors());
-// app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(bodyParserJSON);
+app.use(bodyParserURLEncoded);
 
 //EXTRAS PARA LA PRUEBA CARGA DE FOTOS 
 app.use(fileUpload({
     createParentPath: true
 }));
-app.use(bodyParser.urlencoded({extended: true}));
+
 app.use(morgan('dev'));
-//start app 
-/* const port = process.env.PORT || 3000;
-app.listen(port, () => 
-  console.log(`App is listening on port ${port}.`)
-); */
-app.post('/upload-avatar', async (req, res) => {
-    try {
-        if(!req.files) {
-            res.send({
-                status: false,
-                message: 'No file uploaded'
-            });
-        } else {
-            //Use the name of the input field (i.e. "avatar") to retrieve the uploaded file
-            let user_image = req.files.user_image;
-            
-            //Use the mv() method to place the file in upload directory (i.e. "uploads")
-            user_image.mv('./uploads/' + user_image.name);
-
-            //send response
-            res.send({
-                status: true,
-                message: 'File is uploaded',
-                data: {
-                    name: user_image.name,
-                    mimetype: user_image.mimetype,
-                    size: user_image.size
-                }
-            });
-        }
-    } catch (err) {
-        res.status(500).send(err);
-    }
-});
-
-
 
 //------------------------------------------------------
 
@@ -168,23 +140,94 @@ app.delete("/products", function (request, response) {
 /* ---------------------------------USUARIOS FUNCIONANDO----------------------------------- */
 //Login y comparación de datos
 app.post("/user/login", function (request, response) {
-    let email = request.body.email;
-    let password = request.body.password;
-    let params = [email, password]
-    let sql = "SELECT * FROM user WHERE email = ? AND password = ?";
-    if(email && password){
-        connection.query(sql, params, function(err, result){
-        if (err){
-            console.log(err)
-        }else{
-            console.log('Usuario Correcto')
-            console.log(result)
-        } 
-    response.send(result);
+  let email = request.body.email;
+  let password = request.body.password;
+  let params = [email];
+  //let params = [email, password];
+  //let sql = "SELECT * FROM user WHERE email = ? AND password = ?";
+  let sql = "SELECT * FROM user WHERE email = ?";
+  if (email && password) {
+    connection.query(sql, params, function (err, result) {
+      if (err) {
+        console.log(err)
+      } else {
+          console.log(result);
+          if (result[0] === undefined) {
+            response.status(403).send({ message: 'Something is wrong' });
+            return;
+          }
+        console.log('Usuario Correcto')
+        var user = result[0];
+        console.log(user);
+        const resultPassword = bcrypt.compareSync(password, user.password);
+        console.log("el password es correcto?: " + resultPassword);
+        if (resultPassword) {
+            const expiresIn = 24 * 60 * 60;
+            const accessToken = jwt.sign({ id: user.id }, SECRET_KEY, { expiresIn: expiresIn });
+    
+            const tokenData = {
+              accessToken: accessToken,
+              expiresIn: expiresIn
+            }
+            console.log(tokenData);
+            result.push(tokenData);
+            insertToken(accessToken, email);
+            // prueba
+            if (verifyToken(accessToken,email)) {
+                //ok
+            } else {
+                // no ok
+            }
+            response.send(result);
+        } else {
+            // password wrong
+            response.status(403).send({ message: 'Something is wrong' });
+        }
+      }
     })
-    }
+  }
+});
 
-});// GET /USERS/:USERID = Obtiene toda la información asociada al usuario 
+const insertToken = (accessToken, email) => {
+    console.log("insertando token");
+    let params = [accessToken, email];
+    let sql = "UPDATE user SET accessToken = ? WHERE email = ?";
+    connection.query(sql, params, function(err, result){
+        if (err) {
+            console.log(err)
+            console.log('error al insertar token')
+            return false;
+        } else {
+            console.log('Token insertado')
+            console.log(result)
+            return true;
+        }
+    });
+}
+
+const verifyToken = (accessToken, email) => {
+    console.log("verificando token");
+    let params = [email];
+    let sql = "SELECT accessToken FROM user WHERE email = ?";
+    connection.query(sql, params, function(err, result){
+        if (err) {
+            console.log(err)
+            console.log('error al verificar token')
+            return false;
+        } else {
+            console.log(result)
+            if (result[0].accessToken === accessToken) {
+                console.log('Token verificado')
+                return(true);
+            } else {
+                console.log('Token no válido')
+                return(false);
+            }
+        }
+    });
+}
+
+// GET /USERS/:USERID = Obtiene toda la información asociada al usuario 
 app.get("/user/:id", function (request, response) {
     var id = request.params.id;
     let sql = "SELECT * FROM user WHERE user_id ="+id;
@@ -201,14 +244,14 @@ app.get("/user/:id", function (request, response) {
 
 // POST /USERS/REGISTER = Introduce a un usuario en la base de datos.
 app.post("/user/register", function (request, response) {
-    let name = request.body.name
-    let email = request.body.email
-    let password = request.body.password
-    let comunidad = request.body.comunidad
-    let provincia = request.body.provincia
-    let localidad = request.body.localidad
-    let cp = request.body.cp
-    let user_image = request.body.user_image
+    let name = request.body.name;
+    let email = request.body.email;
+    let password = bcrypt.hashSync(request.body.password);
+    let comunidad = request.body.comunidad;
+    let provincia = request.body.provincia;
+    let localidad = request.body.localidad;
+    let cp = request.body.cp;
+    let user_image = request.body.user_image;
     let params = [name, email, password, comunidad, provincia, localidad, cp, user_image]
     let sql = "INSERT INTO user (name, email, password, comunidad, provincia, localidad, cp, user_image) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?)";
     connection.query(sql, params, function(err, result){
@@ -221,12 +264,13 @@ app.post("/user/register", function (request, response) {
     response.send(result);
     })
 });
+
 // PUT /USERS/:USERID = Actualiza la información asociada al usuario. 
 app.put("/user", function (request, response) {
     let user_id = request.body.user_id
     let name = request.body.name
     let email = request.body.email
-    let password = request.body.password
+    let password = bcrypt.hashSync(request.body.password);
     let comunidad = request.body.comunidad
     let provincia = request.body.provincia
     let localidad = request.body.localidad
@@ -244,6 +288,7 @@ app.put("/user", function (request, response) {
     response.send(result);
     })
 });
+
 // DELETE PARA BORRAR UN USUARIO
 app.delete("/user", function (request, response) {
     let user_id = request.body.user_id

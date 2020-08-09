@@ -25,6 +25,7 @@ export class MyProductsComponent implements OnInit {
   modalRef:BsModalRef; //MODAL NGX
 
   constructor(public productService:ProductService, public loginService:LoginService, private modalService: NgbModal, private modalServices: BsModalService) { 
+    this.products = [];
     this.mostrarProductos(this.idUsuario=this.loginService.usuarioActual.user_id)
   }
   

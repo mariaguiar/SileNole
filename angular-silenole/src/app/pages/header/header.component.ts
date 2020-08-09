@@ -7,6 +7,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Product } from 'src/app/models/product';
 // SERVICIOS
 import { ProductService } from 'src/app/shared/product.service';
+import { LoginService } from 'src/app/shared/login.service';
 
 
 @Component({
@@ -21,7 +22,7 @@ export class HeaderComponent implements OnInit {
   form: FormGroup; // para obtener los datos del formulario
   modalRef:BsModalRef
 
-constructor(public productService:ProductService, private modalService: BsModalService) { }
+constructor(public productService:ProductService, private modalService: BsModalService, public loginService:LoginService) { }
 
 
   onSubmit(form) {
@@ -34,6 +35,13 @@ constructor(public productService:ProductService, private modalService: BsModalS
       this.productService.products = data
       console.log(data)
     })
+  }
+
+  cerrarSesion(){
+    this.loginService.logout();
+    this.loginService.usuarioActual = null;
+    this.productService.usuarioActual = null;
+    // todo limpiar todo
   }
 
   openModal(templateHeader: TemplateRef < any > ) {

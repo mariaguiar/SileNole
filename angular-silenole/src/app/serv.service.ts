@@ -8,8 +8,8 @@ export class ServService {
   public aparecer:boolean
   
   constructor() {
-    console.log('funcionando servicio') 
-    this.aparecer=false
+   /*  console.log('funcionando servicio') 
+    this.aparecer=false */
   }
   
 }

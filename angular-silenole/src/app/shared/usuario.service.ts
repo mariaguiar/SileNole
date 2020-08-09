@@ -19,9 +19,10 @@ export class UsuarioService {
   constructor(private http: HttpClient) { }
 
   //Para lo del token --------------------------------------------------------
-  login(nuevoUsuario: Usuario): Observable<any> { 
-    return this.http.post(this.url + "user/register", nuevoUsuario);
-  } //------------------------------------------------------------------------
+/*   login(user: any): Observable<any> {
+    return this.http.post(this.url + "/login", user);
+  }  */
+  //------------------------------------------------------------------------
 
   public autentificado:boolean = false
   
@@ -33,10 +34,10 @@ export class UsuarioService {
     }
   }
 
-  newUsuario(nuevoUsuario: Usuario){
+  /* newUsuario(nuevoUsuario: Usuario){
     console.log(this.url)
     return this.http.post(this.url + "user/register", nuevoUsuario)
-  }
+  } */
 
   putUsuario(cambios: Usuario){
     return this.http.put(this.url + "user", cambios)

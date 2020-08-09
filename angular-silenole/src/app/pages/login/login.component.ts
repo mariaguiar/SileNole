@@ -19,7 +19,7 @@ import { ProductService } from 'src/app/shared/product.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css']
 })
 
 export class LoginComponent implements OnInit {
@@ -35,13 +35,26 @@ export class LoginComponent implements OnInit {
   title = 'toaster-not'
   notifyService: any;
 
-  constructor(private router:Router,public loginService:LoginService, public usuarioService:UsuarioService,
+  constructor(public loginService:LoginService, public usuarioService:UsuarioService,
       public productService:ProductService, public modalService:BsModalService, 
-      private http: HttpClient,private fb: FormBuilder , private modalService2: NgbModal, private toastr: ToastrService) { 
+      private http: HttpClient, private fb: FormBuilder , private modalService2: NgbModal, private toastr: ToastrService,
+      private router: Router){
     console.log("Funcionando servicio usuario")
-    this.usuario
-  }
     
+    // check for existing session
+    if (this.loginService.getToken() != null) {
+      // ya existe session
+      // cargar datos session usuario
+      const user_id = this.loginService.getUserId();
+      this.usuarioService.getUsuario(user_id).subscribe( data => {
+        console.log(data);
+        this.loginService.usuarioActual = data[0];
+        this.productService.usuarioActual = data[0];
+        this.router.navigate(["/home"]);
+      })
+    }
+  }
+
   ngOnInit() {
     this.initForm();
   }
@@ -54,6 +67,7 @@ export class LoginComponent implements OnInit {
      /*  validators: validarQueSeanIguales */
     });
   }
+
   equals(): boolean {
     return this.form.hasError('noSonIguales') &&
       this.form.get('password').dirty &&
@@ -66,10 +80,14 @@ export class LoginComponent implements OnInit {
 
    registrarUsuario(user_id:number, name:string, password:string, password2:string, email:string, comunidad:string, provincia:string, localidad:string, cp:number){
     // this.compararPassword(password,password2)
-    if(password===password2){
+    if(password === password2){
       console.log("Contraseña correcta")
       this.newUsuario(name, password, email, comunidad, provincia, localidad, cp)
       this.modalRef.hide()
+      const user = {
+        email: this.email,
+        password: this.password
+      };
     }else{
      console.log("abrirModalError")
       // this.equals=true
@@ -82,9 +100,9 @@ export class LoginComponent implements OnInit {
     const pass2 = (<HTMLInputElement> document.getElementById ("pass2")).value
     const nombre = (<HTMLInputElement> document.getElementById ("nombre")).value
     if (pass1 === pass2 && nombre !== "") {
-      this.showToasterSuccess();
-      this.usuarioService.newUsuario(new Usuario(null,name, password, email, comunidad, provincia, localidad, cp,null)).subscribe((data)=>{
+      this.loginService.register(new Usuario(null,name, password, email, comunidad, provincia, localidad, cp, this.loginService.defaultUserPicture)).subscribe((data)=>{
         console.log(data)
+        //this.showToasterSuccess();
       })
     }else{
       this.showToasterError();
@@ -124,30 +142,23 @@ export class LoginComponent implements OnInit {
       console.log(form.value)
   }
 
-  login() {
+  login() { 
     const user = {
       email: this.email,
       password: this.password
     };
-
     console.log(user)
     this.loginService.login(user).subscribe(data => {
-      console.log(data[0]);
-      this.loginService.usuarioActual = data[0]
-      this.productService.usuarioActual = data[0]
-      console.log(this.loginService.usuarioActual)
+      console.log(data);
+      this.loginService.usuarioActual = data[0];
+      this.productService.usuarioActual = data[0];
+      console.log(this.loginService.usuarioActual);
       if (data != undefined) {
         this.router.navigate(["/home"])
       } else {
         console.log("Usuario Inexistente")
         this.router.navigate(["/"])
-      }
-      /* if (data==undefined) {
-        console.log("Usuario Inexistente")
-        this.router.navigate(["/"])
-      } else {
-        this.router.navigate(["/home"])
-      } */
+      } 
     });
   }
 
@@ -166,5 +177,29 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  public random() {
+    return Math.random().toString(36).substr(2); // Eliminar `0.`
+  };
 
+  public token() {
+    return this.random() + this.random(); // Para hacer el token más largo
+  };
+
+  public checkOpenSession(template: TemplateRef<any>) {
+    // check for existing session
+    if (this.loginService.getToken() != null) {
+      // ya existe session
+      // cargar datos session usuario
+      const user_id = this.loginService.getUserId();
+      this.usuarioService.getUsuario(user_id).subscribe( data => {
+        console.log(data);
+        this.loginService.usuarioActual = data[0];
+        this.productService.usuarioActual = data[0];
+        this.router.navigate(["/home"]);
+      })
+    } else {
+      this.openModal(template);
+    }
+  }
+  
 }
