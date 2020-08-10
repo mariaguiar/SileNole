@@ -331,6 +331,7 @@ app.post("/messages", function (request, response) {
     let product_id = request.body.product_id 
     let text = request.body.text
     let date = request.body.date
+    console.log("fecha mensaje es: " + date);
     let params = [chat_id, sender_id , product_id ,text ,date]
     let sql = "INSERT INTO messages (chat_id, sender_id, product_id ,text ,date) VALUES (?, ?, ?, ?, ?)";
     connection.query(sql, params, function(err, result){
@@ -385,7 +386,7 @@ app.post("/noles/", function (request, response) {
 app.get("/noles/:user_id", function (request, response) {
     var user_id = request.params.user_id;
     let params = [user_id];
-    let sql = "SELECT products.nombre, products.descripcion, products.product_image, noles.product_id, noles.chat_id FROM noles INNER JOIN products ON (noles.product_id = products.product_id) WHERE noles.user_id = ?"
+    let sql = "SELECT products.nombre, products.descripcion, products.product_image, noles.product_id, noles.chat_id, user.name FROM noles INNER JOIN products ON (noles.product_id = products.product_id) INNER JOIN user ON (products.user_id = user.user_id) WHERE noles.user_id = ?"
     connection.query(sql, params, function(err, result){
         if (err){
             console.log(err)
@@ -401,7 +402,7 @@ app.get("/noles/:user_id", function (request, response) {
 app.get("/siles/:user_id", function (request, response) {
     var user_id = request.params.user_id;
     let params = [user_id];
-    let sql = "SELECT products.nombre, products.descripcion, products.product_image, noles.product_id, noles.chat_id FROM noles INNER JOIN products ON (noles.product_id = products.product_id) WHERE products.user_id = ?"
+    let sql = "SELECT products.nombre, products.descripcion, products.product_image, noles.product_id, noles.chat_id, user.name FROM noles INNER JOIN products ON (noles.product_id = products.product_id) INNER JOIN user ON (noles.user_id = user.user_id) WHERE products.user_id = ?"
     connection.query(sql, params, function(err, result){
         if (err){
             console.log(err)

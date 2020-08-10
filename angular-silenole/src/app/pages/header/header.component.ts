@@ -5,9 +5,11 @@ import { FormGroup } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 // MODELO
 import { Product } from 'src/app/models/product';
+import { Usuario } from 'src/app/models/usuario';
 // SERVICIOS
 import { ProductService } from 'src/app/shared/product.service';
 import { LoginService } from 'src/app/shared/login.service';
+import { UsuarioService } from 'src/app/shared/usuario.service';
 
 
 @Component({
@@ -21,8 +23,11 @@ export class HeaderComponent implements OnInit {
   public products: any;
   form: FormGroup; // para obtener los datos del formulario
   modalRef:BsModalRef
+  public usuario: Usuario;
+  // public usuarioActual=new Usuario(null,null,null,null,null,null,null,null, null);
 
-constructor(public productService:ProductService, private modalService: BsModalService, public loginService:LoginService) { }
+constructor(public productService:ProductService, private modalService: BsModalService, public loginService:LoginService,
+  public usuarioService:UsuarioService) { }
 
 
   onSubmit(form) {

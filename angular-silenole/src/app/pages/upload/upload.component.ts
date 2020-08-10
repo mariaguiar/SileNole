@@ -42,6 +42,7 @@ export class UploadComponent implements OnInit {
   onFileSelected(event){
     this.selectedFile = <File>event.target.files[0]
   }
+  
   anyadirSile(nombre: string, descripcion: string, categoria: string, user_id: number, product_image: string){
     console.log('Hola desde anyadir')
     console.log(this.productService.product)

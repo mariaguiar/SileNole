@@ -23,6 +23,7 @@ export class MyProductsComponent implements OnInit {
   public idProducto: number
   public idUsuario: number
   modalRef:BsModalRef; //MODAL NGX
+  selectedFile: File; //para cargar la foto
 
   constructor(public productService:ProductService, public loginService:LoginService, private modalService: NgbModal, private modalServices: BsModalService) { 
     this.products = [];
@@ -52,12 +53,22 @@ export class MyProductsComponent implements OnInit {
   onSubmit(form){
     console.log(form.value)
   }
+  //para cargar la foto
+  onFileSelected(event){
+    this.selectedFile = <File>event.target.files[0]
+  }
 
   /* PARA MODIFICAR PRODUCTOS */
-  modificarSile(product_id: number, nombre: string, descripcion: string, categoria: string, user_id: number, product_image: string){
+  modificarSile(product_id: number, nombre: string, descripcion: string, categoria: string, user_id: number){
     console.log('Hola desde modificarSile')
     let date = new Date();
-    this.productService.putProduct(new Product(product_id, nombre, descripcion, categoria, user_id, product_image, date)).subscribe((data)=>{
+    let productImageUrl = this.productService.urlImg + this.selectedFile.name;
+    const fd = new FormData()
+    fd.append('product_image',this.selectedFile, this.selectedFile.name);
+    this.productService.uploadImageProduct(fd).subscribe((data)=>{
+      console.log(data)
+    })
+    this.productService.putProduct(new Product(product_id, nombre, descripcion, categoria, user_id, productImageUrl, date)).subscribe((data)=>{
       console.log(data)
       this.mostrarProductos(this.idUsuario)      
     })

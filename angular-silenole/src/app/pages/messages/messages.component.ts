@@ -1,5 +1,7 @@
 // COMPONENTE
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef  } from '@angular/core';
+// MODAL
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 // MODELO
 import { Message } from 'src/app/models/message';
 import { Usuario } from 'src/app/models/usuario';
@@ -26,9 +28,15 @@ export class MessagesComponent implements OnInit {
   public siles: any;
   public usuarioActual=new Usuario(null, null, null, null, null, null, null, null, null)
   public fecha = new Date();
+  public products: any;
+  public modalRef: BsModalRef;
 
-  constructor(public usuarioService:UsuarioService, public messageService:MessageService, public productService:ProductService, public loginService:LoginService) { 
+  constructor(public usuarioService:UsuarioService, public messageService:MessageService, public productService:ProductService, 
+    public loginService:LoginService, public modalService:BsModalService) { 
     console.log("Funcionando servicio messageService")
+    this.noles=[];
+    this.siles=[];
+    this.usuarioActual = this.loginService.usuarioActual;
     this.cargarNoles()
     this.cargarMensajesNoles()
     this.cargarSiles()
@@ -89,6 +97,13 @@ export class MessagesComponent implements OnInit {
     let chat_id = this.messageService.noleSeleccionado.chat_id
     this.messageService.getMessages(chat_id).subscribe((data)=>{
       this.messagesNoles = data
+      this.messagesNoles.forEach(msg => {
+        let date:Date = new Date();
+        date.setTime(Date.parse(msg.date));
+        msg.date = date.toLocaleString();
+        //console.log(date);
+        //console.log(msg);
+      })
       console.log(data)  
     })
   }
@@ -105,6 +120,13 @@ export class MessagesComponent implements OnInit {
       let chat_id = this.messageService.sileSeleccionado.chat_id
       this.messageService.getMessages(chat_id).subscribe((data)=>{
         this.messagesSiles = data
+        this.messagesSiles.forEach(msg => {
+          let date:Date = new Date();
+          date.setTime(Date.parse(msg.date));
+          msg.date = date.toLocaleString();
+          //console.log(date);
+          //console.log(msg);
+        })
         console.log(data)  
       })
     }
@@ -121,6 +143,11 @@ export class MessagesComponent implements OnInit {
         this.cargarMensajesSiles();
       })
     }
+
+    //PARA ABRIR EL MODAL NGX
+  openModal(Upload: TemplateRef<any>){
+    this.modalRef = this.modalService.show(Upload)
+  }
 
 
   ngOnInit(): void {

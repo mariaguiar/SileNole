@@ -28,6 +28,7 @@ export class ProfileComponent implements OnInit {
   constructor(public usuarioService:UsuarioService, public loginService:LoginService, private modalService: NgbModal, 
     private router: Router, private http: HttpClient) { 
     this.usuarioActual=this.loginService.usuarioActual
+    this.selectedFile = null;
     }
 
   ngOnInit(): void {
@@ -42,7 +43,7 @@ export class ProfileComponent implements OnInit {
     this.selectedFile = <File>event.target.files[0]
   }
   registrarUsuario(user_id:number, name:string, password:string, password2:string, email:string, comunidad:string, provincia:string, localidad:string, cp:number){
-    if(password===password2){
+    if(password === password2){
       console.log("Contraseña correcta")
       this.modificarUsuario(user_id, name, password, email, comunidad, provincia, localidad, cp)
       this.equals=false
@@ -66,19 +67,36 @@ export class ProfileComponent implements OnInit {
   modificarUsuario(idUsuario:number, name:string, password:string, email:string, comunidad:string, provincia:string, localidad:string, cp:number){
     console.log('Usuario Modificado')
     // let userImageName =  name + ".jpg";
-    let userImageUrl = this.usuarioService.urlImg + this.selectedFile.name;
-    const fd = new FormData()
-    fd.append('user_image',this.selectedFile, this.selectedFile.name);
-    let userUpdated = new Usuario(idUsuario, name, password, email, comunidad, provincia, localidad, cp, userImageUrl);
-    this.usuarioService.uploadImage(fd).subscribe((data)=>{
-      console.log(data)
+    let userImageUrl;
+    if(this.selectedFile === null) {
+      userImageUrl = this.usuarioActual.user_image;
+    } else {
+      userImageUrl = this.usuarioService.urlImg + this.selectedFile.name;
+    }
+    let userUpdated = new Usuario(idUsuario, name, password, email, comunidad, provincia, localidad, cp, userImageUrl);  
+
+    if(this.selectedFile === null) {
       this.usuarioService.putUsuario(userUpdated).subscribe((data)=>{
         console.log(data)
+        this.loginService.usuarioActual = userUpdated;
         this.usuarioActual = userUpdated;
         console.log(this.usuarioActual);
         this.router.navigate(["/usuario"]);
       })
-    })
+    } else {
+      const fd = new FormData()
+      fd.append('user_image',this.selectedFile, this.selectedFile.name);
+      this.usuarioService.uploadImage(fd).subscribe((data)=>{
+        console.log(data)
+        this.usuarioService.putUsuario(userUpdated).subscribe((data)=>{
+          console.log(data)
+          this.loginService.usuarioActual = userUpdated;
+          this.usuarioActual = userUpdated;
+          console.log(this.usuarioActual);
+          this.router.navigate(["/usuario"]);
+        })
+      })
+    }
   }
 
   borrarUsuario(id:number){
