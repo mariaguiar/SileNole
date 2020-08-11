@@ -51,7 +51,7 @@
               (click)="modificarSile(productoActual.product_id, nombre.value, descripcion.value, categoria.value, idUsuario)"
               (click)= "openModal(modificadoModal)" (click)="modal.dismiss('Cross click')">Modificar Producto</button>
               <button type="submit" class="btn btn-danger ml-1"
-              (click)="modificarSile(productoActual.product_id, nombre.value, descripcion.value, categoria.value, idUsuario)"
+              (click)="cancelarCambio()"
               (click)="modal.dismiss('Cross click')">Cancelar</button>
           </div>
         </form>

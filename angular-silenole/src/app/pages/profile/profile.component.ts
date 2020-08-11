@@ -94,6 +94,7 @@ export class ProfileComponent implements OnInit {
           this.usuarioActual = userUpdated;
           console.log(this.usuarioActual);
           this.router.navigate(["/usuario"]);
+          this.selectedFile = null;
         })
       })
     }

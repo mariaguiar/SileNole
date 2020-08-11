@@ -304,22 +304,6 @@ app.delete("/user", function (request, response) {
     response.send(result);
     })
 });
-/* app.delete("/user", function (request, response) {
-    let email = request.body.email
-    let password = request.body.password
-    let params = [email, password]
-    let sql = "DELETE FROM user WHERE email = ? AND password = ?";
-    connection.query(sql, params, function(err, result){
-        if (err){
-            console.log(err)
-        }else{
-            console.log('Usuario eliminado')
-            console.log(result)
-        } 
-    response.send(result);
-    })
-}); */
-
 
 /* ---------------------------------FIN USUARIOS----------------------------------- */
 
@@ -361,6 +345,22 @@ app.post("/messages", function (request, response) {
     })
 });
 
+// DELETE PARA BORRAR UN MENSAJE Y SU PRODUCTO
+/* app.delete("/messages/:chat_id", function (request, response) {
+    var chat_id = request.params.chat_id;
+    let params = [chat_id]
+    let sql = "SELECT user.name, messages.text, messages.date FROM messages INNER JOIN user ON (messages.sender_id = user.user_id)  WHERE messages.chat_id = ? ORDER BY messages.date";
+    connection.query(sql, params, function(err, result){
+        if (err){
+            console.log(err)
+        }else{
+            console.log('Objetos del Usuario')
+            console.log(result)
+        } 
+    response.send(result);
+    })
+}); */
+
 /* ---------------------------------FIN MENSAJES----------------------------------- */
 
 /* ---------------------------------NOLES / SILES FUNCIONANDO----------------------------------- */
@@ -386,7 +386,7 @@ app.post("/noles/", function (request, response) {
 app.get("/noles/:user_id", function (request, response) {
     var user_id = request.params.user_id;
     let params = [user_id];
-    let sql = "SELECT products.nombre, products.descripcion, products.product_image, noles.product_id, noles.chat_id, user.name FROM noles INNER JOIN products ON (noles.product_id = products.product_id) INNER JOIN user ON (products.user_id = user.user_id) WHERE noles.user_id = ?"
+    let sql = "SELECT products.nombre, products.descripcion, products.product_image, noles.product_id, noles.chat_id, user.name, user.user_id FROM noles INNER JOIN products ON (noles.product_id = products.product_id) INNER JOIN user ON (products.user_id = user.user_id) WHERE noles.user_id = ?"
     connection.query(sql, params, function(err, result){
         if (err){
             console.log(err)
@@ -398,11 +398,27 @@ app.get("/noles/:user_id", function (request, response) {
     })
 });
 
+// DELETE PARA BORRAR UN NOLE
+app.delete("/noles/:chat_id", function (request, response) {
+    let chat_id = request.params.chat_id
+    let params = [chat_id]
+    let sql = "DELETE FROM noles WHERE chat_id = ?";
+    connection.query(sql, params, function(err, result){
+        if (err){
+            console.log(err)
+        }else{
+            console.log('Nole eliminado')
+            console.log(result)
+        } 
+    response.send(result);
+    })
+});
+
 // GET /SILES= Obtiene todos los productos
 app.get("/siles/:user_id", function (request, response) {
     var user_id = request.params.user_id;
     let params = [user_id];
-    let sql = "SELECT products.nombre, products.descripcion, products.product_image, noles.product_id, noles.chat_id, user.name FROM noles INNER JOIN products ON (noles.product_id = products.product_id) INNER JOIN user ON (noles.user_id = user.user_id) WHERE products.user_id = ?"
+    let sql = "SELECT products.nombre, products.descripcion, products.product_image, noles.product_id, noles.chat_id, user.name, user.user_id FROM noles INNER JOIN products ON (noles.product_id = products.product_id) INNER JOIN user ON (noles.user_id = user.user_id) WHERE products.user_id = ?"
     connection.query(sql, params, function(err, result){
         if (err){
             console.log(err)

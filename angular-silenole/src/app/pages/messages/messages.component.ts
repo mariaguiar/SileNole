@@ -2,6 +2,7 @@
 import { Component, OnInit, TemplateRef  } from '@angular/core';
 // MODAL
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 // MODELO
 import { Message } from 'src/app/models/message';
 import { Usuario } from 'src/app/models/usuario';
@@ -12,7 +13,6 @@ import { UsuarioService } from 'src/app/shared/usuario.service';
 import { LoginService } from 'src/app/shared/login.service';
 
 
-
 @Component({
   selector: 'app-messages',
   templateUrl: './messages.component.html',
@@ -20,6 +20,7 @@ import { LoginService } from 'src/app/shared/login.service';
 })
 export class MessagesComponent implements OnInit {
 
+  closeResult = ''; //MODAL NG
   public message=new Message(null, null, null, null, null ,null)
   public message2=new Message(null, null, null, null, null ,null)
   public messagesNoles: any;
@@ -30,9 +31,10 @@ export class MessagesComponent implements OnInit {
   public fecha = new Date();
   public products: any;
   public modalRef: BsModalRef;
+  public chat_idParaBorrar: string;
 
   constructor(public usuarioService:UsuarioService, public messageService:MessageService, public productService:ProductService, 
-    public loginService:LoginService, public modalService:BsModalService) { 
+    public loginService:LoginService, private modalService: NgbModal, public modalServices:BsModalService,) { 
     console.log("Funcionando servicio messageService")
     this.noles=[];
     this.siles=[];
@@ -45,20 +47,25 @@ export class MessagesComponent implements OnInit {
   onSubmit(form){
     console.log(form.value)
   }
-// No funicona aun TERMINAR --------------------------------------------------------------------------------------
-  eliminarNoleCardMsg(index){
-    console.log(index)
-    let borrado = this.noles.splice(index, 1);
-    this.noles = borrado
-    //this.cargarNoles()
-    //this.cargarMensajesNoles()
-    console.log("el nuevo array es"+this.noles)
-  } // -----------------------------------------------------------------------------------------------------------
+
+  pasarIdOwner(oid) {
+    this.productService.ownerActual = oid
+    console.log(oid)
+    console.log(this.productService.ownerActual)
+  }
 
   pasarNole(nole){
     console.log("El chat seleccionado es: " + nole.chat_id);
     this.messageService.noleSeleccionado.chat_id = nole.chat_id;
     this.messageService.noleSeleccionado.product_id = nole.product_id;
+    this.cargarMensajesNoles();
+  }
+
+  pasarNoleParaBorrar(chat_id){
+    console.log("El chat seleccionado es: " + chat_id);
+    this.chat_idParaBorrar = chat_id;
+    // this.messageService.noleSeleccionado.chat_id = nole.hat_id;
+    // this.messageService.noleSeleccionado.product_id = nole.product_id;
     this.cargarMensajesNoles();
   }
 
@@ -82,7 +89,17 @@ export class MessagesComponent implements OnInit {
       console.log(data)
       this.cargarMensajesNoles();
     })
-    
+  }
+
+  
+  eliminarNole(){
+    this.messageService.deleteNole(this.chat_idParaBorrar).subscribe((data)=>{
+      // console.log(data)
+      this.cargarNoles()
+      this.cargarMensajesNoles()
+      this.cargarSiles()
+      this.cargarMensajesSiles()
+    })
   }
 
   cargarNoles() {
@@ -144,9 +161,34 @@ export class MessagesComponent implements OnInit {
       })
     }
 
-    //PARA ABRIR EL MODAL NGX
+    /* PARA ABRIR LOS MODALES NG*/
+    openModalDeleteNole(modalBorrarNole) {
+      this.modalService.open(modalBorrarNole, {ariaLabelledBy: 'modalEliminarCuenta'}).result.then((result) => {
+        this.closeResult = `Closed with: ${result}`;
+      }, (reason) => {
+        this.closeResult = `${this.getDismissReason(reason)}`;
+      });
+    }
+
+    openModalDeleteSile(modalBorrarSile) {
+      this.modalService.open(modalBorrarSile, {ariaLabelledBy: 'modalEliminarCuenta'}).result.then((result) => {
+        this.closeResult = `Closed with: ${result}`;
+      }, (reason) => {
+        this.closeResult = `${this.getDismissReason(reason)}`;
+      });
+    }
+  
+    private getDismissReason(reason: any): string {
+      if (reason === ModalDismissReasons.ESC) {
+        return 'by pressing ESC';
+      }  else {
+        return '';
+      }
+    }
+
+  //PARA ABRIR EL MODAL NGX
   openModal(Upload: TemplateRef<any>){
-    this.modalRef = this.modalService.show(Upload)
+    this.modalRef = this.modalServices.show(Upload)
   }
 
 

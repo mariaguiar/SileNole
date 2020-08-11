@@ -18,23 +18,27 @@ export class MessageService {
   constructor(private http:HttpClient) { }
 
 // TERMINAR CUANDO ESTÉ EL SERVICIO USUARIO FUNCIONAL
-public getMessages(chat_id: string) {
-  return this.http.get(this.url + "messages/" + chat_id)
-} //Devuelve la llamada al endpoint GET messages”
+  public getMessages(chat_id: string) {
+    return this.http.get(this.url + "messages/" + chat_id)
+  } //Devuelve la llamada al endpoint GET messages”
 
-public postMessage(nuevoMensaje: Message) {
-  return this.http.post(this.url + "messages/", nuevoMensaje)
-} //Devuelve la llamada al endpoint POST “/" 
+  public postMessage(nuevoMensaje: Message) {
+    return this.http.post(this.url + "messages/", nuevoMensaje)
+  } //Devuelve la llamada al endpoint POST “/" 
 
-postNole(newNoleRelation: Nole) {
-  return this.http.post(this.url + "noles/", newNoleRelation)
-}
+  postNole(newNoleRelation: Nole) {
+    return this.http.post(this.url + "noles/", newNoleRelation)
+  }
 
-getNolesByUser(id: number) {
-  return this.http.get(this.url + "noles/" + id);
-}
+  getNolesByUser(id: number) {
+    return this.http.get(this.url + "noles/" + id);
+  }
 
-getSilesByUser(id: number) {
-  return this.http.get(this.url + "siles/" + id);
-}
+  getSilesByUser(id: number) {
+    return this.http.get(this.url + "siles/" + id);
+  }
+
+  deleteNole(chat_id: string) {
+    return this.http.delete(this.url + "noles/" + chat_id);
+  }
 }
