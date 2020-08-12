@@ -59,6 +59,7 @@ app.get("/products/:user_id", function (request, response) {
     response.send(result);
     })
 });
+
 // GET /SILES= Obtiene todos los productos
 app.get("/products", function (request, response) {
     let sql = "SELECT * FROM products"
@@ -181,7 +182,8 @@ app.post("/user/login", function (request, response) {
             response.send(result);
         } else {
             // password wrong
-            response.status(403).send({ message: 'Something is wrong' });
+            //response.status(403).send({ message: 'Something is wrong' });
+            response.send(null);
         }
       }
     })

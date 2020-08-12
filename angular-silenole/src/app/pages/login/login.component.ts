@@ -3,7 +3,7 @@ import { Component, OnInit, TemplateRef, } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-/* import { validarQueSeanIguales } from '../../shared/notificacion'; */
+/* import { validarQueSeanIguales } from 'src/app/shared/notificacion'; */
 import { ToastrService } from 'ngx-toastr';
 // MODAL
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
       'password':  ['', Validators.required],
       'confirmarPassword': ['', Validators.required]
     }, {
-     /*  validators: validarQueSeanIguales */
+      /* validators: validarQueSeanIguales */
     });
   }
 
@@ -78,7 +78,7 @@ export class LoginComponent implements OnInit {
     this.modalRef = this.modalService.show(template)
   }
 
-   registrarUsuario(user_id:number, name:string, password:string, password2:string, email:string, comunidad:string, provincia:string, localidad:string, cp:number){
+/*    registrarUsuario(user_id:number, name:string, password:string, password2:string, email:string, comunidad:string, provincia:string, localidad:string, cp:number){
     // this.compararPassword(password,password2)
     if(password === password2){
       console.log("Contraseña correcta")
@@ -92,24 +92,43 @@ export class LoginComponent implements OnInit {
      console.log("abrirModalError")
       // this.equals=true
     }
-   }
+   } */
    
-  newUsuario(name:string, password:string,  email:string, comunidad:string, provincia:string, localidad:string, cp:number){
-    console.log(this.usuarioService.usuario)
-    const pass1 = (<HTMLInputElement> document.getElementById ("pass1")).value
+  newUsuario(name:string, password:string, email:string, comunidad:string, provincia:string, localidad:string, cp:number){
+    // const pass1 = (<HTMLInputElement> document.getElementById ("pass1")).value
     const pass2 = (<HTMLInputElement> document.getElementById ("pass2")).value
-    const nombre = (<HTMLInputElement> document.getElementById ("nombre")).value
-    if (pass1 === pass2 && nombre !== "") {
-      this.loginService.register(new Usuario(null,name, password, email, comunidad, provincia, localidad, cp, this.loginService.defaultUserPicture)).subscribe((data)=>{
-        console.log(data)
-        //this.showToasterSuccess();
-      })
-    }else{
-      this.showToasterError();
+    // const nombre = (<HTMLInputElement> document.getElementById ("nombre")).value
+    console.log(name, password, pass2, email, comunidad, provincia, localidad, cp)
+    if (name === null || password === null || email === null || comunidad === null ||
+          provincia === null || cp === null ||
+          name === "" || password === "" || email === "" || comunidad === "" ||
+          provincia === "" || cp === 0 || password.length<3) {
+            this.toastr.error("Por favor, revisa todos los campos", "Algo fue mal") 
+    } else {
+      if (password !== pass2) {
+        this.toastr.error("Las contraseñas no coinciden", "Algo fue mal")
+      } else {
+        this.loginService.register(new Usuario(null,name, password, email, comunidad, provincia, localidad, cp, this.loginService.defaultUserPicture)).subscribe((data)=>{
+          console.log(data)
+          if (data === null) {
+            this.toastr.error("No se registró correctamente, el email ya existe", "Algo fue mal")
+          } else {
+            this.toastr.success("Registrado con éxito", "Bienvenido a SileNole")
+            this.modalRef.hide();  
+          }
+        })      
+      }
     }
+
   }
-  showToasterSuccess(){
-    this.notifyService.showSuccess("Registrado con Exito", "Bienvenido a SileNole")
+  
+/*   showSuccess(){
+    // this.notifyService.showSuccess("Registrado con Exito", "Bienvenido a SileNole")
+    this.toastr.success("Registrado con Exito", "Bienvenido a SileNole")
+  }
+  showError(){
+    // this.notifyService.showSuccess("Registrado con Exito", "Bienvenido a SileNole")
+    this.toastr.error("Algo fue Mal", "Usuario no Registrado")
   }
 
   showToasterError(){
@@ -118,7 +137,7 @@ export class LoginComponent implements OnInit {
 
   showToasterInfo(){
     this.notifyService.showInfo("Registrado con Exito", "")
-  }
+  } */
 
   /* newUsuario(user_id:number, name:string, password:string, email:string, comunidad:string, provincia:string, localidad:string, cp:number){
     console.log('Usuario Añadido')
@@ -139,24 +158,30 @@ export class LoginComponent implements OnInit {
   } */
 
   onSubmit(form){
-      console.log(form.value)
+      console.log(form.value) 
   }
 
-  login() { 
+  login(email1,password1) { 
+    if (email1 === null || password1 === null ||
+      email1 === "" || password1 === "") {
+        this.toastr.error("Por favor, revisa todos los campos", "Algo fue mal");
+      }
     const user = {
-      email: this.email,
-      password: this.password
+      email: email1,
+      password: password1
     };
     console.log(user)
     this.loginService.login(user).subscribe(data => {
       console.log(data);
-      this.loginService.usuarioActual = data[0];
-      this.productService.usuarioActual = data[0];
-      console.log(this.loginService.usuarioActual);
-      if (data != undefined) {
+      if (data !== null) {
+        this.loginService.usuarioActual = data[0];
+        this.productService.usuarioActual = data[0];
+        console.log(this.loginService.usuarioActual);
+        this.modalRef.hide();
         this.router.navigate(["/home"])
       } else {
         console.log("Usuario Inexistente")
+        this.toastr.error("El ususario o la contraseña no son válidos", "Algo fue mal");
         this.router.navigate(["/"])
       } 
     });

@@ -25,10 +25,14 @@ export class LoginService {
     return this.http.post<any>(this.backUrl + "/user/login", user).pipe(tap(
         (res: any) => {
           if (res) {
-            // guardar token
-            this.saveToken(res[1].accessToken, res[1].expiresIn);
-            // guardar user_id
-            this.saveUserId(res[0].user_id);
+            if (res[1]) {
+              // guardar token
+              this.saveToken(res[1].accessToken, res[1].expiresIn);
+            }
+            if (res[0]) {
+              // guardar user_id
+              this.saveUserId(res[0].user_id);
+            }
           }
         })
       );

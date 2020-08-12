@@ -20,8 +20,8 @@ import { ProductComponent } from './pages/product/product.component';
 import { HomeComponent } from './pages/home/home.component';
 //Modales y Carrousel ngx
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 //Carrousel NG
 import { NgbModule, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
@@ -51,11 +51,14 @@ import { NgbModule, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    NgbModule,NgbCarouselModule, BrowserAnimationsModule,
     ModalModule.forRoot(),
     CarouselModule.forRoot(),
+    NgbModule,NgbCarouselModule,
+    BrowserAnimationsModule,
     CommonModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      positionClass: 'toast-top-center',
+    }),
   ],
   providers: [ ],
   bootstrap: [AppComponent]
