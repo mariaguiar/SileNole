@@ -1,6 +1,5 @@
 // COMPONENTE
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { HttpClient } from '@angular/common/http';  //para cargar la foto
 // MODAL
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 // MODELO
@@ -10,11 +9,13 @@ import { Usuario } from 'src/app/models/usuario';
 import { ProductService } from 'src/app/shared/product.service';
 import { LoginService } from 'src/app/shared/login.service';
 
+
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
   styleUrls: ['./upload.component.css']
 })
+
 
 export class UploadComponent implements OnInit {
 
@@ -23,27 +24,22 @@ export class UploadComponent implements OnInit {
   public products: any[];
   public idProducto: number
   public modalRef: BsModalRef;
-  selectedFile: File; //para cargar la foto
+  public selectedFile: File; //para cargar la foto
 
-  constructor(public productService:ProductService, public loginService:LoginService, public modalService:BsModalService, private http: HttpClient) {
+  constructor(
+    public productService:ProductService, 
+    public loginService:LoginService, 
+    public modalService:BsModalService) {
     this.usuarioActual=this.loginService.usuarioActual
   }
 
-  pasarIdProducto(numero){
+  // METODOS
+  public pasarIdProducto(numero){
     this.idProducto=numero
     console.log(this.idProducto)
   }
   
-  onSubmit(form){
-    console.log(form.value)
-  }
-
-  //para cargar la foto
-  onFileSelected(event){
-    this.selectedFile = <File>event.target.files[0]
-  }
-  
-  anyadirSile(nombre: string, descripcion: string, categoria: string, user_id: number, product_image: string){
+  public anyadirSile(nombre: string, descripcion: string, categoria: string, user_id: number, product_image: string){
     console.log('Hola desde anyadir')
     console.log(this.productService.product)
     let date = new Date();
@@ -58,8 +54,18 @@ export class UploadComponent implements OnInit {
     })
   }
   
-  //PARA ABRIR EL MODAL NGX
-  openModal(Upload: TemplateRef<any>){
+  //para cargar la foto
+  public onFileSelected(event){
+    this.selectedFile = <File>event.target.files[0]
+  }
+
+  // FORMULARIO
+  public onSubmit(form){
+    console.log(form.value)
+  }
+
+  // MODAL
+  public openModal(Upload: TemplateRef<any>){
     this.modalRef = this.modalService.show(Upload)
   }
 

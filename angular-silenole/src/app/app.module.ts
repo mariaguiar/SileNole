@@ -27,8 +27,6 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { NgbModule, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 
 
-
-
 @NgModule({
   declarations: [
     AppComponent,

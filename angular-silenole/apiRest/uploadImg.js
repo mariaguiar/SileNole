@@ -5,24 +5,9 @@ let cors = require('cors')
 //EXTRAS PARA LA PRUEBA CARGA DE FOTOS 
 const fileUpload = require('express-fileupload');
 const morgan = require('morgan');
-const _ = require('lodash'); //------------------------------------
-
-/* let mysql = require('mysql');
-let connection = mysql.createConnection({
-    host: 'localhost',
-    user: "root",
-    password: null,
-    database: 'silenole'
-});
-connection.connect(function(error){
-    if(error)
-    console.log(error)
-    else
-    console.log('Conexión correcta')
-}); */
+const _ = require('lodash'); 
 
 app.use(cors());
-// app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //EXTRAS PARA LA PRUEBA CARGA DE FOTOS 

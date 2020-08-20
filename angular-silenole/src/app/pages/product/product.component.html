@@ -1,36 +1,40 @@
-
-
-       <!--MODAL INICIO-->
-      <!-- Este boton abre el modal / solo para prueba -->
-     <button class="btn btn-lg btn-outline-primary" (click)="openModal(template)">Launch demo modal</button>
-
-     <ng-template #template>
-      <div class="modal-header border-0">
-        <h4 class="modal-title" id="modal-basic-title"><img src="assets/img/bicicleta.jpg" class="card-img" alt="..."></h4>
-        <button type="button" class="close" aria-label="Close" >
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div><hr>
-      <div class="modal-body text-success">
-        <form>
-          <div class="form-group">
-              <label><h3><b>Producto</b></h3></label><br>
-              <label>Bicicleta</label><br>
-          </div>
-          <div class="form-group">
-              <label ><h3><b>Descripción</b></h3></label><br>
-              <label >Bicicleta de mujer marca Cloot modelo AR Trial 7000</label><br>
-          </div>
-          <div class="form-group">
-            <label ><h3><b>Usuario</b></h3></label><br>
-            <label >Carlos1998</label><br>
-          </div>
-          <hr>
-          <div class="d-flex justify-content-end">
-            <button type="button" role="button" class="btn btn-success" [routerLink]="['/owner']" (click)="modalRef.hide()">Ir a usuario</button> &nbsp;                     
-            <button type="button" role="button" class="btn btn-success" [routerLink]="['/message']" (click)="modalRef.hide()">Enviar Mensaje</button>
-          </div>    
-      </form>
+<!--MODAL INICIO-->
+<ng-template #template>
+  <div class="modal-header border-0">
+    <h4 class="modal-title" id="modal-basic-title"><img src="assets/img/bicicleta.jpg" class="card-img" alt="..."></h4>
+    <button type="button" class="close" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <hr>
+  <div class="modal-body text-success">
+    <form>
+      <div class="form-group">
+        <label>
+          <h3><b>Producto</b></h3>
+        </label><br>
+        <label>Bicicleta</label><br>
       </div>
-    </ng-template>
+      <div class="form-group">
+        <label>
+          <h3><b>Descripción</b></h3>
+        </label><br>
+        <label>Bicicleta de mujer marca Cloot modelo AR Trial 7000</label><br>
+      </div>
+      <div class="form-group">
+        <label>
+          <h3><b>Usuario</b></h3>
+        </label><br>
+        <label>Carlos1998</label><br>
+      </div>
+      <hr>
+      <div class="d-flex justify-content-end">
+        <button type="button" role="button" class="btn btn-success" [routerLink]="['/owner']"
+          (click)="modalRef.hide()">Ir a usuario</button> &nbsp;
+        <button type="button" role="button" class="btn btn-success" [routerLink]="['/message']"
+          (click)="modalRef.hide()">Enviar Mensaje</button>
+      </div>
+    </form>
+  </div>
+</ng-template>
 

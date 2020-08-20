@@ -1,8 +1,6 @@
 // COMPONENTE
 import { Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
-// MODAL
-import { NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 // MODELO
 import { Product } from 'src/app/models/product';
 import { Usuario } from './../../models/usuario';
@@ -27,33 +25,36 @@ export class SearchComponent implements OnInit {
   public idProducto: number;
   public categoriaActual: any;
   public usuario = new Usuario(null, null, null, null, null, null, null, null, null)
-
-  closeResult = ''; //PARA EL MODAL
-
-  constructor(private router:Router, public productService: ProductService, public loginService: LoginService, public messageService:MessageService, private modalService: NgbModal) {
-    this.usuarioActual = this.loginService.usuarioActual;
+  
+  constructor(
+    public productService: ProductService, 
+    public loginService: LoginService, 
+    public messageService:MessageService, 
+    private router:Router,) {
+      this.usuarioActual = this.loginService.usuarioActual;
   }
 
-  mostrarProductos() {
+  // METODOS
+  public mostrarProductos() {
     this.productService.getAllProducts().subscribe((data) => {
       this.products = data
       console.log(data)
     })
   }
 
-  mostrarProductosPorUsuario(uid) {
+  public mostrarProductosPorUsuario(uid) {
     this.productService.getProductsByUser(uid).subscribe((data) => {
       this.products = data
       console.log(data)
     })
   }
 
-  pasarIdOwner(oid) {
+  public pasarIdOwner(oid) {
     this.productService.ownerActual = oid
     console.log(this.productService.ownerActual)
   }
   
-  buscarPorUbicacion(tipo: string, valor: any) {
+  public buscarPorUbicacion(tipo: string, valor: any) {
     console.log("Buscar en ubicacion")
     this.productService.getProductsBySelectedCategoryAndLocation(tipo, valor).subscribe((data) => {
       this.productService.products = data
@@ -61,7 +62,7 @@ export class SearchComponent implements OnInit {
     });
   }
   
-  buscarPorDias(dias: number) {
+  public buscarPorDias(dias: number) {
     console.log("Buscar por dias")
     this.productService.getProductsBySelectedCategoryAndDays(dias).subscribe((data) => {
       this.productService.products = data
@@ -78,17 +79,16 @@ export class SearchComponent implements OnInit {
     });
   }
   
-  pasarIdProducto(pid) {
+  public pasarIdProducto(pid) {
     this.idProducto = pid
     console.log(this.idProducto)
   }
   
-  relacionarProductoMensaje(pid) {
+  public relacionarProductoMensaje(pid) {
     let uid = this.loginService.usuarioActual.user_id;
     this.productService.idProductoSeleccionado=pid;
     let newNole = new Nole(uid, pid);
     this.messageService.postNole(newNole).subscribe((data) => {
-      //this.products = data
       console.log(data)
     })
     this.messageService.noleSeleccionado = newNole;
@@ -98,11 +98,3 @@ export class SearchComponent implements OnInit {
   
 }
 
-
-/*   buscarPorCp() {
-    console.log("Buscar en el CP actual")
-    this.productService.getProductsBySelectedCategoryAndCp(this.loginService.usuarioActual.cp).subscribe((data) => {
-      this.productService.products = data
-      console.log(data)
-    });
-  } */

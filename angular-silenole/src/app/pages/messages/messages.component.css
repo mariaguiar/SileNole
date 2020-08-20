@@ -3,12 +3,12 @@
     text-align: center;
 }
 
-.silenole{
-    font-size: 4em;
-}
+.silenole{font-size: 4em;}
 
 .scroll { height: 400px; overflow-y: scroll;}
+
 .largo { width: 50%; text-align: right;}
 
 .letraChica{ font-size: x-small;}
+
 .letraColor{color: rgb(0, 0, 0); }

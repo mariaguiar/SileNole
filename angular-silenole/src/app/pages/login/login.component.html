@@ -1,49 +1,20 @@
-<!-- ----------------------------- CESAR ------------------------------ -->
-<!--MODAL INICIO-->
-
-
-<!-- MODAL DE REGISTRARSE-->
-<div id="msg"></div>
-<!-- Mensajes de Verificación -->
-<ng-template #template3>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title2">Ingresar</h4>
-     <button type="button" class="close pull-right" aria-label="close" (click)="modalRef.hide()">
-       <span aria-hidden="true">&times;</span>
-     </button>
-  </div>
-  <div class="modal-body">
-    <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)" >
-      <div class="form-group">
-        <label for="recipient-name" class="col-form-label" >Email:</label>
-        <input type="email" class="form-control border-success" name="email" [(ngModel)]="usuario.email" #email="ngModel" 
-        [ngClass]="{'is-invalid': userForm.submitted && email.invalid}" email required>
-        <div *ngIf="userForm.submitted && email.invalid" class="invalid-feedback">
-          <p *ngIf="email.errors.required">El email es obligatorio</p>
-          <p *ngIf="email.errors.email">El formato de email es incorrecto</p>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="recipient-name" for="password" class="col-form-label">Contraseña:</label>
-        <input type="password" class="form-control border-success" id="pass1" name="password" [(ngModel)]="usuario.password" #password="ngModel" 
-        [ngClass]="{'is-invalid': userForm.submitted && password.invalid}" minlength="3" required>
-        <div *ngIf="userForm.submitted && password.invalid" class="invalid-feedback">
-          <p *ngIf="password.errors.required">La contraseña es obligatoria</p>
-          <p *ngIf="password.errors.minlength">La contraseña debe tener al menos 3 caracteres</p>
+<!-- HEADER -->
+<!-- Logo -->
+<!-- botones-->
+<div class="container-fluid mt-3">
+  <div class="row">
+    <div class="col-12 display-1 text-success text-center">Silenole <h3>Tu lugar de intercambio de bienes</h3>
+      <div class="col-12 d-flex justify-content-center mt-3 mb-4">
+        <button class="btn btn-outline-success btn-lg " role="button" aria-pressed="true" type="submit"
+          data-toggle="modal" data-target="#modalIntroducer" (click)="checkOpenSession(template3)">Ingresar</button>
+        <button class="btn btn-outline-success btn-lg ml-3 " role="button" aria-pressed="true" type="submit"
+          data-toggle="modal" data-target="#modalRegistrar" (click)="checkOpenSession(template2)">Registrarse</button>
       </div>
     </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-success" (click)="login(email.value, password.value)"
-         >Ingresar</button>
-      </div>
-    </form>
   </div>
-</ng-template>
-
+</div>
 
 <!-- MODAL DE REGISTRARSE-->
-<div id="msg"></div>
-<!-- Mensajes de Verificación -->
 <ng-template #template2>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title2">Registrarse</h4>
@@ -122,70 +93,11 @@
     </form>
   </div>
 </ng-template>
-      <!-- HEADER -->
-      <!-- Logo -->
-      <!-- botones-->
-      <div class="container-fluid mt-3">
-        <div class="row">
-          <div class="col-12 display-1 text-success text-center">Silenole <h3>Tu lugar de intercambio de bienes</h3>
-            <div class="col-12 d-flex justify-content-center mt-3 mb-4">
-              <button class="btn btn-outline-success btn-lg " role="button" aria-pressed="true" type="submit"
-                data-toggle="modal" data-target="#modalIntroducer" (click)="checkOpenSession(template3)">Ingresar</button>
-              <button class="btn btn-outline-success btn-lg ml-3 " role="button" aria-pressed="true" type="submit"
-                data-toggle="modal" data-target="#modalRegistrar" (click)="checkOpenSession(template2)">Registrarse</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- <hr class="border border-success"> -->
-      <!-- <hr>-->
-
-      <!-- ----------------------------- FIN CESAR ------------------------------ -->
-
-<!-- MODAL USUARIO REGISTRADO -->
-<ng-template #usuarioRegistrado let-modal>
-  <div class="modal-body text-success text-center">
-    <form>
-      <div class="form-group">
-        <label for="recipient-name" class="col-form-label"><h3>Usuario registrado con exito</h3></label>
-      </div>
-    </form>
-  </div>
-  <div class="d-flex justify-content-center mb-3">
-    <button type="button" class="btn btn-outline-danger" (click)="modal.dismiss('Cross click')">Cerrar</button>
-  </div>
-</ng-template>
-<pre>{{ closeResult }}</pre>
 
 <!--MODAL INICIO-->
-<!-- <ng-template #template>
+<ng-template #template3>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Iniciar sesión</h4>
-     <button type="button" class="close pull-right" aria-label="close" (click)="modalRef.hide()">
-       <span aria-hidden="true">&times;</span>
-     </button>
-  </div>
-  <div class="modal-body">
-    <form #form=ngForm method="post" (ngSubmit)="onSubmit(form)">
-      <div class="form-group">
-        <label for="recipient-name" class="col-form-label">Email:</label>
-        <input type="email" class="form-control border-success" id="email" name="email" [(ngModel)]="email"  required>
-      </div>
-      <div class="form-group">
-        <label for="recipient-name" class="col-form-label">Contraseña:</label>
-        <input type="password" class="form-control border-success" id="password" name="password" [(ngModel)]="password" required >
-      </div>
-    </form>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-success" (click)="login()" (click)="modalRef.hide()"
-      >Ingresar</button>
-  </div>
-</ng-template> -->
-<!-- MODAL DE REGISTRARSE-->
-<!-- <ng-template #template2>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title2">Registrarse</h4>
+    <h4 class="modal-title" id="modal-basic-title2">Ingresar</h4>
      <button type="button" class="close pull-right" aria-label="close" (click)="modalRef.hide()">
        <span aria-hidden="true">&times;</span>
      </button>
@@ -193,106 +105,59 @@
   <div class="modal-body">
     <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)" >
       <div class="form-group">
-        <label for="recipient-name" class="col-form-label">Nombre Usuario:</label>
-        <input type="text" class="form-control border-success" name="name" [(ngModel)]="usuario.name" #name="ngModel" [class.is-invalid]="name.invalid && name.touched" required>
-        <small *ngIf ="name.invalid && name.touched" 
-         class="form-text text-danger">Introduce tu nombre</small>
-      </div>
-      <div class="form-group">
         <label for="recipient-name" class="col-form-label" >Email:</label>
-        <input type="email" class="form-control border-success" name="email" [(ngModel)]="usuario.email" #email="ngModel" [class.is-invalid]="email.invalid && email.touched" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" required>
-        <small *ngIf ="email.invalid && email.touched" 
-        class="form-text text-danger">Introduce un email valido</small>
+        <input type="email" class="form-control border-success" name="email" [(ngModel)]="usuario.email" #email="ngModel" 
+        [ngClass]="{'is-invalid': userForm.submitted && email.invalid}" email required>
+        <div *ngIf="userForm.submitted && email.invalid" class="invalid-feedback">
+          <p *ngIf="email.errors.required">El email es obligatorio</p>
+          <p *ngIf="email.errors.email">El formato de email es incorrecto</p>
+        </div>
       </div>
       <div class="form-group">
-        <label for="recipient-name" class="col-form-label">Comunidad Autónoma:</label>
-        <input type="text" class="form-control border-success" name="comunidad" [(ngModel)]="usuario.comunidad" #comunidad="ngModel" [class.is-invalid]="comunidad.invalid && comunidad.touched" required>
-        <small *ngIf ="comunidad.invalid && comunidad.touched" 
-        class="form-text text-danger">Introduce tu comunidad</small>
+        <label for="recipient-name" for="password" class="col-form-label">Contraseña:</label>
+        <input type="password" class="form-control border-success" id="pass1" name="password" [(ngModel)]="usuario.password" #password="ngModel" 
+        [ngClass]="{'is-invalid': userForm.submitted && password.invalid}" minlength="3" required>
+        <div *ngIf="userForm.submitted && password.invalid" class="invalid-feedback">
+          <p *ngIf="password.errors.required">La contraseña es obligatoria</p>
+          <p *ngIf="password.errors.minlength">La contraseña debe tener al menos 3 caracteres</p>
       </div>
-      <div class="form-group">
-        <label for="recipient-name" class="col-form-label">Provincia:</label>
-        <input type="text" class="form-control border-success" name="provincia" [(ngModel)]="usuario.provincia" #provincia="ngModel" [class.is-invalid]="provincia.invalid && provincia.touched" required>
-        <small *ngIf ="provincia.invalid && provincia.touched" 
-        class="form-text text-danger">Introduce tu provincia</small>
+    </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success" (click)="login(email.value, password.value)"
+         >Ingresar</button>
       </div>
-      <div class="form-group">
-        <label for="recipient-name" class="col-form-label">Localidad:</label>
-        <input type="text" class="form-control border-success" name="localidad" [(ngModel)]="usuario.localidad" #localidad="ngModel" [class.is-invalid]="localidad.invalid && localidad.touched" required>
-        <small *ngIf ="localidad.invalid && localidad.touched" 
-        class="form-text text-danger">Introduce tu localidad</small>
-      </div>
-      <div class="form-group">
-        <label for="recipient-name" class="col-form-label">CP:</label>
-        <input type="number" class="form-control border-success" name="cp" [(ngModel)]="usuario.cp" #cp="ngModel" [class.is-invalid]="cp.invalid && cp.touched" required>
-        <small *ngIf ="cp.invalid && cp.touched" 
-        class="form-text text-danger">Introduce tu Codigo Postal</small>
-      </div>
-      <div class="form-group">
-        <label for="recipient-name" class="col-form-label">Contraseña:</label>
-        <input type="password" class="form-control border-success" name="password" (ngModel)="usuario.password" #password="ngModel"required>
-      </div>
-      <div class="form-group">
-        <label for="recipient-name" class="col-form-label">Confirmar contraseña:</label>
-        <input type="password" class="form-control border-success" name="password2" (ngModel)="usuario2.password" #password2="ngModel"required>
-      </div>
-      <span  *ngIf="equals" id="span">Las contraseñas no coinciden</span>
-      </form>
+    </form>
   </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-success" (click)="registrarUsuario(null, name.value, password.value, password2.value, email.value, comunidad.value, provincia.value, localidad.value, cp.value)" 
-    (click)="openUr(usuarioRegistrado)" >Registrarse</button>
-  </div> 
-</ng-template> -->
+</ng-template>
 
-
-      <!-- HEADER -->
-      <!-- Logo -->
-      <!-- botones-->
-      <!-- <div class="container-fluid mt-3">
-        <div class="row">
-          <div class="col-12 display-1 text-success text-center">Silenole <h3>Tu lugar de intercambio de bienes</h3>
-            <div class="col-12 d-flex justify-content-center mt-3 mb-4">
-              <button class="btn btn-outline-success btn-lg " role="button" aria-pressed="true" type="submit"
-                data-toggle="modal" data-target="#modalIngresar" (click)="openModal(template)">Ingresar</button>
-              <button class="btn btn-outline-success btn-lg ml-3 " role="button" aria-pressed="true" type="submit"
-                data-toggle="modal" data-target="#modalRegistrar" (click)="openModal(template2)">Registrarse</button>
-            </div>
-          </div>
-        </div>
-      </div> -->
-      <!-- <hr class="border border-success"> -->
-      <!-- <hr>-->
-
-      <!-- CARROUSEl-->
-
-      <carousel class="carrusel row d-flex justify-content-center ml-5 mr-5 mt-3 mb-5">
-        <div class="col-sm-12 col-md-12 lg-12">
-        <slide>
-          <img src="assets/img/mac.png" alt="first slide"
-            style="display: block; height: 350px; width: 1420px; opacity: 0.9; border:1px solid #4caf50;" >
-          <div class="carousel-caption d-none d-md-block text-success text-right " >
-            <h2 style="font-size: xxx-large;" >FÁCIL</h2>
-            <p style="color: black; font-size: x-large;">Regístrate y sube los productos que no utilices o que quieras intercambiar.</p>
-          </div>
-        </slide>
-        <slide >
-          <img src="assets/img/objs5.png" alt="second slide"
-          style="display: block; height: 350px; width: 1420px; opacity: 0.9; border:1px solid #4caf50;" >
-          <div class="carousel-caption d-none d-md-block  text-success" >
-            <h2 style="font-size: xxx-large;">RÁPIDO</h2>
-            <p style="color: black; font-size: x-large">Utiliza los filtros para buscar productos y encuentra el que necesitas.</p>
-          </div>
-        </slide>
-        <slide>
-          <img src="assets/img/chica.png" alt="third slide"
-          style="display: block; height: 350px; width: 1420px; opacity: 0.9; border:1px solid #4caf50;" >
-          <div class="carousel-caption d-none d-md-block  text-success text-left">
-            <h2 style="font-size: xxx-large;">SENCILLO</h2>
-            <p style="color: black; font-size: x-large">Manda un mensaje al propietario del producto, llegad a un acuerdo y ¡listo! </p>
-          </div>
-        </slide>
-        </div>
-      </carousel>
+<!-- CARROUSEl-->
+<carousel class="carrusel row d-flex justify-content-center ml-5 mr-5 mt-3 mb-5">
+  <div class="col-sm-12 col-md-12 lg-12">
+  <slide>
+    <img src="assets/img/mac.png" alt="first slide"
+      style="display: block; height: 350px; width: 1420px; opacity: 0.9; border:1px solid #4caf50;" >
+    <div class="carousel-caption d-none d-md-block text-success text-right " >
+      <h2 style="font-size: xxx-large;" >FÁCIL</h2>
+      <p style="color: black; font-size: x-large;">Regístrate y sube los productos que no utilices o que quieras intercambiar.</p>
+    </div>
+  </slide>
+  <slide >
+    <img src="assets/img/objs5.png" alt="second slide"
+    style="display: block; height: 350px; width: 1420px; opacity: 0.9; border:1px solid #4caf50;" >
+    <div class="carousel-caption d-none d-md-block  text-success" >
+      <h2 style="font-size: xxx-large;">RÁPIDO</h2>
+      <p style="color: black; font-size: x-large">Utiliza los filtros para buscar productos y encuentra el que necesitas.</p>
+    </div>
+  </slide>
+  <slide>
+    <img src="assets/img/chica.png" alt="third slide"
+    style="display: block; height: 350px; width: 1420px; opacity: 0.9; border:1px solid #4caf50;" >
+    <div class="carousel-caption d-none d-md-block  text-success text-left">
+      <h2 style="font-size: xxx-large;">SENCILLO</h2>
+      <p style="color: black; font-size: x-large">Manda un mensaje al propietario del producto, llegad a un acuerdo y ¡listo! </p>
+    </div>
+  </slide>
+  </div>
+</carousel>
 
       

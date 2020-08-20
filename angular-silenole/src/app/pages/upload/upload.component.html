@@ -2,21 +2,6 @@
 <app-header></app-header>
 <app-categories></app-categories>
 
-<!-- MODAL  -->
-<ng-template #Upload>
-  <div class="modal-body text-success text-center">
-    <form>
-      <div class="form-group">
-        <label for="recipient-name" class="col-form-label"><h3>Producto subido correctamente</h3></label>
-      </div>
-    </form>
-  </div>  
-  <div class="d-flex justify-content-center mb-3">
-    <button type="button" class="btn btn-success"  [routerLink]="['/siles']" (click)="modalRef.hide()">Ir a mis Siles</button> &nbsp;
-    <button type="button" class="btn btn-success"  [routerLink]="['/subir']" (click)="!uploadForm.valid" (click)="modalRef.hide()">Subir otro</button> 
-  </div>
-</ng-template>
-
 <!-- FORMULARIO SUBIDA -->
 <div class="container-fluid ">
   <div class="row">
@@ -73,6 +58,22 @@
     </div>
   </div>
 </div>
+
+<!-- MODAL  -->
+<ng-template #Upload>
+  <div class="modal-body text-success text-center">
+    <form>
+      <div class="form-group">
+        <label for="recipient-name" class="col-form-label"><h3>Producto subido correctamente</h3></label>
+      </div>
+    </form>
+  </div>  
+  <div class="d-flex justify-content-center mb-3">
+    <button type="button" class="btn btn-success"  [routerLink]="['/siles']" (click)="modalRef.hide()">Ir a mis Siles</button> &nbsp;
+    <button type="button" class="btn btn-success"  [routerLink]="['/subir']" (click)="!uploadForm.valid" (click)="modalRef.hide()">Subir otro</button> 
+  </div>
+</ng-template>
+
 
 <!-- FOOTER -->
 <app-footer></app-footer>

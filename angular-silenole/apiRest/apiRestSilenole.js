@@ -5,7 +5,7 @@ const cors = require('cors')
 //EXTRAS PARA LA PRUEBA CARGA DE FOTOS 
 const fileUpload = require('express-fileupload');
 const morgan = require('morgan');
-const _ = require('lodash'); //------------------------------------
+const _ = require('lodash'); 
 //PARA EL AUTENTICACIÓN REGISTER/LOGIN
 const bodyParserJSON = bodyParser.json();
 const bodyParserURLEncoded = bodyParser.urlencoded({ extended: true });
@@ -39,8 +39,6 @@ app.use(fileUpload({
 }));
 
 app.use(morgan('dev'));
-
-//------------------------------------------------------
 
 
 /* ---------------------------------PRODUCTOS FUNCIONANDO----------------------------------- */
@@ -117,6 +115,7 @@ app.put("/products", function (request, response) {
     response.send(result);
     })
 });
+
 // DELETE PARA BORRAR UN PRODUCTO
 app.delete("/products", function (request, response) {
     let product_id = request.body.product_id
@@ -132,13 +131,9 @@ app.delete("/products", function (request, response) {
     response.send(result);
     })
 });
-
-
 /* ---------------------------------FIN PRODUCTOS----------------------------------- */
 
-
-
-/* ---------------------------------USUARIOS FUNCIONANDO----------------------------------- */
+/* ---------------------------------USUARIOS----------------------------------- */
 //Login y comparación de datos
 app.post("/user/login", function (request, response) {
   let email = request.body.email;
@@ -309,7 +304,7 @@ app.delete("/user", function (request, response) {
 
 /* ---------------------------------FIN USUARIOS----------------------------------- */
 
-/* ---------------------------------MENSAJES FUNCIONANDO----------------------------------- */
+/* ---------------------------------MENSAJES----------------------------------- */
 // POST /MESSAGES/ = Añade un nuevo mensaje.
 app.post("/messages", function (request, response) {
     let chat_id = request.body.chat_id
@@ -347,25 +342,9 @@ app.post("/messages", function (request, response) {
     })
 });
 
-// DELETE PARA BORRAR UN MENSAJE Y SU PRODUCTO
-/* app.delete("/messages/:chat_id", function (request, response) {
-    var chat_id = request.params.chat_id;
-    let params = [chat_id]
-    let sql = "SELECT user.name, messages.text, messages.date FROM messages INNER JOIN user ON (messages.sender_id = user.user_id)  WHERE messages.chat_id = ? ORDER BY messages.date";
-    connection.query(sql, params, function(err, result){
-        if (err){
-            console.log(err)
-        }else{
-            console.log('Objetos del Usuario')
-            console.log(result)
-        } 
-    response.send(result);
-    })
-}); */
-
 /* ---------------------------------FIN MENSAJES----------------------------------- */
 
-/* ---------------------------------NOLES / SILES FUNCIONANDO----------------------------------- */
+/* ---------------------------------NOLES / SILES----------------------------------- */
 // POST /NOLES/ inserta la relacion entre usuario y producto //PARA MENSAJES
 app.post("/noles/", function (request, response) {
     let uid  = request.body.user_id 
@@ -566,31 +545,6 @@ app.get("/buscar-cercanos/categoria/:categoria/:tipo_loc/:valor_loc", function (
     response.send(result);
     })
 });
-
-/* app.get("/buscar-cercanos/categoria/:categoria/cp/:cp", function (request, response) {
-    var categoria = request.params.categoria;
-    var cp = request.params.cp;
-    let filtrar_user_id = request.query.filterUser;
-    console.log(filtrar_user_id, categoria, cp)
-    let sql;
-    let params;
-    if(categoria === "Todo"){
-        params = [filtrar_user_id, cp];
-        sql = "SELECT products.nombre, products.descripcion, products.product_image, products.user_id FROM products INNER JOIN user ON (user.user_id = products.user_id) WHERE user.user_id != ? AND user.cp = ? ORDER BY products.product_id";
-    }else{
-        params = [categoria, filtrar_user_id, cp];
-        sql = "SELECT products.nombre, products.descripcion, products.product_image, products.user_id FROM products INNER JOIN user ON (user.user_id = products.user_id) WHERE categoria = ? AND user.user_id != ? AND user.cp = ? ORDER BY products.product_id"; 
-    }
-    connection.query(sql, params, function(err, result){
-        if (err){
-            console.log(err)
-        }else{
-            console.log('Productos cercanos por CP y Categoria')
-            console.log(result)
-        } 
-    response.send(result);
-    } )
-}); */
 
 /* ---------------------------------FIN BUSCAR----------------------------------- */
 

@@ -14,11 +14,11 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 export class ProductComponent implements OnInit {
 
-  modalRef:BsModalRef
+  public modalRef:BsModalRef
 
-  constructor(private modalService: BsModalService ) { }
+  constructor(private modalService: BsModalService) { }
 
-  openModal(template: TemplateRef<any>){
+  public openModal(template: TemplateRef<any>){
     this.modalRef = this.modalService.show(template)
   }
 

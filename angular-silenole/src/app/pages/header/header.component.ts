@@ -17,24 +17,24 @@ import { UsuarioService } from 'src/app/shared/usuario.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
+
+
 export class HeaderComponent implements OnInit {
   
   public product= new Product(null,null,null,null,null,null, null)
   public products: any;
-  form: FormGroup; // para obtener los datos del formulario
-  modalRef:BsModalRef
-  public usuario: Usuario;
-  // public usuarioActual=new Usuario(null,null,null,null,null,null,null,null, null);
+  public form: FormGroup; // para obtener los datos del formulario
+  public modalRef:BsModalRef
+  public usuario: Usuario;  
 
-constructor(public productService:ProductService, private modalService: BsModalService, public loginService:LoginService,
-  public usuarioService:UsuarioService) { }
+  constructor(
+    public productService: ProductService,
+    public loginService: LoginService,
+    public usuarioService: UsuarioService,
+    private modalService: BsModalService) { }
 
-
-  onSubmit(form) {
-    console.log(form.value)
-  }
-
-  buscarProducto(clave: string) {
+  //METODOS
+  public buscarProducto(clave: string) {
     console.log(clave)
     this.productService.getProductsByName(clave).subscribe((data) => {
       this.productService.products = data
@@ -42,14 +42,20 @@ constructor(public productService:ProductService, private modalService: BsModalS
     })
   }
 
-  cerrarSesion(){
+  public cerrarSesion(){
     this.loginService.logout();
     this.loginService.usuarioActual = null;
     this.productService.usuarioActual = null;
     // todo limpiar todo
   }
 
-  openModal(templateHeader: TemplateRef < any > ) {
+  //FORMULARIO
+  public onSubmit(form) {
+    console.log(form.value)
+  }
+
+  //MODAL
+  public openModal(templateHeader: TemplateRef < any > ) {
     this.modalRef = this.modalService.show(templateHeader)
   }
   
@@ -57,25 +63,3 @@ constructor(public productService:ProductService, private modalService: BsModalS
   
 }
 
-
-
-/* mostrarProductos(uid){
-  this.productService.getProductsByUser(uid).subscribe((data)=>{
-    this.products = data
-    console.log(data)
-  })
-}
-
-mostrarTodosProductos(){
-  this.productService.getAllProducts().subscribe((data)=>{
-    this.products = data
-    console.log(data)
-  })
-} */
-/* mostrarProductosPorCategoria(){
-  this.productService.categoriaSeleccionada="Todo";
-  this.productService.getProductsBySelectedCategory().subscribe((data)=>{
-    this.products = data
-    console.log(data)
-  })
-} */
