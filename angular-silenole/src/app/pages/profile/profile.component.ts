@@ -1,10 +1,12 @@
 // COMPONENTE
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import * as bcrypt from 'bcryptjs';
 // MODAL
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 // MODELO
 import { Usuario } from './../../models/usuario';
+import { Password } from './../../models/password';
 // SERVICIOS
 import { UsuarioService } from 'src/app/shared/usuario.service';
 import { LoginService } from 'src/app/shared/login.service';
@@ -20,16 +22,18 @@ import { Router } from '@angular/router';
 export class ProfileComponent implements OnInit {
 
   public closeResult = '';
+  public modalRef: BsModalRef;
   public usuarioActual=new Usuario(null,null,null,null,null,null,null,null,null)
   public usuario=new Usuario(null,null,null,null,null,null,null,null,null)
-  public usuario3=new Usuario(null,null,null,null,null,null,null,null,null)
+  public nuevoPassword = new Password(null, null);
+  
   public equals=false
   public selectedFile: File; //para cargar la foto  
 
   constructor(
     public usuarioService:UsuarioService, 
-    public loginService:LoginService, 
-    private modalService: NgbModal, 
+    public loginService: LoginService, 
+    public modalService: BsModalService,
     private router: Router, 
     private toastr: ToastrService) { 
       this.usuarioActual=this.loginService.usuarioActual
@@ -42,16 +46,19 @@ export class ProfileComponent implements OnInit {
     this.selectedFile = <File>event.target.files[0]
   }
 
-  public registrarUsuario(user_id:number, name:string, password:string, password2:string, email:string, comunidad:string, provincia:string, localidad:string, cp:number){
-    if(password === password2){
-      console.log("Contraseña correcta")
-      this.modificarUsuario(user_id, name, password, email, comunidad, provincia, localidad, cp)
-      this.equals=false
-    }else{
-     console.log("abrirModalError")
-     this.equals=true
-     }
-   }
+  public validarUsuario(user_id: number, name: string, password: string, email: string, comunidad: string, provincia: string, localidad: string, cp: number) {
+    if (password === null || password === "") {
+      this.toastr.error("Sin la contraseña no podras modificar tus datos", "Escribe tu contraseña")
+    } else {
+      const resultPassword = this.confirmarPassword(password)
+      if (resultPassword === true) {
+        this.modificarUsuario(user_id, name, password, email, comunidad, provincia, localidad, cp)
+        this.toastr.success("Tus datos se han actualizado", "Usuario modificado con éxito")
+      } else {
+        this.toastr.error("Vuelve a escribir tu contraseña", "Algo fue mal")
+      }
+    }
+  }
   
   public modificarUsuario(idUsuario:number, name:string, password:string, email:string, comunidad:string, provincia:string, localidad:string, cp:number){
     console.log('Usuario Modificado')
@@ -66,10 +73,18 @@ export class ProfileComponent implements OnInit {
     if(this.selectedFile === null) {
       this.usuarioService.putUsuario(userUpdated).subscribe((data)=>{
         console.log(data)
-        this.loginService.usuarioActual = userUpdated;
-        this.usuarioActual = userUpdated;
-        console.log(this.usuarioActual);
-        this.router.navigate(["/usuario"]);
+        if (this.loginService.getToken() != null) {
+          // ya existe session
+          // cargar datos session usuario
+          this.usuarioService.getUsuario(idUsuario).subscribe(data => {
+            console.log(data);
+            this.loginService.usuarioActual = data[0];
+            //this.productService.usuarioActual = data[0];
+            this.usuarioActual = data[0];
+            console.log(this.usuarioActual);
+            this.router.navigate(["/usuario"]);
+          })
+        }
       })
     } else {
       const fd = new FormData()
@@ -78,14 +93,48 @@ export class ProfileComponent implements OnInit {
         console.log(data)
         this.usuarioService.putUsuario(userUpdated).subscribe((data)=>{
           console.log(data)
-          this.loginService.usuarioActual = userUpdated;
-          this.usuarioActual = userUpdated;
-          console.log(this.usuarioActual);
-          this.router.navigate(["/usuario"]);
-          this.selectedFile = null;
+          if (this.loginService.getToken() != null) {
+            // ya existe session
+            // cargar datos session usuario
+            this.usuarioService.getUsuario(idUsuario).subscribe(data => {
+              console.log(data);
+              this.loginService.usuarioActual = data[0];
+              //this.productService.usuarioActual = data[0];
+              this.usuarioActual = data[0];
+              console.log(this.usuarioActual);
+              this.router.navigate(["/usuario"]);
+              this.selectedFile = null;
+            })
+          }
         })
       })
     }
+  }
+
+  public confirmarPassword(password:string){
+    const resultPassword = bcrypt.compareSync(password, this.loginService.usuarioActual.password)
+    console.log(resultPassword, password, this.loginService.usuarioActual.password )
+    return resultPassword;
+  }
+
+  public cambiarPassword(passwordActual:string, passwordNuevo: string, passwordNuevo2: string){
+    console.log(passwordActual, passwordNuevo, passwordNuevo2)
+    const resultPassword = this.confirmarPassword(passwordActual);
+      if (resultPassword === true && (passwordNuevo === passwordNuevo2) && passwordNuevo.length >= 3) {
+        const user_id = this.usuarioActual.user_id
+        const name =  this.usuarioActual.name;
+        const email = this.usuarioActual.email;
+        const comunidad = this.usuarioActual.comunidad;
+        const provincia = this.usuarioActual.provincia;
+        const localidad = this.usuarioActual.localidad;
+        const cp = this.usuarioActual.cp;
+
+        this.modificarUsuario(user_id, name, passwordNuevo, email, comunidad, provincia, localidad, cp)
+        this.toastr.success("Tus datos se han actualizado", "Contraseña modificada con éxito")
+        this.modalRef.hide();
+      } else {
+        this.toastr.error("Vuelve a escribir tus contraseñas", "Algo fue mal")
+      }
   }
 
   public borrarUsuario(id:number){
@@ -106,29 +155,9 @@ export class ProfileComponent implements OnInit {
     console.log(form.value)
   }
 
-  //MODALES
-  public open3(content3) {
-    this.modalService.open(content3, {ariaLabelledBy: 'modalEliminarCuenta'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `${this.getDismissReason(reason)}`;
-    });
-  }
-
-  public openUm(usuarioSubido) {
-    this.modalService.open(usuarioSubido, {ariaLabelledBy: 'modalEliminarCuenta'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `${this.getDismissReason(reason)}`;
-    });
-  }
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    }  else {
-      return '';
-    }
+  //MODALES NGX
+  public openModal(template: TemplateRef < any > ) {
+    this.modalRef = this.modalService.show(template)
   }
 
   ngOnInit(): void {
