@@ -49,11 +49,31 @@ export class ProductService {
   }
 
   public getProductsByUser(id: number) {
-    return this.http.get(this.url + "products/" + id);
+    const accessToken = this.loginService.getToken();
+    const options = {
+      headers: new HttpHeaders({
+        'Authorization': accessToken,
+        // 'Content-Type': 'application/json',
+      }),
+      body: {
+        user_id: id,
+      },
+    };
+    return this.http.get(this.url + "products/" + id, options);
   }
   
   public postProduct(newProduct: Product) {
-    return this.http.post(this.url + "products/", newProduct)
+    const accessToken = this.loginService.getToken();
+    const options = {
+      headers: new HttpHeaders({
+        'Authorization': accessToken,
+        // 'Content-Type': 'application/json',
+      })/* ,
+      body: {
+        user_id: id,
+      }, */
+    };
+    return this.http.post(this.url + "products/", newProduct, options)
   }
 
   public putProduct(newProduct: Product) {

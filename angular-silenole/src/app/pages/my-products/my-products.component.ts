@@ -1,5 +1,6 @@
 // COMPONENTE
 import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Router } from "@angular/router";
 // MODAL
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
@@ -8,6 +9,7 @@ import { Product } from 'src/app/models/product';
 // SERVICIOS
 import { ProductService } from 'src/app/shared/product.service';
 import { LoginService } from 'src/app/shared/login.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -30,7 +32,9 @@ export class MyProductsComponent implements OnInit {
     public productService:ProductService, 
     public loginService:LoginService, 
     private modalService: NgbModal, 
-    private modalServices: BsModalService) { 
+    private modalServices: BsModalService,
+    private router: Router, 
+    private toastr: ToastrService) { 
     this.products = [];
     this.selectedFile = null;
     this.mostrarProductos(this.idUsuario=this.loginService.usuarioActual.user_id)
@@ -41,13 +45,22 @@ export class MyProductsComponent implements OnInit {
     this.productService.getProductsByUser(uid).subscribe((data)=>{
       this.products = data
       console.log(data)
+    }, (error) => {
+      console.log(error);
+      if (error.status === 401) {
+        this.toastr.error("Por favor, ingresa de nuevo", "Algo fue mal")
+        this.loginService.logout();
+        this.loginService.usuarioActual = null;
+        this.productService.usuarioActual = null;
+        this.router.navigate(["/"]);
+      }
     })
   }
 
   public pasarIdProducto(pid){
     this.idProducto=pid
     console.log(this.idProducto)
-  }
+  };
 
   public pasarProducto(p){
     this.productoActual=p

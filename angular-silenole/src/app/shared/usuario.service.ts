@@ -44,9 +44,13 @@ export class UsuarioService {
     return this.http.delete(this.url + "user/", options)
   }
   
-  //Para la carga de fotos
+  //Para la carga y borrar fotos
   public uploadImage(fd: FormData){
     return this.http.post(this.urlImg + "upload-img", fd)
+  }
+
+  public deleteImage(imageName: string){
+    return this.http.delete(this.urlImg + "delete-img/" + imageName)
   }
   
 }

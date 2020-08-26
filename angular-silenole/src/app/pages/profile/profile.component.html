@@ -79,21 +79,14 @@
               (ngModel)="usuarioActual.password" #password="ngModel" required>
             <small class="form-text text-muted">*Obligatorio.</small>
           </div>
-          <!-- <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Confirmar contraseña:</label>
-            <input type="password" class="form-control border-success" name="password2" (ngModel)="usuario3.password"
-              #password2="ngModel" required>
-            <small class="form-text text-muted">*Obligatorio.</small>
-          </div>
-          <span *ngIf="equals" id="span">Las contraseñas no coinciden</span> -->
-        </form>
+         </form>
       </div>
       <div class="container-fluid">
         <div class="row align-items-center d-flex justify-content-center">
           <div class="my-1">
             <button type="button" class="btn btn-success mr-1"
               (click)="validarUsuario(usuarioActual.user_id, name.value, password.value, email.value, comunidad.value, provincia.value, localidad.value, cp.value)"
-              >Actualizar Perfil</button>
+              (click)="password">Actualizar Perfil</button>
               <button type="button" class="btn btn-success ml-1"
               (click)="openModal(cambioPassword)">Cambiar Contraseña</button>
           </div> &nbsp;

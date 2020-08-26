@@ -42,19 +42,42 @@ app.use(morgan('dev'));
 
 
 /* ---------------------------------PRODUCTOS FUNCIONANDO----------------------------------- */
-// GET /SILES/:USERID = Obtiene el todos los siles creados por el usuario
+// GET /SILES/:USERID = Obtiene todos los siles subidos por el usuario
 app.get("/products/:user_id", function (request, response) {
-    var user_id = request.params.user_id;
+    let sql;
+    let accessTokenLocal = request.headers.authorization;
+    console.log('Token local ', accessTokenLocal);
+    let user_id = request.params.user_id;
     let params = [user_id];
-    let sql = "SELECT * FROM products WHERE user_id = ?";
+    sql = "SELECT accessToken FROM user WHERE user_id = ?";
     connection.query(sql, params, function(err, result){
         if (err){
             console.log(err)
         }else{
-            console.log('Objetos Propios')
-            console.log(result)
+            console.log('Token recibido ', result)
+            if (result[0] === undefined || result[0] === null) {
+                //
+                response.status(500).send({ message: 'Error en el servidor' });
+                return;
+            }
+            let tokenRecibido = result[0].accessToken;
+            if(tokenRecibido === accessTokenLocal){
+                console.log('Los token coinciden. Usuario autorizado')
+                sql = "SELECT * FROM products WHERE user_id = ?";
+                connection.query(sql, params, function(err, result){
+                    if (err){
+                        console.log(err)
+                    }else{
+                        console.log('Objetos Propios')
+                        console.log(result)
+                    } 
+                response.send(result);
+                })
+            } else {
+                console.log('Los token no coinciden. Operación no permitida')
+                response.status(401).send({ message: 'No autorizado. Ingresa en tu cuenta.' });
+            }
         } 
-    response.send(result);
     })
 });
 
@@ -75,22 +98,46 @@ app.get("/products", function (request, response) {
 // POST /SILES/ = Añade un nuevo sile del usuario 
 app.post("/products", function (request, response) {
     /* let product_id = request.body.product_id */
+    let sql;
+    let accessTokenLocal = request.headers.authorization;
+    console.log('Token local ', accessTokenLocal);
     let nombre = request.body.nombre
     let descripcion = request.body.descripcion
     let categoria = request.body.categoria
     let user_id  = request.body.user_id 
     let product_image = request.body.product_image
     let date = request.body.date
-    let params = [nombre, descripcion, categoria, user_id, product_image, date]
-    let sql = `INSERT INTO products (nombre, descripcion, categoria, user_id , product_image, date) VALUES ( ?, ?, ?, ?, ?, ?)`;
+    let params = [user_id]
+    sql = "SELECT accessToken FROM user WHERE user_id = ?";
     connection.query(sql, params, function(err, result){
         if (err){
             console.log(err)
         }else{
-            console.log('Nuevo producto Ingresado')
-            console.log(result)
+            console.log('Token recibido ', result)
+            if (result[0] === undefined || result[0] === null) {
+                //
+                response.status(500).send({ message: 'Error en el servidor' });
+                return;
+            }
+            let tokenRecibido = result[0].accessToken;
+            if(tokenRecibido === accessTokenLocal){
+                console.log('Los token coinciden. Usuario autorizado')
+                params = [nombre, descripcion, categoria, user_id, product_image, date]
+                sql = `INSERT INTO products (nombre, descripcion, categoria, user_id , product_image, date) VALUES ( ?, ?, ?, ?, ?, ?)`;
+                connection.query(sql, params, function(err, result){
+                    if (err){
+                        console.log(err)
+                    }else{
+                        console.log('Nuevo producto Ingresado')
+                        console.log(result)
+                    } 
+                response.send(result);
+                })
+            } else {
+                console.log('Los token no coinciden. Operación no permitida')
+                response.status(401).send({ message: 'No autorizado. Ingresa en tu cuenta.' });
+            }
         } 
-    response.send(result);
     })
 });
 

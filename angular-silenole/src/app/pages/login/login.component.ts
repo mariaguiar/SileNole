@@ -166,13 +166,5 @@ export class LoginComponent implements OnInit {
 
 }
 
-  //Para usarlas en un futuro para generar nombres de ficheros aleatorios
-/*   public random() {
-    return Math.random().toString(36).substr(2); // Eliminar `0.`
-  };
-
-  public token() {
-    return this.random() + this.random(); // Para hacer el token más largo
-  }; */
 
 

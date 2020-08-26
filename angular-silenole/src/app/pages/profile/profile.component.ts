@@ -64,10 +64,14 @@ export class ProfileComponent implements OnInit {
     console.log('Usuario Modificado')
     // let userImageName =  name + ".jpg";
     let userImageUrl;
+    let oldImage;
     if(this.selectedFile === null) {
       userImageUrl = this.usuarioActual.user_image;
     } else {
-      userImageUrl = this.usuarioService.urlImg + this.selectedFile.name;
+      oldImage = this.usuarioActual.user_image;
+      oldImage = oldImage.replace(this.usuarioService.urlImg, "");
+      console.log(oldImage);
+      userImageUrl = this.usuarioService.urlImg + this.token() + "-" + idUsuario + ".jpg";
     }
     let userUpdated = new Usuario(idUsuario, name, password, email, comunidad, provincia, localidad, cp, userImageUrl);  
     if(this.selectedFile === null) {
@@ -88,7 +92,11 @@ export class ProfileComponent implements OnInit {
       })
     } else {
       const fd = new FormData()
-      fd.append('user_image',this.selectedFile, this.selectedFile.name);
+      const nombreFoto = userImageUrl
+      fd.append('user_image',this.selectedFile, nombreFoto);
+      this.usuarioService.deleteImage(oldImage).subscribe((data)=>{
+        console.log(data)
+      })
       this.usuarioService.uploadImage(fd).subscribe((data)=>{
         console.log(data)
         this.usuarioService.putUsuario(userUpdated).subscribe((data)=>{
@@ -149,6 +157,15 @@ export class ProfileComponent implements OnInit {
       this.router.navigate(["/"]);
     })
   }
+
+  //Para generar nombres de ficheros aleatorios
+  public random() {
+    return Math.random().toString(36).substr(2); // Eliminar `0.`
+  };
+
+  public token() {
+    return this.random() + this.random(); // Para hacer el token más largo
+  };
   
   // FORMULARIO
   onSubmit(form){

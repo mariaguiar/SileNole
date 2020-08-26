@@ -53,18 +53,19 @@ export class LoginService {
     localStorage.setItem("EXPIRES_IN", expiresIn);
     this.token = token;
   }
+  
+  private saveUserId(userId: any): void {
+    localStorage.setItem("USER_ID", userId);
+  }
 
   public getToken(): string {
     if (!this.token) {
       this.token = localStorage.getItem("ACCESS_TOKEN");
     }
-    return this.token;
+    //return this.token;
+    return localStorage.getItem("ACCESS_TOKEN");
   }
-
-  private saveUserId(userId: any): void {
-    localStorage.setItem("USER_ID", userId);
-  }
-
+  
   public getUserId(): any {
     return localStorage.getItem("USER_ID");
   }

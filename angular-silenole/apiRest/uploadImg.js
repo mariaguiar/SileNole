@@ -6,6 +6,7 @@ let cors = require('cors')
 const fileUpload = require('express-fileupload');
 const morgan = require('morgan');
 const _ = require('lodash'); 
+var fs = require('fs');
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -76,6 +77,34 @@ app.post('/upload-imgProduct', async (req, res) => {
                     name: product_image.name,
                     mimetype: product_image.mimetype,
                     size: product_image.size
+                }
+            });
+        }
+    } catch (err) {
+        res.status(500).send(err);
+    }
+});
+
+app.delete('/delete-img/:imageName', async (req, res) => {
+    var imageName = req.params.imageName;
+    try {
+        if(imageName === null || imageName === "") {
+            res.send({
+                status: false,
+                message: 'No file to delete'
+            });
+        } else {
+            const imagePath = './uploads/' + imageName;
+            fs.unlink( imagePath, (err) => {
+                if (err) throw err;
+                console.log(imageName + ' was deleted');
+            });
+            //send response
+            res.send({
+                status: true,
+                message: 'File is deleted',
+                data: {
+                    name: imageName
                 }
             });
         }

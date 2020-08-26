@@ -1,5 +1,6 @@
 // COMPONENTE
 import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Router } from "@angular/router";
 // MODAL
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 // MODELO
@@ -8,6 +9,7 @@ import { Usuario } from 'src/app/models/usuario';
 // SERVICIOS
 import { ProductService } from 'src/app/shared/product.service';
 import { LoginService } from 'src/app/shared/login.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -29,7 +31,9 @@ export class UploadComponent implements OnInit {
   constructor(
     public productService:ProductService, 
     public loginService:LoginService, 
-    public modalService:BsModalService) {
+    public modalService:BsModalService, 
+    private toastr: ToastrService,
+    private router: Router) {
     this.usuarioActual=this.loginService.usuarioActual
   }
 
@@ -42,15 +46,26 @@ export class UploadComponent implements OnInit {
   public anyadirSile(nombre: string, descripcion: string, categoria: string, user_id: number, product_image: string){
     console.log('Hola desde anyadir')
     console.log(this.productService.product)
+    let productImageUrl;
     let date = new Date();
-    let productImageUrl = this.productService.urlImg + this.selectedFile.name;
+    productImageUrl = this.productService.urlImg + this.token() + "-" + user_id + ".jpg";
+    const nombreFotoProducto = productImageUrl
     const fd = new FormData()
-    fd.append('product_image',this.selectedFile, this.selectedFile.name);
+    fd.append('product_image',this.selectedFile, nombreFotoProducto);
     this.productService.uploadImageProduct(fd).subscribe((data)=>{
       console.log(data)
     })
     this.productService.postProduct(new Product(null, nombre, descripcion, categoria, user_id, productImageUrl, date)).subscribe((data)=>{
       console.log(data)
+    }, (error) => {
+      console.log(error);
+      if (error.status === 401) {
+        this.toastr.error("Por favor, ingresa de nuevo", "Algo fue mal")
+        this.loginService.logout();
+        this.loginService.usuarioActual = null;
+        this.productService.usuarioActual = null;
+        this.router.navigate(["/"]);
+      }
     })
   }
   
@@ -68,6 +83,15 @@ export class UploadComponent implements OnInit {
   public openModal(Upload: TemplateRef<any>){
     this.modalRef = this.modalService.show(Upload)
   }
+
+  //Para generar nombres de ficheros aleatorios
+  public random() {
+    return Math.random().toString(36).substr(2); // Eliminar `0.`
+  };
+
+  public token() {
+    return this.random() + this.random(); // Para hacer el token más largo
+  };
 
   ngOnInit(): void {
   }
