@@ -43,10 +43,11 @@ export class HeaderComponent implements OnInit {
   }
 
   public cerrarSesion(){
-    this.loginService.logout();
-    this.loginService.usuarioActual = null;
-    this.productService.usuarioActual = null;
-    // todo limpiar todo
+    this.loginService.logout().subscribe((data) => {
+      this.loginService.usuarioActual = null;
+      this.productService.usuarioActual = null;
+      console.log(data)
+    });
   }
 
   //FORMULARIO

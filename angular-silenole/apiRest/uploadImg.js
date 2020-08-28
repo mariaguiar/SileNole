@@ -1,12 +1,12 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var app = express();
-let cors = require('cors')
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+const cors = require('cors')
+const fs = require('fs');
 //EXTRAS PARA LA PRUEBA CARGA DE FOTOS 
 const fileUpload = require('express-fileupload');
 const morgan = require('morgan');
 const _ = require('lodash'); 
-var fs = require('fs');
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -86,7 +86,7 @@ app.post('/upload-imgProduct', async (req, res) => {
 });
 
 app.delete('/delete-img/:imageName', async (req, res) => {
-    var imageName = req.params.imageName;
+    const imageName = req.params.imageName;
     try {
         if(imageName === null || imageName === "") {
             res.send({

@@ -44,16 +44,15 @@ app.use(morgan('dev'));
 /* ---------------------------------PRODUCTOS FUNCIONANDO----------------------------------- */
 // GET /SILES/:USERID = Obtiene todos los siles subidos por el usuario
 app.get("/products/:user_id", function (request, response) {
-    let sql;
+    let user_id = request.params.user_id;
     let accessTokenLocal = request.headers.authorization;
     console.log('Token local ', accessTokenLocal);
-    let user_id = request.params.user_id;
     let params = [user_id];
-    sql = "SELECT accessToken FROM user WHERE user_id = ?";
+    let sql = "SELECT accessToken FROM user WHERE user_id = ?";
     connection.query(sql, params, function(err, result){
         if (err){
             console.log(err)
-        }else{
+        } else {
             console.log('Token recibido ', result)
             if (result[0] === undefined || result[0] === null) {
                 //
@@ -61,13 +60,13 @@ app.get("/products/:user_id", function (request, response) {
                 return;
             }
             let tokenRecibido = result[0].accessToken;
-            if(tokenRecibido === accessTokenLocal){
+            if (tokenRecibido === accessTokenLocal){
                 console.log('Los token coinciden. Usuario autorizado')
                 sql = "SELECT * FROM products WHERE user_id = ?";
                 connection.query(sql, params, function(err, result){
                     if (err){
                         console.log(err)
-                    }else{
+                    } else {
                         console.log('Objetos Propios')
                         console.log(result)
                     } 
@@ -83,21 +82,43 @@ app.get("/products/:user_id", function (request, response) {
 
 // GET /SILES= Obtiene todos los productos
 app.get("/products", function (request, response) {
-    let sql = "SELECT * FROM products"
-    connection.query(sql, function(err, result){
+    let sql;
+    let accessTokenLocal = request.headers.authorization;
+    console.log('Token local ', accessTokenLocal);
+    sql = "SELECT accessToken FROM user WHERE user_id = ?";
+    connection.query(sql, params, function(err, result){
         if (err){
             console.log(err)
-        }else{
-            console.log('Objetos del Usuario')
-            console.log(result)
+        } else {
+            console.log('Token recibido ', result)
+            if (result[0] === undefined || result[0] === null) {
+                //
+                response.status(500).send({ message: 'Error en el servidor' });
+                return;
+            }
+            let tokenRecibido = result[0].accessToken;
+            if (tokenRecibido === accessTokenLocal){
+                console.log('Los token coinciden. Usuario autorizado')
+                sql = "SELECT * FROM products"
+                connection.query(sql, params, function(err, result){
+                    if (err){
+                        console.log(err)
+                    } else {
+                        console.log('Objetos del usuario')
+                        console.log(result)
+                    } 
+                response.send(result);
+                })
+            } else {
+                console.log('Los token no coinciden. Operación no permitida')
+                response.status(401).send({ message: 'No autorizado. Ingresa en tu cuenta.' });
+            }
         } 
-    response.send(result);
     })
 });
 
 // POST /SILES/ = Añade un nuevo sile del usuario 
 app.post("/products", function (request, response) {
-    /* let product_id = request.body.product_id */
     let sql;
     let accessTokenLocal = request.headers.authorization;
     console.log('Token local ', accessTokenLocal);
@@ -112,7 +133,7 @@ app.post("/products", function (request, response) {
     connection.query(sql, params, function(err, result){
         if (err){
             console.log(err)
-        }else{
+        } else {
             console.log('Token recibido ', result)
             if (result[0] === undefined || result[0] === null) {
                 //
@@ -120,14 +141,14 @@ app.post("/products", function (request, response) {
                 return;
             }
             let tokenRecibido = result[0].accessToken;
-            if(tokenRecibido === accessTokenLocal){
+            if (tokenRecibido === accessTokenLocal){
                 console.log('Los token coinciden. Usuario autorizado')
                 params = [nombre, descripcion, categoria, user_id, product_image, date]
                 sql = `INSERT INTO products (nombre, descripcion, categoria, user_id , product_image, date) VALUES ( ?, ?, ?, ?, ?, ?)`;
                 connection.query(sql, params, function(err, result){
                     if (err){
                         console.log(err)
-                    }else{
+                    } else {
                         console.log('Nuevo producto Ingresado')
                         console.log(result)
                     } 
@@ -143,6 +164,7 @@ app.post("/products", function (request, response) {
 
 // PUT /SILES/ = Actualiza un sile del usuario
 app.put("/products", function (request, response) {
+    let sql;
     let product_id = request.body.product_id
     let nombre = request.body.nombre
     let descripcion = request.body.descripcion
@@ -150,32 +172,77 @@ app.put("/products", function (request, response) {
     let user_id  = request.body.user_id 
     let product_image = request.body.product_image
     let date = request.body.date
-    let params = [nombre, descripcion, categoria, user_id , product_image, date]
-    let sql = "UPDATE products SET nombre = ?, descripcion = ?, categoria = ?, user_id = ?, product_image = ?, date = ? WHERE product_id =" + product_id;
+    let accessTokenLocal = request.headers.authorization;
+    console.log('Token local ', accessTokenLocal);
+    let params = [user_id]
+    sql = "SELECT accessToken FROM user WHERE user_id = ?";
     connection.query(sql, params, function(err, result){
-        if (err){
+        if (err) {
             console.log(err)
-        }else{
-            console.log('Producto Modificado')
-            console.log(result)
+        } else {
+            console.log('Token recibido ', result)
+            if (result[0] === undefined || result[0] === null) {
+                response.status(500).send({ message: 'Error en el servidor' });
+                return;
+            }
+            let tokenRecibido = result[0].accessToken;
+            if (tokenRecibido === accessTokenLocal){
+                console.log('Los token coinciden. Usuario autorizado')
+                params = [nombre, descripcion, categoria, user_id , product_image, date]
+                sql = "UPDATE products SET nombre = ?, descripcion = ?, categoria = ?, user_id = ?, product_image = ?, date = ? WHERE product_id =" + product_id;
+                connection.query(sql, params, function(err, result){
+                    if (err){
+                        console.log(err)
+                    } else {
+                        console.log('Producto Modificado')
+                        console.log(result)
+                    } 
+                response.send(result);
+                })
+            } else {
+                console.log('Los token no coinciden. Operación no permitida')
+                response.status(401).send({ message: 'No autorizado. Ingresa en tu cuenta.' });
+            }
         } 
-    response.send(result);
     })
 });
 
 // DELETE PARA BORRAR UN PRODUCTO
 app.delete("/products", function (request, response) {
+    let sql;
     let product_id = request.body.product_id
-    let params = [product_id]
-    let sql = "DELETE FROM products WHERE product_id = ?"
+    let accessTokenLocal = request.headers.authorization;
+    console.log('Token local ', accessTokenLocal);
+    let params = [user_id]
+    sql = "SELECT accessToken FROM user WHERE user_id = ?";
     connection.query(sql, params, function(err, result){
-        if (err){
+        if (err) {
             console.log(err)
-        }else{
-            console.log('Producto Borrado')
-            console.log(result)
+        } else {
+            console.log('Token recibido ', result)
+            if (result[0] === undefined || result[0] === null) {
+                response.status(500).send({ message: 'Error en el servidor' });
+                return;
+            }
+            let tokenRecibido = result[0].accessToken;
+            if(tokenRecibido === accessTokenLocal){
+                console.log('Los token coinciden. Usuario autorizado')
+                let params = [product_id]
+                sql = "DELETE FROM products WHERE product_id = ?"
+                connection.query(sql, params, function(err, result){
+                    if (err){
+                        console.log(err)
+                    }else{
+                        console.log('Producto Borrado')
+                        console.log(result)
+                    } 
+                response.send(result);
+                })
+            } else {
+                console.log('Los token no coinciden. Operación no permitida')
+                response.status(401).send({ message: 'No autorizado. Ingresa en tu cuenta.' });
+            }
         } 
-    response.send(result);
     })
 });
 /* ---------------------------------FIN PRODUCTOS----------------------------------- */
@@ -186,8 +253,6 @@ app.post("/user/login", function (request, response) {
   let email = request.body.email;
   let password = request.body.password;
   let params = [email];
-  //let params = [email, password];
-  //let sql = "SELECT * FROM user WHERE email = ? AND password = ?";
   let sql = "SELECT * FROM user WHERE email = ?";
   if (email && password) {
     connection.query(sql, params, function (err, result) {
@@ -330,6 +395,46 @@ app.put("/user", function (request, response) {
             console.log(result)
         } 
     response.send(result);
+    })
+});
+
+// PUT /USERS/TOKEN = Borra el token asociada al usuario. 
+app.put("/user/token", function (request, response) {
+    let sql;
+    let user_id = request.body.user_id
+    let accessTokenLocal = request.headers.authorization;
+    console.log('Token local ', accessTokenLocal);
+    let tokenVacio = '';
+    let params = [user_id]
+    sql = "SELECT accessToken FROM user WHERE user_id = ?";
+    connection.query(sql, params, function(err, result){
+        if (err) {
+            console.log(err)
+        } else {
+            console.log('Token recibido ', result)
+            if (result[0] === undefined || result[0] === null) {
+                response.status(500).send({ message: 'Error en el servidor' });
+                return;
+            }
+            let tokenRecibido = result[0].accessToken;
+            if(tokenRecibido === accessTokenLocal){
+                console.log('Los token coinciden. Usuario autorizado')
+                params = [tokenVacio,user_id]
+                sql = "UPDATE user SET accessToken = ? WHERE user_id = ?";
+                connection.query(sql, params, function(err, result){
+                    if (err){
+                        console.log(err)
+                    }else{
+                        console.log('Usuario Modificado')
+                        console.log(result)
+                    } 
+                response.send(result);
+                })
+            } else {
+                console.log('Los token no coinciden. Operación no permitida')
+                response.status(401).send({ message: 'No autorizado. Ingresa en tu cuenta.' });
+            }
+        } 
     })
 });
 

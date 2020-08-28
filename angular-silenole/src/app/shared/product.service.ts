@@ -29,7 +29,7 @@ export class ProductService {
   }
 
 
-  //para la prueba carga de fotos
+  //para la carga de fotos
   public uploadImageProduct(fd: FormData){
     return this.http.post(this.urlImg + "upload-imgProduct", fd)
   }
@@ -45,7 +45,13 @@ export class ProductService {
   }
 
   public getAllProducts() {
-    return this.http.get(this.url+ "products/");
+    const accessToken = this.loginService.getToken();
+    const options = {
+      headers: new HttpHeaders({
+        'Authorization': accessToken,
+      })
+    };
+    return this.http.get(this.url+ "products/", options );
   }
 
   public getProductsByUser(id: number) {
@@ -53,7 +59,6 @@ export class ProductService {
     const options = {
       headers: new HttpHeaders({
         'Authorization': accessToken,
-        // 'Content-Type': 'application/json',
       }),
       body: {
         user_id: id,
@@ -67,18 +72,20 @@ export class ProductService {
     const options = {
       headers: new HttpHeaders({
         'Authorization': accessToken,
-        // 'Content-Type': 'application/json',
-      })/* ,
-      body: {
-        user_id: id,
-      }, */
+      })
     };
     return this.http.post(this.url + "products/", newProduct, options)
   }
 
   public putProduct(newProduct: Product) {
+    const accessToken = this.loginService.getToken();
+    const options = {
+      headers: new HttpHeaders({
+        'Authorization': accessToken,
+      })
+    };
     console.log(newProduct);
-    return this.http.put(this.url+ "products/", newProduct)
+    return this.http.put(this.url+ "products/", newProduct, options)
   }
 
   public getProductsByName(clave: string) {
@@ -126,14 +133,16 @@ export class ProductService {
   }
 
   public deleteProduct(id:number){
-  let options = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-    }),
-    body: {
-      product_id: id
-    },
-  };
+    const accessToken = this.loginService.getToken();
+    const options = {
+      headers: new HttpHeaders({
+        'Authorization': accessToken,
+        'Content-Type': 'application/json',
+      }),
+      body: {
+        product_id: id
+      },
+    };
   return this.http.delete(this.url+ "products/", options)
   }
 

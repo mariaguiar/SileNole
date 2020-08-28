@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs/internal/Observable";
 import { Usuario } from '../models/usuario';
 import { tap } from 'rxjs/operators';
@@ -41,11 +41,25 @@ export class LoginService {
     return this.http.post(this.backUrl + "/user/register", nuevoUsuario)
   }
 
-  public logout(): void {
+  public logout() {
+    console.log ( 'Hola desde Logout')
+    const accessToken = this.getToken();
+    const options = {
+      headers: new HttpHeaders({
+        'Authorization': accessToken,
+      }),
+      /* body: {
+        user_id: this.usuarioActual.user_id,
+      }, */
+    };
+    const body = {
+      user_id: this.usuarioActual.user_id,
+    };
     this.token = '';
     localStorage.removeItem("ACCESS_TOKEN");
     localStorage.removeItem("EXPIRES_IN");
     localStorage.removeItem("USER_ID");
+    return this.http.put(this.backUrl + "/user/token", body,  options)
   }
 
   private saveToken(token: string, expiresIn: string): void {

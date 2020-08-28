@@ -9,6 +9,7 @@ import { Nole } from 'src/app/models/nole';
 import { ProductService } from 'src/app/shared/product.service';
 import { LoginService } from 'src/app/shared/login.service';
 import { MessageService } from 'src/app/shared/message.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -30,8 +31,9 @@ export class SearchComponent implements OnInit {
     public productService: ProductService, 
     public loginService: LoginService, 
     public messageService:MessageService, 
-    private router:Router,) {
-      this.usuarioActual = this.loginService.usuarioActual;
+    private router:Router, 
+    private toastr: ToastrService) {
+    this.usuarioActual = this.loginService.usuarioActual;
   }
 
   // METODOS
@@ -39,6 +41,15 @@ export class SearchComponent implements OnInit {
     this.productService.getAllProducts().subscribe((data) => {
       this.products = data
       console.log(data)
+    }, (error) => {
+      console.log(error);
+      if (error.status === 401) {
+        this.toastr.error("Por favor, ingresa de nuevo", "Algo fue mal")
+        this.loginService.logout();
+        this.loginService.usuarioActual = null;
+        this.productService.usuarioActual = null;
+        this.router.navigate(["/"]);
+      }
     })
   }
 

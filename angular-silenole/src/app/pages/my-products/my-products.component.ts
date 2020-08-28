@@ -86,6 +86,15 @@ export class MyProductsComponent implements OnInit {
       this.productService.putProduct(new Product(product_id, nombre, descripcion, categoria, user_id, productImageUrl, date)).subscribe((data)=>{
         console.log(data)
         this.mostrarProductos(this.idUsuario)      
+      }, (error) => {
+        console.log(error);
+        if (error.status === 401) {
+          this.toastr.error("Por favor, ingresa de nuevo", "Algo fue mal")
+          this.loginService.logout();
+          this.loginService.usuarioActual = null;
+          this.productService.usuarioActual = null;
+          this.router.navigate(["/"]);
+        }
       })
     } else {
       const fd = new FormData()
@@ -96,6 +105,15 @@ export class MyProductsComponent implements OnInit {
           console.log(data)
           this.selectedFile = null;
           this.mostrarProductos(this.idUsuario)      
+        }, (error) => {
+          console.log(error);
+          if (error.status === 401) {
+            this.toastr.error("Por favor, ingresa de nuevo", "Algo fue mal")
+            this.loginService.logout();
+            this.loginService.usuarioActual = null;
+            this.productService.usuarioActual = null;
+            this.router.navigate(["/"]);
+          }
         })
       })
     }
@@ -112,6 +130,15 @@ export class MyProductsComponent implements OnInit {
     this.productService.deleteProduct(id).subscribe((data)=>{
       console.log(data)
       this.mostrarProductos(this.idUsuario)
+    }, (error) => {
+      console.log(error);
+      if (error.status === 401) {
+        this.toastr.error("Por favor, ingresa de nuevo", "Algo fue mal")
+        this.loginService.logout();
+        this.loginService.usuarioActual = null;
+        this.productService.usuarioActual = null;
+        this.router.navigate(["/"]);
+      }
     })
   }
 
@@ -153,6 +180,5 @@ export class MyProductsComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 
 }
