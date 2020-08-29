@@ -13,9 +13,9 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const SECRET_KEY = 'secretkey123456';
 
-
-
 const mysql = require('mysql');
+const util = require( 'util' );
+
 const connection = mysql.createConnection({
     host: 'localhost',
     user: "root",
@@ -28,6 +28,26 @@ connection.connect(function(error){
     else
     console.log('Conexión correcta')
 });
+
+// conexión a BD para async/await en verificar accessToken
+function makeDb( config ) {
+    const connection = mysql.createConnection( config );  
+    return {
+      query( sql, args ) {
+        return util.promisify( connection.query )
+          .call( connection, sql, args );
+      },
+      close() {
+        return util.promisify( connection.end ).call( connection );
+      }
+    };
+}
+const db = makeDb( {
+    host: 'localhost',
+    user: "root",
+    password: null,
+    database: 'silenole'
+} );
 
 app.use(cors());
 app.use(bodyParserJSON);
@@ -43,7 +63,7 @@ app.use(morgan('dev'));
 
 /* ---------------------------------PRODUCTOS FUNCIONANDO----------------------------------- */
 // GET /SILES/:USERID = Obtiene todos los siles subidos por el usuario
-app.get("/products/:user_id", function (request, response) {
+/* app.get("/products/:user_id", function (request, response) {
     let user_id = request.params.user_id;
     let accessTokenLocal = request.headers.authorization;
     console.log('Token local ', accessTokenLocal);
@@ -55,7 +75,6 @@ app.get("/products/:user_id", function (request, response) {
         } else {
             console.log('Token recibido ', result)
             if (result[0] === undefined || result[0] === null) {
-                //
                 response.status(500).send({ message: 'Error en el servidor' });
                 return;
             }
@@ -78,10 +97,45 @@ app.get("/products/:user_id", function (request, response) {
             }
         } 
     })
+}); */
+
+app.get("/products/:user_id", async function (request, response) {
+    let user_id = request.params.user_id;
+    let accessTokenLocal = request.headers.authorization;
+    console.log('Token local ', accessTokenLocal);
+    let params;
+    let sql;
+    const tokenResult = await verifyToken(accessTokenLocal, user_id)
+    console.log ("verifyToken result: " , tokenResult);
+
+    switch (tokenResult) {
+        case 500:
+            response.status(500).send({ message: 'Error en el servidor' });
+            break;
+        case 401:
+            console.log('Los token no coinciden. Operación no permitida')
+            response.status(401).send({ message: 'No autorizado. Ingresa en tu cuenta.' });
+            break;
+        case 200:
+            console.log('Los token coinciden. Usuario autorizado');
+            params = [user_id];
+            sql = "SELECT * FROM products WHERE user_id = ?";
+            connection.query(sql, params, function(err, result){
+                if (err){
+                    console.log(err)
+                } else {
+                    console.log('Objetos Propios')
+                    console.log(result)
+                } 
+                response.send(result);
+            })
+            break;
+        default:
+    }
 });
 
 // GET /SILES= Obtiene todos los productos
-app.get("/products", function (request, response) {
+/* app.get("/products", function (request, response) {
     let sql;
     let accessTokenLocal = request.headers.authorization;
     console.log('Token local ', accessTokenLocal);
@@ -115,7 +169,7 @@ app.get("/products", function (request, response) {
             }
         } 
     })
-});
+}); */
 
 // POST /SILES/ = Añade un nuevo sile del usuario 
 app.post("/products", function (request, response) {
@@ -313,28 +367,54 @@ const insertToken = (accessToken, email) => {
         }
     });
 }
-
-const verifyToken = (accessToken, email) => {
+ 
+verifyToken = async (accessToken, user_id) => {
     console.log("verificando token");
-    let params = [email];
-    let sql = "SELECT accessToken FROM user WHERE email = ?";
+    let params = [user_id];
+    let sql = "SELECT accessToken FROM user WHERE user_id = ?";
+
+    let resultCode;
+    await db.query(sql, params).then( result => {
+        console.log ("token BBDD" , result);
+        if (result[0] === undefined || result[0] === null){
+            resultCode = 500;
+        } else {
+            if (result[0].accessToken === accessToken) {
+                console.log('Token verificado')
+                resultCode = 200;
+            } else {
+                console.log('Token no válido')
+                resultCode = 401;
+            }
+        }
+    });
+    return resultCode;
+}
+
+/* const verifyToken = (accessToken, user_id) => {
+    console.log("verificando token");
+    let params = [user_id];
+    let sql = "SELECT accessToken FROM user WHERE user_id = ?";
     connection.query(sql, params, function(err, result){
         if (err) {
             console.log(err)
             console.log('error al verificar token')
-            return false;
+            return 500;
         } else {
             console.log(result)
+            if (result[0] === undefined || result[0] === null){
+                return 500;
+            }
             if (result[0].accessToken === accessToken) {
                 console.log('Token verificado')
-                return(true);
+                return(200);
             } else {
                 console.log('Token no válido')
-                return(false);
+                return(401);
             }
         }
     });
-}
+} */
 
 // GET /USERS/:USERID = Obtiene toda la información asociada al usuario 
 app.get("/user/:id", function (request, response) {
