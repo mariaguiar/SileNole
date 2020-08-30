@@ -1,5 +1,5 @@
 // COMPONENTE
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import * as bcrypt from 'bcryptjs';
 // MODAL
@@ -20,13 +20,13 @@ import { Router } from '@angular/router';
 })
 
 export class ProfileComponent implements OnInit {
+  @ViewChild("content3", {static: false}) myModalInfo: TemplateRef<any>;
 
   public closeResult = '';
   public modalRef: BsModalRef;
   public usuarioActual=new Usuario(null,null,null,null,null,null,null,null,null)
   public usuario=new Usuario(null,null,null,null,null,null,null,null,null)
   public nuevoPassword = new Password(null, null);
-  
   public equals=false
   public selectedFile: File; //para cargar la foto  
 
@@ -145,6 +145,19 @@ export class ProfileComponent implements OnInit {
       }
   }
 
+  public validarBorrarUsuario(user_id: number, name: string, password: string, email: string, comunidad: string, provincia: string, localidad: string, cp: number, template: TemplateRef < any > ) {
+    if (password === null || password === "") {
+      this.toastr.error("Sin la contraseña no podras modificar tus datos", "Escribe tu contraseña")
+    } else {
+      const resultPassword = this.confirmarPassword(password)
+      if (resultPassword === true) {
+        this.openModal(template);
+      } else {
+        this.toastr.error("Vuelve a escribir tu contraseña", "Algo fue mal")
+      }
+    }
+  }
+
   public borrarUsuario(id:number){
     console.log('Usuario Borrado')
     this.usuarioService.deleteUsuario(id).subscribe((data)=>{
@@ -153,6 +166,7 @@ export class ProfileComponent implements OnInit {
       this.usuarioActual = new Usuario(null,null,null,null,null,null,null,null,null);
       this.loginService.usuarioActual = this.usuarioActual;
       this.selectedFile = null;
+      this.modalRef.hide();
       this.toastr.success("Esperamos que vuelvas pronto a SileNole", "Usuario eliminado con éxito")
       this.router.navigate(["/"]);
     })

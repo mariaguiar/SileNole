@@ -96,8 +96,9 @@
         <div class="row align-items-center d-flex justify-content-center pb-3">
           <div>
             <hr>
-            <button type="button" class="btn btn-danger btn-sm" (click)="openModal(content3)"><i class="fa fa-trash"
-                aria-hidden="true"></i>
+            <button type="button" class="btn btn-danger btn-sm" 
+            (click)="validarBorrarUsuario(usuarioActual.user_id, name.value, password.value, email.value, comunidad.value, provincia.value, localidad.value, cp.value, content3)"
+            ><i class="fa fa-trash" aria-hidden="true"></i>
               Eliminar Cuenta</button>
           </div> &nbsp;
         </div>
@@ -109,7 +110,7 @@
 <br>
 
 <!-- MODAL BORRAR USUARIO  -->
-<ng-template #content3 let-modal>
+<ng-template #content3 id="content3" let-modal>
   <div class="modal-body text-success text-center">
     <form>
       <div class="form-group">

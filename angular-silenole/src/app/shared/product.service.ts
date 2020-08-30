@@ -3,6 +3,7 @@ import { Product } from '../models/product';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LoginService } from './login.service';
 import { Usuario } from '../models/usuario';
+// import { userInfo } from 'os';
 
 
 @Injectable({
@@ -140,7 +141,8 @@ export class ProductService {
         'Content-Type': 'application/json',
       }),
       body: {
-        product_id: id
+        product_id: id,
+        user_id: this.usuarioActual.user_id
       },
     };
   return this.http.delete(this.url+ "products/", options)
