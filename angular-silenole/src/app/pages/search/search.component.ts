@@ -44,11 +44,8 @@ export class SearchComponent implements OnInit {
     }, (error) => {
       console.log(error);
       if (error.status === 401) {
-        this.toastr.error("Por favor, ingresa de nuevo", "Algo fue mal")
-        this.loginService.logout();
-        this.loginService.usuarioActual = null;
         this.productService.usuarioActual = null;
-        this.router.navigate(["/"]);
+        this.loginService.forcedLogout();
       }
     })
   }
@@ -57,6 +54,11 @@ export class SearchComponent implements OnInit {
     this.productService.getProductsByUser(uid).subscribe((data) => {
       this.products = data
       console.log(data)
+    }, (error) => {
+      console.log(error);
+      if (error.status === 401) {
+        this.loginService.forcedLogout();
+      }
     })
   }
 
@@ -70,7 +72,12 @@ export class SearchComponent implements OnInit {
     this.productService.getProductsBySelectedCategoryAndLocation(tipo, valor).subscribe((data) => {
       this.productService.products = data
       console.log(data)
-    });
+    }, (error) => {
+      console.log(error);
+      if (error.status === 401) {
+        this.loginService.forcedLogout();
+      }
+    })
   }
   
   public buscarPorDias(dias: number) {
@@ -78,7 +85,12 @@ export class SearchComponent implements OnInit {
     this.productService.getProductsBySelectedCategoryAndDays(dias).subscribe((data) => {
       this.productService.products = data
       console.log(data)
-    });
+    }, (error) => {
+      console.log(error);
+      if (error.status === 401) {
+        this.loginService.forcedLogout();
+      }
+    })
   }
   
   buscarUsuario(nombreUsuario){
@@ -87,7 +99,12 @@ export class SearchComponent implements OnInit {
       this.productService.ownerActual = data[0].user_id;
       console.log(this.productService.ownerActual);
       this.router.navigate(["/owner"])
-    });
+    }, (error) => {
+      console.log(error);
+      if (error.status === 401) {
+        this.loginService.forcedLogout();
+      }
+    })
   }
   
   public pasarIdProducto(pid) {

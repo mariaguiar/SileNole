@@ -31,9 +31,11 @@ export class UsuarioService {
       return this.http.get(this.url + "user/register")
     }else{
       const accessToken = this.loginService.getToken();
+      const user_id = this.loginService.usuarioActual.user_id.toString();
       const options = {
         headers: new HttpHeaders({
-          'Authorization': accessToken,
+          'Authorization': accessToken, 
+          'User': user_id, 
         })
       };
       return this.http.get(this.url + "user/" + id, options)

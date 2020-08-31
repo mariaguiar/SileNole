@@ -39,6 +39,11 @@ export class HomeComponent implements OnInit {
     this.productService.getLatestProducts().subscribe((data) => {
       this.productsUltimos = data
       console.log(data)
+    }, (error) => {
+      console.log(error);
+      if (error.status === 401) {
+        this.loginService.forcedLogout();
+      }
     })
   }
 
@@ -46,6 +51,11 @@ export class HomeComponent implements OnInit {
     this.productService.getClosestProducts().subscribe((data) => {
       this.productsCercanos = data
       console.log(data)
+    }, (error) => {
+      console.log(error);
+      if (error.status === 401) {
+        this.loginService.forcedLogout();
+      }
     })
   }
   
@@ -60,6 +70,11 @@ export class HomeComponent implements OnInit {
     let newNole = new Nole(uid, pid);
     this.messageService.postNole(newNole).subscribe((data) => {
       console.log(data)
+    }, (error) => {
+      console.log(error);
+      if (error.status === 401) {
+        this.loginService.forcedLogout();
+      }
     })
     this.messageService.noleSeleccionado = newNole;
   }

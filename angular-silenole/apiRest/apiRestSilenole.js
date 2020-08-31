@@ -104,10 +104,11 @@ const insertToken = (accessToken, email) => {
 app.get("/products/:user_id", async function (request, response) {
     let accessTokenLocal = request.headers.authorization;
     console.log('Token local ', accessTokenLocal);
+    let user_id_verificar = request.headers.user;
     let user_id = request.params.user_id;
     let params;
     let sql;
-    const tokenResult = await verifyToken(accessTokenLocal, user_id)
+    const tokenResult = await verifyToken(accessTokenLocal, user_id_verificar)
     console.log ("verifyToken result: " , tokenResult);
     switch (tokenResult) {
         case 500:
@@ -344,10 +345,11 @@ app.post("/user/login", function (request, response) {
 app.get("/user/:id", async function (request, response) {
     let accessTokenLocal = request.headers.authorization;
     console.log('Token local ', accessTokenLocal);
+    let user_id_verificar = request.headers.user;
     let user_id = request.params.id;
     let params;
     let sql;
-    const tokenResult = await verifyToken(accessTokenLocal, user_id)
+    const tokenResult = await verifyToken(accessTokenLocal, user_id_verificar)
     console.log ("verifyToken result: " , tokenResult);
     switch (tokenResult) {
         case 500:
@@ -744,112 +746,211 @@ app.get("/siles/:user_id", async function (request, response) {
 
 /* ---------------------------------BUSCAR----------------------------------- */
 
-app.get("/buscar/usuario/:nombre", function (request, response) {
-    var nombre = request.params.nombre;
+app.get("/buscar/usuario/:nombre", async function (request, response) {
+    let accessTokenLocal = request.headers.authorization;
+    console.log('Token local ', accessTokenLocal);
+    let user_id = request.headers.user;
+    console.log(user_id)
+    let nombre = request.params.nombre;
     console.log("buscando usuario ", nombre)
-    let params = [nombre];
-    let sql = "SELECT * FROM user WHERE name = ?";
-    connection.query(sql, params, function(err, result){
-        if (err){
-            console.log(err)
-        }else{
-            console.log('Usuario por nombre')
-            console.log(result)
-        } 
-    response.send(result);
-    })
+    let params;
+    let sql;
+    const tokenResult = await verifyToken(accessTokenLocal, user_id)
+    console.log ("verifyToken result: " , tokenResult);
+    switch (tokenResult) {
+        case 500:
+            response.status(500).send({ message: 'Error en el servidor' });
+            break;
+        case 401:
+            console.log('Los token no coinciden. Operación no permitida')
+            response.status(401).send({ message: 'No autorizado. Ingresa en tu cuenta.' });
+            break;
+        case 200:
+            console.log('Los token coinciden. Usuario autorizado');
+            params = [nombre];
+            sql = "SELECT * FROM user WHERE name = ?";
+            connection.query(sql, params, function(err, result){
+                if (err){
+                    console.log(err)
+                }else{
+                    console.log('Usuario por nombre')
+                    console.log(result)
+                } 
+            response.send(result);
+            })
+            break;
+        default:
+    }
 });
 
 // GET BUSCAR/CATEGORIA Obtiene los productos segun categoria
-app.get("/buscar/:categoria", function (request, response) {
+app.get("/buscar/:categoria", async function (request, response) {
+    let accessTokenLocal = request.headers.authorization;
+    console.log('Token local ', accessTokenLocal);
+    let user_id = request.headers.user;
     var categoria = request.params.categoria;
     var filtrar_user_id = request.query.filterUser;
     let sql;
     let params;
-    if(categoria === "Todo"){
-        params = [filtrar_user_id];
-        sql = "SELECT * FROM products WHERE user_id != ?";
-    }else{
-        params = [categoria, filtrar_user_id]
-        sql = "SELECT * FROM products WHERE categoria = ? AND user_id != ?"; 
+    const tokenResult = await verifyToken(accessTokenLocal, user_id)
+    console.log ("verifyToken result: " , tokenResult);
+    switch (tokenResult) {
+        case 500:
+            response.status(500).send({ message: 'Error en el servidor' });
+            break;
+        case 401:
+            console.log('Los token no coinciden. Operación no permitida')
+            response.status(401).send({ message: 'No autorizado. Ingresa en tu cuenta.' });
+            break;
+        case 200:
+            console.log('Los token coinciden. Usuario autorizado');
+            if(categoria === "Todo"){
+                params = [filtrar_user_id];
+                sql = "SELECT * FROM products WHERE user_id != ?";
+            }else{
+                params = [categoria, filtrar_user_id]
+                sql = "SELECT * FROM products WHERE categoria = ? AND user_id != ?"; 
+            }
+            connection.query(sql, params, function(err, result){
+                if (err){
+                    console.log(err)
+                    console.log("hola desde api")
+                }else{
+                    console.log('Objetos en la categoria ' + categoria)
+                    console.log(result)
+                } 
+            response.send(result);
+            })
+            break;
+        default:
     }
-    connection.query(sql, params, function(err, result){
-        if (err){
-            console.log(err)
-            console.log("hola desde api")
-        }else{
-            console.log('Objetos en la categoria ' + categoria)
-            console.log(result)
-        } 
-    response.send(result);
-    })
 });
 
 // GET /buscar/ por nombre de producto
-app.get("/buscar/", function (request, response) {
+app.get("/buscar/", async function (request, response) {
+    let accessTokenLocal = request.headers.authorization;
+    console.log('Token local ', accessTokenLocal);
+    let user_id = request.headers.user;
     let filtrar_user_id = request.query.filterUser;
     let filtrar_name = "%" + request.query.filterProductName + "%";
     console.log(filtrar_name)
-    let params = [filtrar_user_id, filtrar_name, filtrar_name];
-    let sql = "SELECT products.nombre, products.descripcion, products.product_image, products.user_id FROM products INNER JOIN user ON (user.user_id = products.user_id) WHERE user.user_id != ? AND (products.nombre LIKE ? OR products.descripcion LIKE ?) ORDER BY product_id DESC";
-    console.log(sql);
-    connection.query(sql, params, function(err, result){
-        if (err){
-            console.log(err)
-        }else{
-            console.log('Buscar por Clave')
-            console.log(result)
-        } 
-    response.send(result);
-    })
+    let sql;
+    let params;
+    const tokenResult = await verifyToken(accessTokenLocal, user_id)
+    console.log ("verifyToken result: ", tokenResult);
+    switch (tokenResult) {
+        case 500:
+            response.status(500).send({ message: 'Error en el servidor' });
+            break;
+        case 401:
+            console.log('Los token no coinciden. Operación no permitida')
+            response.status(401).send({ message: 'No autorizado. Ingresa en tu cuenta.' });
+            break;
+        case 200:
+            console.log('Los token coinciden. Usuario autorizado');
+            params = [filtrar_user_id, filtrar_name, filtrar_name];
+            sql = "SELECT products.nombre, products.descripcion, products.product_image, products.user_id FROM products INNER JOIN user ON (user.user_id = products.user_id) WHERE user.user_id != ? AND (products.nombre LIKE ? OR products.descripcion LIKE ?) ORDER BY product_id DESC";
+            console.log(sql);
+            connection.query(sql, params, function(err, result){
+                if (err){
+                    console.log(err)
+                }else{
+                    console.log('Buscar por Clave')
+                    console.log(result)
+                } 
+            response.send(result);
+            })
+            break;
+        default:
+    }
 });
 
 // GET /buscar/ Obtiene los ultimos 4 productos agregados
-app.get("/buscar-ultimos/", function (request, response) {
+app.get("/buscar-ultimos/", async function (request, response) {
+    let accessTokenLocal = request.headers.authorization;
+    console.log('Token local ', accessTokenLocal);
+    let user_id = request.headers.user;
     let filtrar_user_id = request.query.filterUser;
     let filtrar_fecha = request.query.days;
-    let params;
     let sql;
-    if (filtrar_fecha != null) {
-        date = new Date();
-        date.setDate(date.getDate() - filtrar_fecha)
-        console.log("fitrando dias", filtrar_fecha, date);
-        params = [filtrar_user_id, date];
-        sql = "SELECT * FROM products WHERE user_id != ? AND date > ? ORDER BY product_id DESC";
-    } else {
-        params = [filtrar_user_id];
-        sql = "SELECT * FROM products WHERE user_id != ? ORDER BY product_id DESC LIMIT 4";
+    let params;
+    const tokenResult = await verifyToken(accessTokenLocal, user_id)
+    console.log ("verifyToken result: " , tokenResult);
+    switch (tokenResult) {
+        case 500:
+            response.status(500).send({ message: 'Error en el servidor' });
+            break;
+        case 401:
+            console.log('Los token no coinciden. Operación no permitida')
+            response.status(401).send({ message: 'No autorizado. Ingresa en tu cuenta.' });
+            break;
+        case 200:
+            console.log('Los token coinciden. Usuario autorizado');
+            if (filtrar_fecha != null) {
+                date = new Date();
+                date.setDate(date.getDate() - filtrar_fecha)
+                console.log("fitrando dias", filtrar_fecha, date);
+                params = [filtrar_user_id, date];
+                sql = "SELECT * FROM products WHERE user_id != ? AND date > ? ORDER BY product_id DESC";
+            } else {
+                params = [filtrar_user_id];
+                sql = "SELECT * FROM products WHERE user_id != ? ORDER BY product_id DESC LIMIT 4";
+            }
+            connection.query(sql, params, function(err, result){
+                if (err){
+                    console.log(err)
+                }else{
+                    console.log('Últimos productos añadidos')
+                    console.log(result)
+                } 
+            response.send(result);
+            })
+            break;
+        default:
     }
-
-    connection.query(sql, params, function(err, result){
-        if (err){
-            console.log(err)
-        }else{
-            console.log('Últimos productos añadidos')
-            console.log(result)
-        } 
-    response.send(result);
-    })
 });
 
-app.get("/buscar-cercanos/", function (request, response) {
+app.get("/buscar-cercanos/", async function (request, response) {
+    let accessTokenLocal = request.headers.authorization;
+    console.log('Token local ', accessTokenLocal);
+    let user_id = request.headers.user;
     let filtrar_user_id = request.query.filterUser;
     let filtrar_where = request.query.filterWhere;
-    let params = [filtrar_user_id, filtrar_where];
-    console.log(filtrar_user_id,filtrar_where)
-    let sql = "SELECT * FROM user INNER JOIN products ON (user.user_id=products.user_id) WHERE user.user_id != ? AND user.localidad = ? ORDER BY product_id DESC LIMIT 4"
-    connection.query(sql, params, function(err, result){
-        if (err){
-            console.log(err)
-        }else{
-            console.log('Productos cercanos añadidos')
-            console.log(result)
-        } 
-    response.send(result);
-    })
+    let sql;
+    let params;
+    const tokenResult = await verifyToken(accessTokenLocal, user_id)
+    console.log ("verifyToken result: " , tokenResult);
+    switch (tokenResult) {
+        case 500:
+            response.status(500).send({ message: 'Error en el servidor' });
+            break;
+        case 401:
+            console.log('Los token no coinciden. Operación no permitida')
+            response.status(401).send({ message: 'No autorizado. Ingresa en tu cuenta.' });
+            break;
+        case 200:
+            console.log('Los token coinciden. Usuario autorizado');
+            params = [filtrar_user_id, filtrar_where];
+            console.log(filtrar_user_id,filtrar_where)
+            sql = "SELECT * FROM user INNER JOIN products ON (user.user_id=products.user_id) WHERE user.user_id != ? AND user.localidad = ? ORDER BY product_id DESC LIMIT 4"
+            connection.query(sql, params, function(err, result){
+                if (err){
+                    console.log(err)
+                }else{
+                    console.log('Productos cercanos añadidos')
+                    console.log(result)
+                } 
+            response.send(result);
+            })
+            break;
+        default:
+    }
 });
 
-app.get("/buscar-cercanos/categoria/:categoria/:tipo_loc/:valor_loc", function (request, response) {
+app.get("/buscar-cercanos/categoria/:categoria/:tipo_loc/:valor_loc", async function (request, response) {
+    let accessTokenLocal = request.headers.authorization;
+    console.log('Token local ', accessTokenLocal);
+    let user_id = request.headers.user;
     var categoria = request.params.categoria;
     var tipo_loc = "user." + request.params.tipo_loc
     var valor_loc = request.params.valor_loc;
@@ -857,22 +958,37 @@ app.get("/buscar-cercanos/categoria/:categoria/:tipo_loc/:valor_loc", function (
     console.log(filtrar_user_id, categoria, tipo_loc, valor_loc)
     let sql;
     let params;
-    if(categoria === "Todo"){
-        params = [filtrar_user_id, valor_loc];
-        sql = "SELECT products.nombre, products.descripcion, products.product_image, products.user_id FROM products INNER JOIN user ON (user.user_id = products.user_id) WHERE user.user_id != ? AND " + tipo_loc + " = ? ORDER BY products.product_id DESC";
-    }else{
-        params = [categoria, filtrar_user_id, tipo_loc, valor_loc];
-        sql = "SELECT products.nombre, products.descripcion, products.product_image, products.user_id FROM products INNER JOIN user ON (user.user_id = products.user_id) WHERE categoria = ? AND user.user_id != ? AND ? = ? ORDER BY products.product_id DESC"; 
+    const tokenResult = await verifyToken(accessTokenLocal, user_id)
+    console.log ("verifyToken result: " , tokenResult);
+    switch (tokenResult) {
+        case 500:
+            response.status(500).send({ message: 'Error en el servidor' });
+            break;
+        case 401:
+            console.log('Los token no coinciden. Operación no permitida')
+            response.status(401).send({ message: 'No autorizado. Ingresa en tu cuenta.' });
+            break;
+        case 200:
+            console.log('Los token coinciden. Usuario autorizado');
+            if(categoria === "Todo"){
+                params = [filtrar_user_id, valor_loc];
+                sql = "SELECT products.nombre, products.descripcion, products.product_image, products.user_id FROM products INNER JOIN user ON (user.user_id = products.user_id) WHERE user.user_id != ? AND " + tipo_loc + " = ? ORDER BY products.product_id DESC";
+            }else{
+                params = [categoria, filtrar_user_id, valor_loc];
+                sql = "SELECT products.nombre, products.descripcion, products.product_image, products.user_id FROM products INNER JOIN user ON (user.user_id = products.user_id) WHERE categoria = ? AND user.user_id != ? AND " + tipo_loc + " = ? ORDER BY products.product_id DESC"; 
+            }
+            connection.query(sql, params, function(err, result){
+                if (err){
+                    console.log(err)
+                }else{
+                    console.log('Productos cercanos por Localización y Categoria')
+                    console.log(result)
+                } 
+            response.send(result);
+            })
+            break;
+        default:
     }
-    connection.query(sql, params, function(err, result){
-        if (err){
-            console.log(err)
-        }else{
-            console.log('Productos cercanos por CP y Categoria')
-            console.log(result)
-        } 
-    response.send(result);
-    })
 });
 
 /* ---------------------------------FIN BUSCAR----------------------------------- */

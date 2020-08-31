@@ -58,6 +58,11 @@ export class HeaderComponent implements OnInit {
     this.productService.getProductsByName(clave).subscribe((data) => {
       this.productService.products = data
       console.log(data)
+    }, (error) => {
+      console.log(error);
+      if (error.status === 401) {
+        this.loginService.forcedLogout();
+      }
     })
   }
 
@@ -66,7 +71,12 @@ export class HeaderComponent implements OnInit {
       this.loginService.usuarioActual = null;
       this.productService.usuarioActual = null;
       console.log(data)
-    });
+    }, (error) => {
+      console.log(error);
+      if (error.status === 401) {
+        this.loginService.forcedLogout();
+      }
+    })
   }
 
   //FORMULARIO
