@@ -65,7 +65,6 @@ verifyToken = async (accessToken, user_id) => {
     console.log("verificando token");
     let params = [user_id];
     let sql = "SELECT accessToken FROM user WHERE user_id = ?";
-
     let resultCode;
     await db.query(sql, params).then( result => {
         console.log ("token BBDD" , result);
@@ -103,9 +102,9 @@ const insertToken = (accessToken, email) => {
 
 /* ---------------------------------PRODUCTOS----------------------------------- */
 app.get("/products/:user_id", async function (request, response) {
-    let user_id = request.params.user_id;
     let accessTokenLocal = request.headers.authorization;
     console.log('Token local ', accessTokenLocal);
+    let user_id = request.params.user_id;
     let params;
     let sql;
     const tokenResult = await verifyToken(accessTokenLocal, user_id)
@@ -342,18 +341,38 @@ app.post("/user/login", function (request, response) {
 });
 
 // GET /USERS/:USERID = Obtiene toda la información asociada al usuario 
-app.get("/user/:id", function (request, response) {
-    var id = request.params.id;
-    let sql = "SELECT * FROM user WHERE user_id ="+id;
-    connection.query(sql, function(err, result){
-        if (err){
-            console.log(err)
-        }else{
-            console.log('Datos del Usuario')
-            console.log(result)
-        } 
-    response.send(result);
-    })
+app.get("/user/:id", async function (request, response) {
+    let accessTokenLocal = request.headers.authorization;
+    console.log('Token local ', accessTokenLocal);
+    let user_id = request.params.id;
+    let params;
+    let sql;
+    const tokenResult = await verifyToken(accessTokenLocal, user_id)
+    console.log ("verifyToken result: " , tokenResult);
+    switch (tokenResult) {
+        case 500:
+            response.status(500).send({ message: 'Error en el servidor' });
+            break;
+        case 401:
+            console.log('Los token no coinciden. Operación no permitida')
+            response.status(401).send({ message: 'No autorizado. Ingresa en tu cuenta.' });
+            break;
+        case 200:
+            console.log('Los token coinciden. Usuario autorizado');
+            params = [user_id];
+            sql = "SELECT * FROM user WHERE user_id = ?";
+            connection.query(sql, params, function(err, result){
+                if (err){
+                    console.log(err)
+                }else{
+                    console.log('Datos del Usuario')
+                    console.log(result)
+                } 
+            response.send(result);
+            })
+            break;
+        default:
+    }
 });
 
 // POST /USERS/REGISTER = Introduce a un usuario en la base de datos.
@@ -380,7 +399,9 @@ app.post("/user/register", function (request, response) {
 });
 
 // PUT /USERS/:USERID = Actualiza la información asociada al usuario. 
-app.put("/user", function (request, response) {
+app.put("/user", async function (request, response) {
+    let accessTokenLocal = request.headers.authorization;
+    console.log('Token local ', accessTokenLocal);
     let user_id = request.body.user_id
     let name = request.body.name
     let email = request.body.email
@@ -390,17 +411,34 @@ app.put("/user", function (request, response) {
     let localidad = request.body.localidad
     let cp = request.body.cp
     let user_image = request.body.user_image
-    let params = [name, email, password, comunidad, provincia, localidad, cp, user_image]
-    let sql = "UPDATE user SET name = ?, email = ?, password = ?, comunidad = ?, provincia = ?, localidad = ?, cp = ?, user_image = ? WHERE user_id ="+user_id;
-    connection.query(sql, params, function(err, result){
-        if (err){
-            console.log(err)
-        }else{
-            console.log('Usuario Modificado')
-            console.log(result)
-        } 
-    response.send(result);
-    })
+    let params;
+    let sql;
+    const tokenResult = await verifyToken(accessTokenLocal, user_id)
+    console.log ("verifyToken result: " , tokenResult);
+    switch (tokenResult) {
+        case 500:
+            response.status(500).send({ message: 'Error en el servidor' });
+            break;
+        case 401:
+            console.log('Los token no coinciden. Operación no permitida')
+            response.status(401).send({ message: 'No autorizado. Ingresa en tu cuenta.' });
+            break;
+        case 200:
+            console.log('Los token coinciden. Usuario autorizado')
+            params = [name, email, password, comunidad, provincia, localidad, cp, user_image]
+            sql = "UPDATE user SET name = ?, email = ?, password = ?, comunidad = ?, provincia = ?, localidad = ?, cp = ?, user_image = ? WHERE user_id ="+user_id;
+            connection.query(sql, params, function(err, result){
+                if (err){
+                    console.log(err)
+                }else{
+                    console.log('Usuario Modificado')
+                    console.log(result)
+                } 
+            response.send(result);
+            })
+            break;
+        default:
+    }
 });
 
 // PUT /USERS/TOKEN = Borra el token asociada al usuario. 
@@ -460,127 +498,246 @@ app.delete("/user", async function (request, response) {
             console.log('Los token coinciden. Usuario autorizado')
             params = [user_id]
             sql = "DELETE FROM user WHERE user_id = ?";
-                connection.query(sql, params, function(err, result){
-                    if (err){
-                        console.log(err)
-                    }else{
-                        console.log('Usuario eliminado')
-                        console.log(result)
-                    } 
-                response.send(result);
-                })
-                break;
-    default:
-}
+            connection.query(sql, params, function(err, result){
+                if (err){
+                    console.log(err)
+                }else{
+                    console.log('Usuario eliminado')
+                    console.log(result)
+                } 
+            response.send(result);
+            })
+            break;
+        default:
+    }
 });
 
 /* ---------------------------------FIN USUARIOS----------------------------------- */
 
 /* ---------------------------------MENSAJES----------------------------------- */
 // POST /MESSAGES/ = Añade un nuevo mensaje.
-app.post("/messages", function (request, response) {
+app.post("/messages", async function (request, response) {
+    let accessTokenLocal = request.headers.authorization;
+    console.log('Token local ', accessTokenLocal);
     let chat_id = request.body.chat_id
     let sender_id  = request.body.sender_id 
+    let user_id = sender_id
     let product_id = request.body.product_id 
     let text = request.body.text
     let date = request.body.date
     console.log("fecha mensaje es: " + date);
-    let params = [chat_id, sender_id , product_id ,text ,date]
-    let sql = "INSERT INTO messages (chat_id, sender_id, product_id ,text ,date) VALUES (?, ?, ?, ?, ?)";
-    connection.query(sql, params, function(err, result){
-        if (err){
-            console.log(err)
-        }else{
-            console.log('Mensaje Ingresado')
-            console.log(result)
-        } 
-    response.send(result);
-    })
+    let params;
+    let sql;
+    const tokenResult = await verifyToken(accessTokenLocal, user_id)
+    console.log ("verifyToken result: " , tokenResult);
+    switch (tokenResult) {
+        case 500:
+            response.status(500).send({ message: 'Error en el servidor' });
+            break;
+        case 401:
+            console.log('Los token no coinciden. Operación no permitida')
+            response.status(401).send({ message: 'No autorizado. Ingresa en tu cuenta.' });
+            break;
+        case 200:
+            console.log('Los token coinciden. Usuario autorizado')
+            params = [chat_id, sender_id , product_id ,text ,date]
+            sql = "INSERT INTO messages (chat_id, sender_id, product_id ,text ,date) VALUES (?, ?, ?, ?, ?)";
+            connection.query(sql, params, function(err, result){
+                if (err){
+                    console.log(err)
+                }else{
+                    console.log('Mensaje Ingresado')
+                    console.log(result)
+                } 
+            response.send(result);
+            })
+            break;
+        default:
+    }
 });
 
 // GET /MESSAGES/: USERID/:OWNERID= Obtiene todos los mensajes intercambiados entre el usuario y el propietario del nole 
- app.get("/messages/:chat_id", function (request, response) {
+ app.get("/messages/:chat_id", async function (request, response) {
+    let accessTokenLocal = request.headers.authorization;
+    console.log('Token local ', accessTokenLocal);
+    let user_id = request.headers.user;
+    console.log(user_id)
     var chat_id = request.params.chat_id;
-    let params = [chat_id]
-    let sql = "SELECT user.name, messages.text, messages.date FROM messages INNER JOIN user ON (messages.sender_id = user.user_id)  WHERE messages.chat_id = ? ORDER BY messages.date";
-    connection.query(sql, params, function(err, result){
-        if (err){
-            console.log(err)
-        }else{
-            console.log('Objetos del Usuario')
-            console.log(result)
-        } 
-    response.send(result);
-    })
+    let params;
+    let sql;
+    const tokenResult = await verifyToken(accessTokenLocal, user_id)
+    console.log ("verifyToken result: " , tokenResult);
+    switch (tokenResult) {
+        case 500:
+            response.status(500).send({ message: 'Error en el servidor' });
+            break;
+        case 401:
+            console.log('Los token no coinciden. Operación no permitida')
+            response.status(401).send({ message: 'No autorizado. Ingresa en tu cuenta.' });
+            break;
+        case 200:
+            console.log('Los token coinciden. Usuario autorizado');
+            params = [chat_id]
+            sql = "SELECT user.name, messages.text, messages.date FROM messages INNER JOIN user ON (messages.sender_id = user.user_id)  WHERE messages.chat_id = ? ORDER BY messages.date";
+            connection.query(sql, params, function(err, result){
+                if (err){
+                    console.log(err)
+                }else{
+                    console.log('Objetos del Usuario')
+                    console.log(result)
+                } 
+            response.send(result);
+            })
+            break;
+        default:
+    }
 });
 
 /* ---------------------------------FIN MENSAJES----------------------------------- */
 
 /* ---------------------------------NOLES / SILES----------------------------------- */
 // POST /NOLES/ inserta la relacion entre usuario y producto //PARA MENSAJES
-app.post("/noles/", function (request, response) {
-    let uid  = request.body.user_id 
+app.post("/noles/", async function (request, response) {
+    let accessTokenLocal = request.headers.authorization;
+    console.log('Token local ', accessTokenLocal);
+    let user_id  = request.body.user_id 
     let pid = request.body.product_id 
     let chat_id = request.body.chat_id
-    let params = [uid , pid, chat_id]
-    let sql = "INSERT INTO noles (user_id, product_id, chat_id ) VALUES (?, ?, ?)";
-    connection.query(sql, params, function(err, result){
-        if (err){
-            console.log(err)
-        }else{
-            console.log('Relación Nole creada')
-            console.log(result)
-        } 
-    response.send(result);
-    })
+    let params;
+    let sql;
+    const tokenResult = await verifyToken(accessTokenLocal, user_id)
+    console.log ("verifyToken result: " , tokenResult);
+    switch (tokenResult) {
+        case 500:
+            response.status(500).send({ message: 'Error en el servidor' });
+            break;
+        case 401:
+            console.log('Los token no coinciden. Operación no permitida')
+            response.status(401).send({ message: 'No autorizado. Ingresa en tu cuenta.' });
+            break;
+        case 200:
+            console.log('Los token coinciden. Usuario autorizado');
+            params = [user_id , pid, chat_id]
+            sql = "INSERT INTO noles (user_id, product_id, chat_id ) VALUES (?, ?, ?)";
+            connection.query(sql, params, function(err, result){
+                if (err){
+                    console.log(err)
+                }else{
+                    console.log('Relación Nole creada')
+                    console.log(result)
+                } 
+            response.send(result);
+            })
+            break;
+        default:
+    }
 });
 
 // GET /NOLES= Obtiene todos los productos
-app.get("/noles/:user_id", function (request, response) {
-    var user_id = request.params.user_id;
-    let params = [user_id];
-    let sql = "SELECT products.nombre, products.descripcion, products.product_image, noles.product_id, noles.chat_id, user.name, user.user_id FROM noles INNER JOIN products ON (noles.product_id = products.product_id) INNER JOIN user ON (products.user_id = user.user_id) WHERE noles.user_id = ?"
-    connection.query(sql, params, function(err, result){
-        if (err){
-            console.log(err)
-        }else{
-            console.log('Objetos del Usuario')
-            console.log(result)
-        } 
-    response.send(result);
-    })
+app.get("/noles/:user_id", async function (request, response) {
+    let accessTokenLocal = request.headers.authorization;
+    console.log('Token local ', accessTokenLocal);
+    let user_id = request.params.user_id;
+    let params;
+    let sql;
+    const tokenResult = await verifyToken(accessTokenLocal, user_id)
+    console.log ("verifyToken result: " , tokenResult);
+    switch (tokenResult) {
+        case 500:
+            response.status(500).send({ message: 'Error en el servidor' });
+            break;
+        case 401:
+            console.log('Los token no coinciden. Operación no permitida')
+            response.status(401).send({ message: 'No autorizado. Ingresa en tu cuenta.' });
+            break;
+        case 200:
+            console.log('Los token coinciden. Usuario autorizado');
+            params = [user_id];
+            sql = "SELECT products.nombre, products.descripcion, products.product_image, noles.product_id, noles.chat_id, user.name, user.user_id FROM noles INNER JOIN products ON (noles.product_id = products.product_id) INNER JOIN user ON (products.user_id = user.user_id) WHERE noles.user_id = ?"
+            connection.query(sql, params, function(err, result){
+                if (err){
+                    console.log(err)
+                }else{
+                    console.log('Objetos del Usuario')
+                    console.log(result)
+                } 
+            response.send(result);
+            })
+            break;
+        default:
+    }
 });
 
 // DELETE PARA BORRAR UN NOLE
-app.delete("/noles/:chat_id", function (request, response) {
+app.delete("/noles/:chat_id", async function (request, response) {
+    let accessTokenLocal = request.headers.authorization;
+    console.log('Token local ', accessTokenLocal);
+    let user_id = request.headers.user;
+    console.log(user_id)
     let chat_id = request.params.chat_id
-    let params = [chat_id]
-    let sql = "DELETE FROM noles WHERE chat_id = ?";
-    connection.query(sql, params, function(err, result){
-        if (err){
-            console.log(err)
-        }else{
-            console.log('Nole eliminado')
-            console.log(result)
-        } 
-    response.send(result);
-    })
+    let params;
+    let sql;
+    const tokenResult = await verifyToken(accessTokenLocal, user_id)
+    console.log ("verifyToken result: " , tokenResult);
+    switch (tokenResult) {
+        case 500:
+            response.status(500).send({ message: 'Error en el servidor' });
+            break;
+        case 401:
+            console.log('Los token no coinciden. Operación no permitida')
+            response.status(401).send({ message: 'No autorizado. Ingresa en tu cuenta.' });
+            break;
+        case 200:
+            console.log('Los token coinciden. Usuario autorizado');
+            params = [chat_id]
+            sql = "DELETE FROM noles WHERE chat_id = ?";
+            connection.query(sql, params, function(err, result){
+                if (err){
+                    console.log(err)
+                }else{
+                    console.log('Nole eliminado')
+                    console.log(result)
+                } 
+            response.send(result);
+            })
+            break;
+        default:
+    }
 });
 
 // GET /SILES= Obtiene todos los productos
-app.get("/siles/:user_id", function (request, response) {
-    var user_id = request.params.user_id;
-    let params = [user_id];
-    let sql = "SELECT products.nombre, products.descripcion, products.product_image, noles.product_id, noles.chat_id, user.name, user.user_id FROM noles INNER JOIN products ON (noles.product_id = products.product_id) INNER JOIN user ON (noles.user_id = user.user_id) WHERE products.user_id = ?"
-    connection.query(sql, params, function(err, result){
-        if (err){
-            console.log(err)
-        }else{
-            console.log('Objetos del Usuario')
-            console.log(result)
-        } 
-    response.send(result);
-    })
+app.get("/siles/:user_id", async function (request, response) {
+    let accessTokenLocal = request.headers.authorization;
+    console.log('Token local ', accessTokenLocal);
+    let user_id = request.params.user_id;
+    let params;
+    let sql;
+    const tokenResult = await verifyToken(accessTokenLocal, user_id)
+    console.log ("verifyToken result: " , tokenResult);
+    switch (tokenResult) {
+        case 500:
+            response.status(500).send({ message: 'Error en el servidor' });
+            break;
+        case 401:
+            console.log('Los token no coinciden. Operación no permitida')
+            response.status(401).send({ message: 'No autorizado. Ingresa en tu cuenta.' });
+            break;
+        case 200:
+            console.log('Los token coinciden. Usuario autorizado');
+            params = [user_id];
+            sql = "SELECT products.nombre, products.descripcion, products.product_image, noles.product_id, noles.chat_id, user.name, user.user_id FROM noles INNER JOIN products ON (noles.product_id = products.product_id) INNER JOIN user ON (noles.user_id = user.user_id) WHERE products.user_id = ?"
+            connection.query(sql, params, function(err, result){
+                if (err){
+                    console.log(err)
+                }else{
+                    console.log('Objetos del Usuario')
+                    console.log(result)
+                } 
+            response.send(result);
+            })
+            break;
+        default:
+    }
 });
 
 /* ---------------------------------FIN NOLES / SILES----------------------------------- */

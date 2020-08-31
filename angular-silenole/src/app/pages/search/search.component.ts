@@ -101,6 +101,11 @@ export class SearchComponent implements OnInit {
     let newNole = new Nole(uid, pid);
     this.messageService.postNole(newNole).subscribe((data) => {
       console.log(data)
+    }, (error) => {
+      console.log(error);
+      if (error.status === 401) {
+        this.loginService.forcedLogout();
+      }
     })
     this.messageService.noleSeleccionado = newNole;
   }

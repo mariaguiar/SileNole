@@ -20,8 +20,7 @@ import { Router } from '@angular/router';
 })
 
 export class ProfileComponent implements OnInit {
-  @ViewChild("content3", {static: false}) myModalInfo: TemplateRef<any>;
-
+  
   public closeResult = '';
   public modalRef: BsModalRef;
   public usuarioActual=new Usuario(null,null,null,null,null,null,null,null,null)
@@ -53,7 +52,6 @@ export class ProfileComponent implements OnInit {
       const resultPassword = this.confirmarPassword(password)
       if (resultPassword === true) {
         this.modificarUsuario(user_id, name, password, email, comunidad, provincia, localidad, cp)
-        this.toastr.success("Tus datos se han actualizado", "Usuario modificado con éxito")
       } else {
         this.toastr.error("Vuelve a escribir tu contraseña", "Algo fue mal")
       }
@@ -62,7 +60,6 @@ export class ProfileComponent implements OnInit {
   
   public modificarUsuario(idUsuario:number, name:string, password:string, email:string, comunidad:string, provincia:string, localidad:string, cp:number){
     console.log('Usuario Modificado')
-    // let userImageName =  name + ".jpg";
     let userImageUrl;
     let oldImage;
     if(this.selectedFile === null) {
@@ -77,17 +74,18 @@ export class ProfileComponent implements OnInit {
     if(this.selectedFile === null) {
       this.usuarioService.putUsuario(userUpdated).subscribe((data)=>{
         console.log(data)
-        if (this.loginService.getToken() != null) {
-          // ya existe session
-          // cargar datos session usuario
-          this.usuarioService.getUsuario(idUsuario).subscribe(data => {
-            console.log(data);
-            this.loginService.usuarioActual = data[0];
-            //this.productService.usuarioActual = data[0];
-            this.usuarioActual = data[0];
-            console.log(this.usuarioActual);
-            this.router.navigate(["/usuario"]);
-          })
+        this.usuarioService.getUsuario(idUsuario).subscribe(data => {
+          console.log(data);
+          this.loginService.usuarioActual = data[0];
+          this.usuarioActual = data[0];
+          console.log(this.usuarioActual);
+          this.toastr.success("Tus datos se han actualizado", "Usuario modificado con éxito")
+          this.router.navigate(["/usuario"]);
+        })
+      }, (error) => {
+        console.log(error);
+        if (error.status === 401) {
+          this.loginService.forcedLogout();
         }
       })
     } else {
@@ -101,18 +99,19 @@ export class ProfileComponent implements OnInit {
         console.log(data)
         this.usuarioService.putUsuario(userUpdated).subscribe((data)=>{
           console.log(data)
-          if (this.loginService.getToken() != null) {
-            // ya existe session
-            // cargar datos session usuario
-            this.usuarioService.getUsuario(idUsuario).subscribe(data => {
-              console.log(data);
-              this.loginService.usuarioActual = data[0];
-              //this.productService.usuarioActual = data[0];
-              this.usuarioActual = data[0];
-              console.log(this.usuarioActual);
-              this.router.navigate(["/usuario"]);
-              this.selectedFile = null;
-            })
+          this.usuarioService.getUsuario(idUsuario).subscribe(data => {
+            console.log(data);
+            this.loginService.usuarioActual = data[0];
+            this.usuarioActual = data[0];
+            console.log(this.usuarioActual);
+            this.toastr.success("Tus datos se han actualizado", "Usuario modificado con éxito")
+            this.router.navigate(["/usuario"]);
+            this.selectedFile = null;
+          })
+        }, (error) => {
+          console.log(error);
+          if (error.status === 401) {
+            this.loginService.forcedLogout();
           }
         })
       })

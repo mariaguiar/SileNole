@@ -1,9 +1,11 @@
+// SERVICIO
 import { Injectable } from '@angular/core';
-import { Product } from '../models/product';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { LoginService } from './login.service';
+// MODELOS
+import { Product } from '../models/product';
 import { Usuario } from '../models/usuario';
-// import { userInfo } from 'os';
+// SERVICIOS IMPORTADOS
+import { LoginService } from './login.service';
 
 
 @Injectable({
@@ -24,7 +26,8 @@ export class ProductService {
   public urlImg = "http://localhost:3100/" 
 
 
-  constructor(private http: HttpClient, public loginService:LoginService) {
+  constructor(private http: HttpClient, 
+    public loginService:LoginService) {
     console.log("funcionando servicio product");
     this.usuarioActual=this.loginService.usuarioActual
   }
@@ -129,8 +132,14 @@ export class ProductService {
   }
   
   public getOwnerByName(nombreUsuario: string) {
+    const accessToken = this.loginService.getToken();
+    const options = {
+      headers: new HttpHeaders({
+        'Authorization': accessToken, 
+      })
+    };
     console.log("obteniendo usuario por nombre")
-    return this.http.get(this.url + "buscar/usuario/" + nombreUsuario);
+    return this.http.get(this.url + "buscar/usuario/" + nombreUsuario, options);
   }
 
   public deleteProduct(id:number){

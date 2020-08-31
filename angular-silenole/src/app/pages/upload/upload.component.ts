@@ -31,9 +31,7 @@ export class UploadComponent implements OnInit {
   constructor(
     public productService:ProductService, 
     public loginService:LoginService, 
-    public modalService:BsModalService, 
-    private toastr: ToastrService,
-    private router: Router) {
+    public modalService:BsModalService) {
     this.usuarioActual=this.loginService.usuarioActual
   }
 
@@ -60,11 +58,8 @@ export class UploadComponent implements OnInit {
     }, (error) => {
       console.log(error);
       if (error.status === 401) {
-        this.toastr.error("Por favor, ingresa de nuevo", "Algo fue mal")
-        this.loginService.logout();
-        this.loginService.usuarioActual = null;
+        this.loginService.forcedLogout();
         this.productService.usuarioActual = null;
-        this.router.navigate(["/"]);
       }
     })
   }

@@ -1,8 +1,13 @@
+// SERVICIO
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs/internal/Observable";
-import { Usuario } from '../models/usuario';
 import { tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
+// MODALES
+import { ToastrService } from 'ngx-toastr';
+// MODELOS
+import { Usuario } from '../models/usuario';
 
 
 @Injectable({
@@ -17,7 +22,9 @@ export class LoginService {
   private token: string;
   public usuarioActual = new Usuario(null, null, null, null, null, null, null, null, this.defaultUserPicture);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,
+    private router: Router, 
+    private toastr: ToastrService) {}
 
   public login(user: any): Observable < any > {
     return this.http.post < any > (this.backUrl + "/user/login", user).pipe(tap(
@@ -47,10 +54,7 @@ export class LoginService {
     const options = {
       headers: new HttpHeaders({
         'Authorization': accessToken,
-      }),
-      /* body: {
-        user_id: this.usuarioActual.user_id,
-      }, */
+      })
     };
     const body = {
       user_id: this.usuarioActual.user_id,
@@ -82,6 +86,13 @@ export class LoginService {
   
   public getUserId(): any {
     return localStorage.getItem("USER_ID");
+  }
+
+  public forcedLogout(){
+    this.toastr.error("Por favor, ingresa de nuevo", "Algo fue mal")
+    this.logout();
+    this.usuarioActual = null;
+    this.router.navigate(["/"]);
   }
   
 }

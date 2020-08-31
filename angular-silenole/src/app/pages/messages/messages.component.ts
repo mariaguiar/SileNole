@@ -88,6 +88,11 @@ export class MessagesComponent implements OnInit {
     this.messageService.postMessage(new Message(null, chat_id, sender_id,  product_id, text, date)).subscribe((data)=>{
       console.log(data)
       this.cargarMensajesNoles();
+    }, (error) => {
+      console.log(error);
+      if (error.status === 401) {
+        this.loginService.forcedLogout();
+      }
     })
   }
   
@@ -97,6 +102,11 @@ export class MessagesComponent implements OnInit {
       this.cargarMensajesNoles()
       this.cargarSiles()
       this.cargarMensajesSiles()
+    }, (error) => {
+      console.log(error);
+      if (error.status === 401) {
+        this.loginService.forcedLogout();
+      }
     })
   }
 
@@ -105,6 +115,11 @@ export class MessagesComponent implements OnInit {
     this.messageService.getNolesByUser(uid).subscribe((data)=>{
       this.noles = data
       console.log(data) 
+    }, (error) => {
+      console.log(error);
+      if (error.status === 401) {
+        this.loginService.forcedLogout();
+      }
     })
   }
 
@@ -118,6 +133,11 @@ export class MessagesComponent implements OnInit {
         msg.date = date.toLocaleString();
       })
       console.log(data)  
+    }, (error) => {
+      console.log(error);
+      if (error.status === 401) {
+        this.loginService.forcedLogout();
+      }
     })
   }
 
@@ -126,6 +146,11 @@ export class MessagesComponent implements OnInit {
       this.messageService.getSilesByUser(uid).subscribe((data)=>{
         this.siles = data
         console.log(data) 
+      }, (error) => {
+        console.log(error);
+        if (error.status === 401) {
+          this.loginService.forcedLogout();
+        }
       })
     }
 
@@ -139,6 +164,11 @@ export class MessagesComponent implements OnInit {
         msg.date = date.toLocaleString();
       })
       console.log(data)  
+    }, (error) => {
+      console.log(error);
+      if (error.status === 401) {
+        this.loginService.forcedLogout();
+      }
     })
   }
 
@@ -152,6 +182,11 @@ export class MessagesComponent implements OnInit {
     this.messageService.postMessage(new Message(null, chat_id, sender_id,  product_id, text, date)).subscribe((data)=>{
       console.log(data)
       this.cargarMensajesSiles();
+    }, (error) => {
+      console.log(error);
+      if (error.status === 401) {
+        this.loginService.forcedLogout();
+      }
     })
   }
   

@@ -1,6 +1,11 @@
+// SERVICIO
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Router } from '@angular/router';
+// MODELOS
 import { Usuario } from './../models/usuario';
+// SERVICIOS IMPORTADOS
+import { LoginService } from './login.service';
 
 
 @Injectable({
@@ -17,24 +22,39 @@ export class UsuarioService {
   public urlImg = "http://localhost:3100/"
 
   
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private router: Router, public loginService:LoginService ) { }
 
 
   public getUsuario(id: number){
     if (!id){
       return this.http.get(this.url + "user/register")
     }else{
-      return this.http.get(this.url + "user/" + id)
+      const accessToken = this.loginService.getToken();
+      const options = {
+        headers: new HttpHeaders({
+          'Authorization': accessToken,
+        })
+      };
+      return this.http.get(this.url + "user/" + id, options)
     }
   }
 
   public putUsuario(cambios: Usuario){
-    return this.http.put(this.url + "user", cambios)
+    const accessToken = this.loginService.getToken();
+      const options = {
+        headers: new HttpHeaders({
+          'Authorization': accessToken,
+        })
+      };
+    return this.http.put(this.url + "user", cambios, options)
   }
   
   public deleteUsuario(id: number){
+    const accessToken = this.loginService.getToken();
     const options = {
       headers: new HttpHeaders({
+        'Authorization': accessToken, 
         'Content-Type': 'application/json',
       }),
       body: {

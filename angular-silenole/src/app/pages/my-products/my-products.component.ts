@@ -48,11 +48,8 @@ export class MyProductsComponent implements OnInit {
     }, (error) => {
       console.log(error);
       if (error.status === 401) {
-        this.toastr.error("Por favor, ingresa de nuevo", "Algo fue mal")
-        this.loginService.logout();
-        this.loginService.usuarioActual = null;
+        this.loginService.forcedLogout();
         this.productService.usuarioActual = null;
-        this.router.navigate(["/"]);
       }
     })
   }
@@ -89,11 +86,8 @@ export class MyProductsComponent implements OnInit {
       }, (error) => {
         console.log(error);
         if (error.status === 401) {
-          this.toastr.error("Por favor, ingresa de nuevo", "Algo fue mal")
-          this.loginService.logout();
-          this.loginService.usuarioActual = null;
+          this.loginService.forcedLogout();
           this.productService.usuarioActual = null;
-          this.router.navigate(["/"]);
         }
       })
     } else {
@@ -108,11 +102,8 @@ export class MyProductsComponent implements OnInit {
         }, (error) => {
           console.log(error);
           if (error.status === 401) {
-            this.toastr.error("Por favor, ingresa de nuevo", "Algo fue mal")
-            this.loginService.logout();
-            this.loginService.usuarioActual = null;
+            this.loginService.forcedLogout();
             this.productService.usuarioActual = null;
-            this.router.navigate(["/"]);
           }
         })
       })
@@ -133,11 +124,8 @@ export class MyProductsComponent implements OnInit {
     }, (error) => {
       console.log(error);
       if (error.status === 401) {
-        this.toastr.error("Por favor, ingresa de nuevo", "Algo fue mal")
-        this.loginService.logout();
-        this.loginService.usuarioActual = null;
+        this.loginService.forcedLogout();
         this.productService.usuarioActual = null;
-        this.router.navigate(["/"]);
       }
     })
   }
